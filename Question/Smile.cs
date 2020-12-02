@@ -7,12 +7,12 @@ using Global;
 using BaseLog; 
 namespace Question
 {
-    public class Smiles : Qustions
+    public class Smiles : Qustion
     {
         /// <summary>
         /// Class Smile inhertaed Qustion and have 3 constructor 
         /// </summary>
-        public Smiles(int Id, int IdForType, string NewText, Global.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfSmiles)
+        public Smiles(int Id, int IdForType, string NewText, Question.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfSmiles)
         {
             try
             {
@@ -28,7 +28,7 @@ namespace Question
                 StaticObjects.Erros.Log(ex);
             }
         }
-        public Smiles(int idForType, string NewText, Global.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfSmiles)
+        public Smiles(int idForType, string NewText, Question.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfSmiles)
         {
             try
             {

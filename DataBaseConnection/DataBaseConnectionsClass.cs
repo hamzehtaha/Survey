@@ -53,7 +53,6 @@ namespace DataBaseConnection
         private const string JoinSliderAndQuestion = "select Qustions.ID, Slider.ID ,Qustions.Qustions_text,Qustions.Qustion_order,Slider.Start_Value,Slider.End_Value,Slider.Start_Value_Cap,Slider.End_Value_Cap from Qustions INNER JOIN Slider ON Slider.Qus_ID = Qustions.ID;";
         private const string JoinStarsAndQuestion = "select Qustions.ID,Stars.ID ,Qustions.Qustions_text,Qustions.Qustion_order,Stars.Number_Of_Stars from Qustions INNER JOIN Stars ON Stars.Qus_ID = Qustions.ID;";
         private const string ProcdureQuestionSelectForMax = "select max(ID) as ID from Qustions";
-        private const string SelectStarFromQuestion = "SELECT * FROM Qustions";
         private const string DeleteStarString = "DELETE FROM Stars Where ID = @ID;";
         private const string UpdateSlider = "UPDATE Slider SET Start_Value =@Start_value, End_Value = @End_Value,Start_Value_Cap =@Start_Value_Cap, End_Value_Cap = @End_Value_Cap where Qus_ID = @ID;";
         private const string UpdateSmile = "UPDATE Smily SET Number_of_smily = @Number_of_smily where Qus_ID = @ID;";
@@ -74,11 +73,12 @@ namespace DataBaseConnection
         /// For Add Qustion return new OBJECT OF QUESTION
         /// </summary>
         /// 
-        private static int AddQustionInDataBase(Qustions Question)
+        private static int AddQustionInDataBase(Qustion Question)
         {
-            int Id = -1;
+            
             try
             {
+                int Id = -1;
                 using (SqlConnection Connection = new SqlConnection(DataBaseConnections.connectionString))
                 {
                     SqlCommand ComandForInsertQustion = new SqlCommand(InsertIntoQustion, Connection);
@@ -98,22 +98,23 @@ namespace DataBaseConnection
                         Id = Convert.ToInt32(Reader[IdQuestion]);
                     Reader.Close();
                 }
+                return Id; 
             }
             catch (Exception ex)
             {
                 StaticObjects.Erros.Log(ex);
                 StaticObjects.SuccOfFail = 0;
-                return Id;
+                return 0;
             }
-            return Id;
+            
         }
-        public static Qustions AddNewSlider(Qustions Qustion)
+        public static Qustion AddNewSlider(Qustion Qustion)
         {
-            Slider SliderQuestion = (Slider)Qustion;
-            int Id = AddQustionInDataBase(SliderQuestion);
-            if (Id != -1)
+            try
             {
-                try
+                Slider SliderQuestion = (Slider)Qustion;
+                int Id = AddQustionInDataBase(SliderQuestion);
+                if (Id != -1)
                 {
                     using (SqlConnection Connection = new SqlConnection(DataBaseConnections.connectionString))
                     {
@@ -131,17 +132,16 @@ namespace DataBaseConnection
                     }
 
                 }
-                catch (Exception ex)
-                {
-                    StaticObjects.Erros.Log(ex);
-                    StaticObjects.SuccOfFail = 0;
-                    return SliderQuestion;
-                }
-
+                return null; 
             }
-            return SliderQuestion;
+            catch (Exception ex)
+            {
+                StaticObjects.Erros.Log(ex);
+                StaticObjects.SuccOfFail = 0;
+                return null;
+            }
         }
-        public static Qustions AddNewSmile(Qustions Qustion)
+        public static Qustion AddNewSmile(Qustion Qustion)
         {
             int Id = AddQustionInDataBase(Qustion);
             Smiles SmileQuestion = (Smiles)Qustion;
@@ -173,7 +173,7 @@ namespace DataBaseConnection
             return SmileQuestion;
 
         }
-        public static Qustions AddNewStar(Qustions Qustion)
+        public static Qustion AddNewStar(Qustion Qustion)
         {
             Stars StarQuestion = (Stars)Qustion;
             int Id = AddQustionInDataBase(Qustion);
@@ -190,7 +190,6 @@ namespace DataBaseConnection
                         CommandForInsertStar.ExecuteNonQuery();
                         CommandForInsertStar.Parameters.Clear();
                         StarQuestion.Id = Id;
-                        //StaticObjects.ListOfAllQuestion.Add(StarQuestion);
                         StaticObjects.SuccOfFail = 1;
                         return StarQuestion;
                     }
@@ -207,7 +206,7 @@ namespace DataBaseConnection
         /// <summary>
         /// For Edit Question retrun object after edited
         /// </summary>
-        private static void EditQuestion(Qustions Question)
+        private static void EditQuestion(Qustion Question)
         {
 
             try
@@ -228,7 +227,7 @@ namespace DataBaseConnection
                 StaticObjects.Erros.Log(ex);
             }
         }
-        public static Qustions EditSlider(Qustions Qustion)
+        public static Qustion EditSlider(Qustion Qustion)
         {
             try
             {
@@ -256,7 +255,7 @@ namespace DataBaseConnection
                 return Qustion;
             }
         }
-        public static Qustions EditSmile(Qustions Qustion)
+        public static Qustion EditSmile(Qustion Qustion)
         {
             try
             {
@@ -279,7 +278,7 @@ namespace DataBaseConnection
                 return Qustion;
             }
         }
-        public static Qustions EditStar(Qustions Qustion)
+        public static Qustion EditStar(Qustion Qustion)
         {
             try
             {
@@ -324,7 +323,7 @@ namespace DataBaseConnection
                 StaticObjects.Erros.Log(ex);
             }
         }
-        public static int DeleteSlider(Qustions Question)
+        public static int DeleteSlider(Qustion Question)
         {
             try
             {
@@ -347,7 +346,7 @@ namespace DataBaseConnection
                 return 0;
             }
         }
-        public static int DeleteSmile(Qustions Question)
+        public static int DeleteSmile(Qustion Question)
         {
             try
             {
@@ -370,7 +369,7 @@ namespace DataBaseConnection
                 return 0;
             }
         }
-        public static int DeleteStar(Qustions Question)
+        public static int DeleteStar(Qustion Question)
         {
             try
             {
@@ -398,9 +397,9 @@ namespace DataBaseConnection
         /// <summary>
         /// Return list of question from database
         /// </summary>
-        public static List<Qustions> GetQuestionFromDataBase()
+        public static List<Qustion> GetQuestionFromDataBase()
         {
-            List<Qustions> TempListOfQustion = new List<Qustions>();
+            List<Qustion> TempListOfQustion = new List<Qustion>();
             SqlDataReader DataReader = null;
             Smiles NewSmile = null;
             Slider NewSlider = null;
@@ -417,10 +416,10 @@ namespace DataBaseConnection
                         NewSmile = new Smiles();
                         NewSmile.Id = Convert.ToInt32(DataReader.GetValue(0));
                         NewSmile.IdForType = Convert.ToInt32(DataReader.GetValue(1));
-                        NewSmile.NewText = DataReader.GetValue(2) + Global.Constant.Empty;
+                        NewSmile.NewText = DataReader.GetValue(2).ToString();
                         NewSmile.Order = Convert.ToInt32(DataReader.GetValue(3));
                         NewSmile.NumberOfSmiles = Convert.ToInt32(DataReader.GetValue(4));
-                        NewSmile.TypeOfQuestion = Global.TypeOfQuestion.Smily;
+                        NewSmile.TypeOfQuestion = TypeOfQuestion.Smily;
                         TempListOfQustion.Add(NewSmile);
                     }
                     DataReader.Close();
@@ -431,13 +430,13 @@ namespace DataBaseConnection
                         NewSlider = new Slider();
                         NewSlider.Id = Convert.ToInt32(DataReader.GetValue(0));
                         NewSlider.IdForType = Convert.ToInt32(DataReader.GetValue(1));
-                        NewSlider.NewText = DataReader.GetValue(2) + Global.Constant.Empty;
+                        NewSlider.NewText = DataReader.GetValue(2).ToString();
                         NewSlider.Order = Convert.ToInt32(DataReader.GetValue(3));
-                        NewSlider.TypeOfQuestion = Global.TypeOfQuestion.Slider;
+                        NewSlider.TypeOfQuestion =TypeOfQuestion.Slider;
                         NewSlider.StartValue = Convert.ToInt32(DataReader.GetValue(4));
                         NewSlider.EndValue = Convert.ToInt32(DataReader.GetValue(5));
-                        NewSlider.StartCaption = DataReader.GetValue(6) + Global.Constant.Empty;
-                        NewSlider.EndCaption = DataReader.GetValue(7) + Global.Constant.Empty;
+                        NewSlider.StartCaption = DataReader.GetValue(6).ToString();
+                        NewSlider.EndCaption = DataReader.GetValue(7).ToString();
                         TempListOfQustion.Add(NewSlider);
                     }
                     DataReader.Close();
@@ -448,10 +447,10 @@ namespace DataBaseConnection
                         NewStars = new Stars();
                         NewStars.Id = Convert.ToInt32(DataReader.GetValue(0));
                         NewStars.IdForType = Convert.ToInt32(DataReader.GetValue(1));
-                        NewStars.NewText = DataReader.GetValue(2) + Global.Constant.Empty;
+                        NewStars.NewText = DataReader.GetValue(2).ToString();
                         NewStars.Order = Convert.ToInt32(DataReader.GetValue(3));
                         NewStars.NumberOfStars = Convert.ToInt32(DataReader.GetValue(4));
-                        NewStars.TypeOfQuestion = Global.TypeOfQuestion.Stars;
+                        NewStars.TypeOfQuestion = TypeOfQuestion.Stars;
                         TempListOfQustion.Add(NewStars);
                     }
                 }

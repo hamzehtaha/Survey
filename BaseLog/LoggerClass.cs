@@ -11,7 +11,7 @@ namespace BaseLog
     /// <summary>
     /// This Class using  AbstractLog For Error 
     /// </summary>
-    public class Logger
+    public  class Logger
     {
         private string CurrentDirectory
         {

@@ -7,12 +7,12 @@ using Global;
 using BaseLog; 
 namespace Question
 {
-    public class Slider : Qustions
+    public class Slider : Qustion
     {
         /// <summary>
         /// Class Slider inhertaed Qustion and have 3 constructor 
         /// </summary>
-        public Slider(int Id, int IdForType, string NewText, Global.TypeOfQuestion TypeOfQuestion, int Order, int StartValue, int EndValue, string StartCaption, string EndCaption)
+        public Slider(int Id, int IdForType, string NewText, Question.TypeOfQuestion TypeOfQuestion, int Order, int StartValue, int EndValue, string StartCaption, string EndCaption)
         {
             try
             {
@@ -31,7 +31,7 @@ namespace Question
                 StaticObjects.Erros.Log(ex);
             }
         }
-        public Slider(string NewText, Global.TypeOfQuestion TypeOfQuestion, int IdForType, int Order, int StartValue, int EndValue, string StartCaption, string EndCaption)
+        public Slider(string NewText, Question.TypeOfQuestion TypeOfQuestion, int IdForType, int Order, int StartValue, int EndValue, string StartCaption, string EndCaption)
         {
             try
             {

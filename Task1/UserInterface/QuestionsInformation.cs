@@ -25,16 +25,17 @@ namespace Survey
         /// <summary>
         /// privtae objects for add,edit and delete 
         /// </summary>
-        private Qustions QuestionWillDeleteOrEdit = null;
+        private Qustion QuestionWillDeleteOrEdit = null;
         private Slider SliderForEdit = null;
         private Stars StarForEdit = null;
         private Smiles SmileForEdit = null;
-        private Global.TypeOfChoice AddOrEdirChoice; 
-        public Qustions ReturnNewQuestion { get; set; }
+        private TypeOfChoice AddOrEdirChoice;
+        private const string ErrorString = "Error";
+        public Qustion ReturnNewQuestion { get; set; }
         /// <summary>
         /// This constructor for hide and if i choose edit will show the variable for types of question
         /// </summary>
-        public QuestionsInformation(Qustions QuestionWillDeleteOrEdit, TypeOfChoice AddOrEdit)
+        public QuestionsInformation(Qustion QuestionWillDeleteOrEdit, TypeOfChoice AddOrEdit)
         {
             InitializeComponent();
             InitHide();
@@ -45,7 +46,7 @@ namespace Survey
             {
                 switch (AddOrEdit)
                 {
-                    case Global.TypeOfChoice.Edit:
+                    case TypeOfChoice.Edit:
                     this.Text = Survey.Properties.Resource1.TitleOfQuestionEdit;
                     GroupOfTypes.Visible = false;
                     ShowDataForEdit();
@@ -183,24 +184,24 @@ namespace Survey
         /// <summary>
         /// This Function to Check validation of data 
         /// </summary>
-        private bool CheckTheData(Qustions TypeQuestion)
+        private bool CheckTheData(Qustion TypeQuestion)
         {
             try
             {
-                if (TypeQuestion.NewText == Constant.Empty)
+                if (TypeQuestion.NewText == "")
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsEmptyMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsEmptyMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
                     return false;
                 }
                 else if (IsNumber(TypeQuestion.NewText))
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsJustANumberMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsJustANumberMessage,ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
                 else if (TypeQuestion.Order <= 0)
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.NewOrderLessThanZeroMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Survey.Properties.Resource1.NewOrderLessThanZeroMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
@@ -209,47 +210,47 @@ namespace Survey
                     Slider SliderCheck = (Slider)TypeQuestion;
                     if (SliderCheck.StartValue <= 0)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartValueLessThanZeroMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartValueLessThanZeroMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.EndValue <= 0)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndValueLessThanZeroMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndValueLessThanZeroMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.StartValue > 100)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartValueGreaterThanOneHundredMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartValueGreaterThanOneHundredMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.EndValue > 100)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndValueGreaterThanOneHundredMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndValueGreaterThanOneHundredMessage,ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.StartValue >= SliderCheck.EndValue)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.TheEndValueSholudGreaterThanStartValueMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.TheEndValueSholudGreaterThanStartValueMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
-                    else if (SliderCheck.StartCaption == Constant.Empty)
+                    else if (SliderCheck.StartCaption == "")
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionEmptyMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionEmptyMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (IsNumber(SliderCheck.StartCaption))
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionJustNumberMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionJustNumberMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
-                    else if (SliderCheck.EndCaption == Constant.Empty)
+                    else if (SliderCheck.EndCaption == "")
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionEmptyMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionEmptyMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (IsNumber(SliderCheck.EndCaption))
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionJustNumberMessage, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionJustNumberMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -258,7 +259,7 @@ namespace Survey
                     Smiles SmilesCheck = (Smiles)TypeQuestion;
                     if (SmilesCheck.NumberOfSmiles <= 1 || SmilesCheck.NumberOfSmiles > 5)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.NumberOfSmileBetweenFiveAndTow, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.NumberOfSmileBetweenFiveAndTow, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -267,7 +268,7 @@ namespace Survey
                     Stars StarCheck = (Stars)TypeQuestion;
                     if (StarCheck.NumberOfStars <= 0 || StarCheck.NumberOfStars > 10)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.NumberOfStrasBetweenTenAndOne, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.NumberOfStrasBetweenTenAndOne, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -426,7 +427,7 @@ namespace Survey
                         }
                         break; 
                     default :
-                        MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, Constant.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
                 }
             }catch (Exception ex)

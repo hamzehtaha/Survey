@@ -11,15 +11,15 @@ namespace OperationManger
 {
     public class Operation
     {
-        public static Qustions AddQustion(Qustions Question)
+        public static Qustion AddQustion(Qustion Question)
         {
             try
             {
                 switch (Question.TypeOfQuestion)
                 {
-                    case Global.TypeOfQuestion.Slider:
+                    case TypeOfQuestion.Slider:
                         return DataBaseConnections.AddNewSlider(Question);
-                    case Global.TypeOfQuestion.Smily:
+                    case TypeOfQuestion.Smily:
                         return DataBaseConnections.AddNewSmile(Question);
                     default:
                         return DataBaseConnections.AddNewStar(Question);
@@ -32,15 +32,15 @@ namespace OperationManger
                 return null;
             }
         }
-        public static Qustions EditQustion(Qustions Question)
+        public static Qustion EditQustion(Qustion Question)
         {
             try
             {
                 switch (Question.TypeOfQuestion)
                 {
-                    case Global.TypeOfQuestion.Slider:
+                    case TypeOfQuestion.Slider:
                         return DataBaseConnections.EditSlider(Question);
-                    case Global.TypeOfQuestion.Smily:
+                    case TypeOfQuestion.Smily:
                         return DataBaseConnections.EditSmile(Question);
                     default:
                         return DataBaseConnections.EditStar(Question);
@@ -53,15 +53,15 @@ namespace OperationManger
                 return null;
             }
         }
-        public static int DeleteQustion(Qustions Question)
+        public static int DeleteQustion(Qustion Question)
         {
             try
             {
                 switch (Question.TypeOfQuestion)
                 {
-                    case Global.TypeOfQuestion.Slider:
+                    case TypeOfQuestion.Slider:
                         return DataBaseConnections.DeleteSlider(Question);
-                    case Global.TypeOfQuestion.Smily:
+                    case TypeOfQuestion.Smily:
                         return DataBaseConnections.DeleteSmile(Question);
                     default:
                         return DataBaseConnections.DeleteStar(Question);
@@ -74,7 +74,7 @@ namespace OperationManger
                 return 0;
             }
         }
-        public static List<Qustions> GetQustion()
+        public static List<Qustion> GetQustion()
         {
             try
             {

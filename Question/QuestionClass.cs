@@ -5,7 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 namespace Question
 {
-    public abstract class Qustions
+    public enum TypeOfQuestion
+    {
+        Slider,
+        Smily,
+        Stars
+    }
+    public enum TypeOfChoice
+    {
+        Add,
+        Edit
+    }
+
+    public abstract class Qustion
     {
         /// <summary>
         /// This abstract Method And override in all types of Question 
@@ -13,6 +25,6 @@ namespace Question
         public string NewText { get; set; }
         public int Order { get; set; }
         public int Id { get; set; }
-        public Global.TypeOfQuestion TypeOfQuestion { get; set; }
+        public TypeOfQuestion TypeOfQuestion { get; set; }
     }
 }
