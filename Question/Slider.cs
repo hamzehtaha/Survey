@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Global;
 using BaseLog; 
 namespace Question
 {
@@ -28,7 +27,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
             }
         }
         public Slider(string NewText, Question.TypeOfQuestion TypeOfQuestion, int IdForType, int Order, int StartValue, int EndValue, string StartCaption, string EndCaption)
@@ -46,7 +45,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
             }
         }
         public Slider()

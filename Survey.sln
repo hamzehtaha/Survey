@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataBaseConnection", "DataB
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseLog", "BaseLog\BaseLog.csproj", "{B9C8D4AE-38DF-489E-8EA4-A5384752E8D5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Global", "Global\Global.csproj", "{245E70D4-521D-4D06-B618-43E06617944A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationManger", "OperationManger\OperationManger.csproj", "{4815D443-14B3-464B-BE30-EBC249F8F06C}"
 EndProject
 Global
@@ -37,10 +35,6 @@ Global
 		{B9C8D4AE-38DF-489E-8EA4-A5384752E8D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9C8D4AE-38DF-489E-8EA4-A5384752E8D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9C8D4AE-38DF-489E-8EA4-A5384752E8D5}.Release|Any CPU.Build.0 = Release|Any CPU
-		{245E70D4-521D-4D06-B618-43E06617944A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{245E70D4-521D-4D06-B618-43E06617944A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{245E70D4-521D-4D06-B618-43E06617944A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{245E70D4-521D-4D06-B618-43E06617944A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4815D443-14B3-464B-BE30-EBC249F8F06C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4815D443-14B3-464B-BE30-EBC249F8F06C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4815D443-14B3-464B-BE30-EBC249F8F06C}.Release|Any CPU.ActiveCfg = Release|Any CPU

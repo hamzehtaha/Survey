@@ -11,7 +11,6 @@ namespace Global
         /// <summary>
         /// This static objects and use it everwhere 
         /// </summary>
-        public static Logger Erros = new Logger(); 
-        public static int SuccOfFail = 0;
+
     }
 }

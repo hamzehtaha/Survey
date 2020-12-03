@@ -52,10 +52,6 @@
       <Project>{b9c8d4ae-38df-489e-8ea4-a5384752e8d5}</Project>
       <Name>BaseLog</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Global\Global.csproj">
-      <Project>{245e70d4-521d-4d06-b618-43e06617944a}</Project>
-      <Name>Global</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

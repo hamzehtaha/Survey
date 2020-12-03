@@ -421,7 +421,7 @@
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;NewNumberOfStars.Parent" xml:space="preserve">
-    <value>panel1</value>
+    <value>GroupOfStars</value>
   </data>
   <data name="&gt;&gt;NewNumberOfStars.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -442,7 +442,7 @@
     <value>System.Windows.Forms.NumericUpDown, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;NewNumberOfSmiles.Parent" xml:space="preserve">
-    <value>panel2</value>
+    <value>GroupOfSmile</value>
   </data>
   <data name="&gt;&gt;NewNumberOfSmiles.ZOrder" xml:space="preserve">
     <value>1</value>
@@ -688,30 +688,30 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label1.Parent" xml:space="preserve">
-    <value>panel1</value>
+    <value>GroupOfStars</value>
   </data>
   <data name="&gt;&gt;label1.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="GroupOfStars.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 193</value>
   </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="GroupOfStars.Size" type="System.Drawing.Size, System.Drawing">
     <value>191, 35</value>
   </data>
-  <data name="panel1.TabIndex" type="System.Int32, mscorlib">
+  <data name="GroupOfStars.TabIndex" type="System.Int32, mscorlib">
     <value>6</value>
   </data>
-  <data name="&gt;&gt;panel1.Name" xml:space="preserve">
-    <value>panel1</value>
+  <data name="&gt;&gt;GroupOfStars.Name" xml:space="preserve">
+    <value>GroupOfStars</value>
   </data>
-  <data name="&gt;&gt;panel1.Type" xml:space="preserve">
+  <data name="&gt;&gt;GroupOfStars.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;panel1.Parent" xml:space="preserve">
+  <data name="&gt;&gt;GroupOfStars.Parent" xml:space="preserve">
     <value>panel3</value>
   </data>
-  <data name="&gt;&gt;panel1.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;GroupOfStars.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
   <data name="label3.AutoSize" type="System.Boolean, mscorlib">
@@ -736,30 +736,30 @@
     <value>System.Windows.Forms.Label, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;label3.Parent" xml:space="preserve">
-    <value>panel2</value>
+    <value>GroupOfSmile</value>
   </data>
   <data name="&gt;&gt;label3.ZOrder" xml:space="preserve">
     <value>0</value>
   </data>
-  <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
+  <data name="GroupOfSmile.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 183</value>
   </data>
-  <data name="panel2.Size" type="System.Drawing.Size, System.Drawing">
+  <data name="GroupOfSmile.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 30</value>
   </data>
-  <data name="panel2.TabIndex" type="System.Int32, mscorlib">
+  <data name="GroupOfSmile.TabIndex" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
-  <data name="&gt;&gt;panel2.Name" xml:space="preserve">
-    <value>panel2</value>
+  <data name="&gt;&gt;GroupOfSmile.Name" xml:space="preserve">
+    <value>GroupOfSmile</value>
   </data>
-  <data name="&gt;&gt;panel2.Type" xml:space="preserve">
+  <data name="&gt;&gt;GroupOfSmile.Type" xml:space="preserve">
     <value>System.Windows.Forms.Panel, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="&gt;&gt;panel2.Parent" xml:space="preserve">
+  <data name="&gt;&gt;GroupOfSmile.Parent" xml:space="preserve">
     <value>panel3</value>
   </data>
-  <data name="&gt;&gt;panel2.ZOrder" xml:space="preserve">
+  <data name="&gt;&gt;GroupOfSmile.ZOrder" xml:space="preserve">
     <value>2</value>
   </data>
   <data name="NewOrder.Location" type="System.Drawing.Point, System.Drawing">

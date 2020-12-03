@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Global;
 using BaseLog; 
 namespace Question
 {
@@ -25,7 +24,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
             }
         }
         public Stars(int IdForType, string NewText, Question.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfStars)
@@ -40,7 +39,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
             }
         }
         public Stars()

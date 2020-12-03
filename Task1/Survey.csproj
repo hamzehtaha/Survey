@@ -130,10 +130,6 @@
       <Project>{bd89ced8-163e-4d03-8939-9d7d512e7245}</Project>
       <Name>DataBaseConnection</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Global\Global.csproj">
-      <Project>{245e70d4-521d-4d06-b618-43e06617944a}</Project>
-      <Name>Global</Name>
-    </ProjectReference>
     <ProjectReference Include="..\OperationManger\OperationManger.csproj">
       <Project>{4815d443-14b3-464b-be30-ebc249f8f06c}</Project>
       <Name>OperationManger</Name>

@@ -6,33 +6,33 @@ using System.Threading.Tasks;
 using DataBaseConnection;
 using Question;
 using BaseLog;
-using Global; 
+ 
 namespace OperationManger
 {
     public class Operation
     {
-        public static Qustion AddQustion(Qustion Question)
+        public static int  AddQustion(Qustion Question,out Qustion NewQuestion)
         {
             try
             {
                 switch (Question.TypeOfQuestion)
                 {
                     case TypeOfQuestion.Slider:
-                        return DataBaseConnections.AddNewSlider(Question);
+                        return DataBaseConnections.AddNewSlider(Question,out NewQuestion);
                     case TypeOfQuestion.Smily:
-                        return DataBaseConnections.AddNewSmile(Question);
+                        return DataBaseConnections.AddNewSmile(Question, out NewQuestion);
                     default:
-                        return DataBaseConnections.AddNewStar(Question);
+                        return DataBaseConnections.AddNewStar(Question, out NewQuestion);
                 }
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
-                StaticObjects.SuccOfFail = 0;
-                return null;
+                Qustion.Errors.Log(ex);
+                NewQuestion = null; 
+                return 0;
             }
         }
-        public static Qustion EditQustion(Qustion Question)
+        public static int EditQustion(Qustion Question)
         {
             try
             {
@@ -48,9 +48,8 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
-                StaticObjects.SuccOfFail = 0;
-                return null;
+                Qustion.Errors.Log(ex);
+                return 0;
             }
         }
         public static int DeleteQustion(Qustion Question)
@@ -69,8 +68,7 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
-                StaticObjects.SuccOfFail = 0;
+                Qustion.Errors.Log(ex);
                 return 0;
             }
         }
@@ -82,7 +80,7 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 return null;
             }
         }

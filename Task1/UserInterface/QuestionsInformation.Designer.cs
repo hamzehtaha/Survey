@@ -51,9 +51,9 @@
             this.Save = new System.Windows.Forms.Button();
             this.Cancel = new System.Windows.Forms.Button();
             this.panel3 = new System.Windows.Forms.Panel();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.GroupOfStars = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
+            this.GroupOfSmile = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.NewOrder = new System.Windows.Forms.NumericUpDown();
             this.GroupOfSlider.SuspendLayout();
@@ -63,8 +63,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.NewNumberOfSmiles)).BeginInit();
             this.GroupOfTypes.SuspendLayout();
             this.panel3.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
+            this.GroupOfStars.SuspendLayout();
+            this.GroupOfSmile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NewOrder)).BeginInit();
             this.SuspendLayout();
             // 
@@ -261,8 +261,8 @@
             // panel3
             // 
             this.panel3.Controls.Add(this.Cancel);
-            this.panel3.Controls.Add(this.panel1);
-            this.panel3.Controls.Add(this.panel2);
+            this.panel3.Controls.Add(this.GroupOfStars);
+            this.panel3.Controls.Add(this.GroupOfSmile);
             this.panel3.Controls.Add(this.Save);
             this.panel3.Controls.Add(this.NewOrder);
             this.panel3.Controls.Add(this.NewText);
@@ -274,12 +274,12 @@
             this.panel3.Name = "panel3";
             this.panel3.Paint += new System.Windows.Forms.PaintEventHandler(this.panel3_Paint);
             // 
-            // panel1
+            // GroupOfStars
             // 
-            this.panel1.Controls.Add(this.label1);
-            this.panel1.Controls.Add(this.NewNumberOfStars);
-            resources.ApplyResources(this.panel1, "panel1");
-            this.panel1.Name = "panel1";
+            this.GroupOfStars.Controls.Add(this.label1);
+            this.GroupOfStars.Controls.Add(this.NewNumberOfStars);
+            resources.ApplyResources(this.GroupOfStars, "GroupOfStars");
+            this.GroupOfStars.Name = "GroupOfStars";
             // 
             // label1
             // 
@@ -288,12 +288,12 @@
             this.label1.Name = "label1";
             this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
-            // panel2
+            // GroupOfSmile
             // 
-            this.panel2.Controls.Add(this.label3);
-            this.panel2.Controls.Add(this.NewNumberOfSmiles);
-            resources.ApplyResources(this.panel2, "panel2");
-            this.panel2.Name = "panel2";
+            this.GroupOfSmile.Controls.Add(this.label3);
+            this.GroupOfSmile.Controls.Add(this.NewNumberOfSmiles);
+            resources.ApplyResources(this.GroupOfSmile, "GroupOfSmile");
+            this.GroupOfSmile.Name = "GroupOfSmile";
             // 
             // label3
             // 
@@ -342,10 +342,10 @@
             this.GroupOfTypes.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
-            this.panel2.ResumeLayout(false);
-            this.panel2.PerformLayout();
+            this.GroupOfStars.ResumeLayout(false);
+            this.GroupOfStars.PerformLayout();
+            this.GroupOfSmile.ResumeLayout(false);
+            this.GroupOfSmile.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NewOrder)).EndInit();
             this.ResumeLayout(false);
 
@@ -377,8 +377,8 @@
         private System.Windows.Forms.NumericUpDown NewNumberOfStars;
         private System.Windows.Forms.NumericUpDown NewNumberOfSmiles;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel GroupOfStars;
+        private System.Windows.Forms.Panel GroupOfSmile;
         private System.Windows.Forms.Label label3;
     }
 }

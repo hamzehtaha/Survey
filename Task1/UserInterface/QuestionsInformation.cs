@@ -15,7 +15,6 @@ using System.Diagnostics;
 using Task1;
 using Question;
 using BaseLog;
-using Global;
 using DataBaseConnection;
 using OperationManger; 
 namespace Survey
@@ -25,34 +24,31 @@ namespace Survey
         /// <summary>
         /// privtae objects for add,edit and delete 
         /// </summary>
-        private Qustion QuestionWillDeleteOrEdit = null;
-        private Slider SliderForEdit = null;
-        private Stars StarForEdit = null;
-        private Smiles SmileForEdit = null;
-        private TypeOfChoice AddOrEdirChoice;
+        private Qustion QustionForOperations = null;
+        public static Qustion ReturnNewQuestion { get; set; }
+        private TypeOfChoice AddOrEditChoice;
         private const string ErrorString = "Error";
-        public Qustion ReturnNewQuestion { get; set; }
         /// <summary>
         /// This constructor for hide and if i choose edit will show the variable for types of question
         /// </summary>
-        public QuestionsInformation(Qustion QuestionWillDeleteOrEdit, TypeOfChoice AddOrEdit)
+        public QuestionsInformation(Qustion QustionForOperations, TypeOfChoice AddOrEdit)
         {
-            InitializeComponent();
-            InitHide();
-            this.QuestionWillDeleteOrEdit = QuestionWillDeleteOrEdit;
-            NewText.Focus();
-            AddOrEdirChoice = AddOrEdit;
             try
             {
+                InitializeComponent();
+                InitHide();
+                this.QustionForOperations = QustionForOperations;
+                NewText.Focus();
+                AddOrEditChoice = AddOrEdit;
                 switch (AddOrEdit)
                 {
                     case TypeOfChoice.Edit:
+                    //For Change Ttitle 
                     this.Text = Survey.Properties.Resource1.TitleOfQuestionEdit;
-                    GroupOfTypes.Visible = false;
                     ShowDataForEdit();
-                    if (QuestionWillDeleteOrEdit != null)
+                    if (QustionForOperations != null)
                     {
-                            switch (QuestionWillDeleteOrEdit.TypeOfQuestion) 
+                            switch (QustionForOperations.TypeOfQuestion) 
                             {
                                 case TypeOfQuestion.Slider:
                                     ShowForSlider();
@@ -76,7 +72,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -91,7 +87,7 @@ namespace Survey
                 GroupOfSlider.Visible = true; 
             }catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -103,11 +99,11 @@ namespace Survey
             try
             {
                 InitHide();
-                panel2.Visible = true;
+                GroupOfSmile.Visible = true;
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -119,11 +115,11 @@ namespace Survey
             try
             {
                 InitHide();
-                   panel1.Visible = true;
+                   GroupOfStars.Visible = true;
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -136,10 +132,10 @@ namespace Survey
             {
                 GroupOfTypes.Visible = true;
                 GroupOfTypes.Enabled = false;
-                switch (QuestionWillDeleteOrEdit.TypeOfQuestion)
+                switch (QustionForOperations.TypeOfQuestion)
                 {
                     case TypeOfQuestion.Slider:
-                        Slider EditSlider = (Slider)QuestionWillDeleteOrEdit;
+                        Slider EditSlider = (Slider)QustionForOperations;
                         NewText.Text = EditSlider.NewText;
                         NewOrder.Value = EditSlider.Order;
                         NewStartValue.Value = EditSlider.StartValue;
@@ -147,30 +143,25 @@ namespace Survey
                         NewStartValueCaption.Text = EditSlider.StartCaption;
                         NewEndValueCaption.Text = EditSlider.EndCaption;
                         SliderRadio.Checked = true;
-                        SliderForEdit = (Slider)QuestionWillDeleteOrEdit;
                         break;
                     case TypeOfQuestion.Stars:
-                        Stars EditStar = (Stars)QuestionWillDeleteOrEdit;
+                        Stars EditStar = (Stars)QustionForOperations;
                         NewText.Text = EditStar.NewText;
                         NewOrder.Value = EditStar.Order;
                         NewNumberOfStars.Value = EditStar.NumberOfStars;
                         StarsRadio.Checked = true;
-                        StarForEdit = (Stars)QuestionWillDeleteOrEdit;
                         break;
                     case TypeOfQuestion.Smily:
-                        Smiles EditSmile = (Smiles)QuestionWillDeleteOrEdit;
+                        Smiles EditSmile = (Smiles)QustionForOperations;
                         NewText.Text = EditSmile.NewText;
                         NewOrder.Value = EditSmile.Order;
                         NewNumberOfSmiles.Value = EditSmile.NumberOfSmiles;
                         SmilyRadio.Checked = true;
-                        SmileForEdit = (Smiles)QuestionWillDeleteOrEdit;
                         break; 
-                        
-
                 }
             }catch(Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -179,7 +170,16 @@ namespace Survey
         /// </summary>
         private bool IsNumber(string Number)
         {
-            return int.TryParse(Number, out int N);
+            try
+            {
+                return int.TryParse(Number, out int N);
+            }
+            catch(Exception ex)
+            {
+                Qustion.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+                return false;
+            }
         }
         /// <summary>
         /// This Function to Check validation of data 
@@ -275,7 +275,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
 
                 return false;
@@ -290,12 +290,12 @@ namespace Survey
             
             try
             {
-                GroupOfSlider.Visible = false ;
-                panel2.Visible = false;
-                panel1.Visible = false; 
+                GroupOfSlider.Visible = false;
+                GroupOfSmile.Visible = false;
+                GroupOfStars.Visible = false; 
             }catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
@@ -314,7 +314,7 @@ namespace Survey
                 }
             } catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -332,7 +332,7 @@ namespace Survey
                 }
             } catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -350,7 +350,7 @@ namespace Survey
                 }
             } catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -365,7 +365,7 @@ namespace Survey
                 this.Close();
             }catch(Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
@@ -373,123 +373,129 @@ namespace Survey
         /// <summary>
         /// when i press save button go to this function and from AddOrEdit var will know i edit or add the question 
         /// </summary>
-        private void Save_Click(object sender, EventArgs e)
+        private Qustion AddAttrubitesForQuestion (Qustion NewQuestion)
         {
             try
             {
-                switch (AddOrEdirChoice)
+                NewQuestion.NewText = NewText.Text;
+                NewQuestion.Order = Convert.ToInt32(NewOrder.Value);
+                return NewQuestion;
+            }catch (Exception ex)
+            {
+                Qustion.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+                return null; 
+            }
+        }
+        private void CheckAndAddQuestion(Qustion NewQuestion)
+        {
+            try
+            {
+                if (CheckTheData(NewQuestion))
+                {
+                    if (Operation.AddQustion(NewQuestion, out QustionForOperations) == 1)
+                    {
+                        DataEnter();
+                        ReturnNewQuestion = QustionForOperations;
+                    }
+                }
+            }catch (Exception ex)
+            {
+                Qustion.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+            }
+        }
+        private void Save_Click(object sender, EventArgs e)
+        {
+            try {
+                switch (AddOrEditChoice)
                 {
                     case TypeOfChoice.Add:
                         if (SliderRadio.Checked)
                         {
                             Slider NewQuestion = new Slider();
-                            NewQuestion.NewText = NewText.Text;
-                            NewQuestion.Order = Convert.ToInt32(NewOrder.Value);
-                            NewQuestion.TypeOfQuestion = TypeOfQuestion.Slider;
+                            NewQuestion = (Slider)AddAttrubitesForQuestion(NewQuestion);
+                            NewQuestion.TypeOfQuestion = TypeOfQuestion.Slider; 
                             NewQuestion.StartValue = Convert.ToInt32(NewStartValue.Text);
                             NewQuestion.EndValue = Convert.ToInt32(NewEndValue.Text);
                             NewQuestion.StartCaption = NewStartValueCaption.Text;
                             NewQuestion.EndCaption = NewEndValueCaption.Text;
-                            if (CheckTheData(NewQuestion))
-                            {
-                                ReturnNewQuestion = (Slider)Operation.AddQustion(NewQuestion);
-                                if (StaticObjects.SuccOfFail == 1)
-                                    DataEnter();
-                            }
+                            CheckAndAddQuestion(NewQuestion); 
                         }
                         else if (SmilyRadio.Checked)
                         {
                             Smiles NewQuestion = new Smiles();
-                            NewQuestion.NewText = NewText.Text;
-                            NewQuestion.Order = Convert.ToInt32(NewOrder.Value);
+                            NewQuestion = (Smiles)AddAttrubitesForQuestion(NewQuestion);
                             NewQuestion.TypeOfQuestion = TypeOfQuestion.Smily;
                             NewQuestion.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Text);
-                            if (CheckTheData(NewQuestion))
-                            {
-                                ReturnNewQuestion = (Smiles)Operation.AddQustion(NewQuestion);
-                                if (StaticObjects.SuccOfFail == 1)
-                                    DataEnter();
-                            }
+                            CheckAndAddQuestion(NewQuestion);
                         }
                         else if (StarsRadio.Checked)
                         {
                             Stars NewQuestion = new Stars();
-                            NewQuestion.NewText = NewText.Text;
-                            NewQuestion.Order = Convert.ToInt32(NewOrder.Value);
+                            NewQuestion = (Stars)AddAttrubitesForQuestion(NewQuestion);
                             NewQuestion.TypeOfQuestion = TypeOfQuestion.Stars;
                             NewQuestion.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Text);
-                            if (CheckTheData(NewQuestion))
-                            {
-                                ReturnNewQuestion = (Stars)Operation.AddQustion(NewQuestion);
-                                if (StaticObjects.SuccOfFail == 1)
-                                    DataEnter();
-                            }
+                            CheckAndAddQuestion(NewQuestion);
                         }
-                        break; 
-                    default :
-                        MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        else
+                            MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         break;
-                }
-            }catch (Exception ex)
-            {
-                StaticObjects.Erros.Log(ex);
-                MessageBox.Show(Survey.Properties.Resource1.MessageError);
-            }
-            try {
-                switch (AddOrEdirChoice)
-                {
                     case TypeOfChoice.Edit:
-                        if (SliderForEdit != null)
+                        switch (QustionForOperations.TypeOfQuestion) 
                         {
-                            SliderForEdit.NewText = NewText.Text;
-                            SliderForEdit.Order = Convert.ToInt32(NewOrder.Value);
-                            SliderForEdit.StartValue = Convert.ToInt32(NewStartValue.Value);
-                            SliderForEdit.EndValue = Convert.ToInt32(NewEndValue.Value);
-                            SliderForEdit.StartCaption = NewStartValueCaption.Text;
-                            SliderForEdit.EndCaption = NewEndValueCaption.Text;
-                            if (CheckTheData(SliderForEdit))
-                            {
-                                ReturnNewQuestion = (Slider)Operation.EditQustion(SliderForEdit);
-                                MessageBox.Show(Properties.Resource1.TheEditMessage);
-                                StaticObjects.SuccOfFail = 1;
-                                this.Close();
+                            case TypeOfQuestion.Slider:
+                                Slider SliderForEdit = (Slider)QustionForOperations;
+                                SliderForEdit = (Slider)AddAttrubitesForQuestion(SliderForEdit); 
+                                SliderForEdit.StartValue = Convert.ToInt32(NewStartValue.Value);
+                                SliderForEdit.EndValue = Convert.ToInt32(NewEndValue.Value);
+                                SliderForEdit.StartCaption = NewStartValueCaption.Text;
+                                SliderForEdit.EndCaption = NewEndValueCaption.Text;
+                                if (CheckTheData(SliderForEdit))
+                                {
+                                    if (Operation.EditQustion(SliderForEdit) != 0) {
+                                        ReturnNewQuestion = SliderForEdit;
+                                        MessageBox.Show(Properties.Resource1.TheEditMessage);
+                                        this.Close();
+                                    }
 
-                            }
-
-                        }
-                        else if (SmileForEdit != null)
-                        {
-                            SmileForEdit.NewText = NewText.Text;
-                            SmileForEdit.Order = Convert.ToInt32(NewOrder.Value);
-                            SmileForEdit.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Value);
-                            if (CheckTheData(SmileForEdit))
-                            {
-                                ReturnNewQuestion = (Smiles)Operation.EditQustion(SmileForEdit);
-                                MessageBox.Show(Properties.Resource1.TheEditMessage);
-                                StaticObjects.SuccOfFail = 1;
-                                this.Close();
-                            }
-                        }
-                        else if (StarForEdit != null)
-                        {
-                            StarForEdit.NewText = NewText.Text;
-                            StarForEdit.Order = Convert.ToInt32(NewOrder.Value);
-                            StarForEdit.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Value);
-                            if (CheckTheData(StarForEdit))
-                            {
-                                ReturnNewQuestion = (Stars)Operation.EditQustion(StarForEdit);
-                                MessageBox.Show(Properties.Resource1.TheEditMessage);
-                                StaticObjects.SuccOfFail = 1;
-                                this.Close();
-                            }
+                                }
+                                break;
+                            case TypeOfQuestion.Smily:
+                                Smiles SmileForEdit = (Smiles)QustionForOperations;
+                                SmileForEdit= (Smiles)AddAttrubitesForQuestion(SmileForEdit); 
+                                SmileForEdit.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Value);
+                                if (CheckTheData(SmileForEdit))
+                                {
+                                    if (Operation.EditQustion(SmileForEdit) != 0)
+                                    {
+                                        ReturnNewQuestion = SmileForEdit;
+                                        MessageBox.Show(Properties.Resource1.TheEditMessage);
+                                        this.Close();
+                                    }
+                                }
+                                break;
+                            case TypeOfQuestion.Stars:
+                                Stars StarForEdit = (Stars)QustionForOperations;
+                                StarForEdit = (Stars)AddAttrubitesForQuestion(StarForEdit);
+                                StarForEdit.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Value);
+                                if (CheckTheData(StarForEdit))
+                                {
+                                    if (Operation.EditQustion(StarForEdit) != 0)
+                                    {
+                                        ReturnNewQuestion = StarForEdit;
+                                        MessageBox.Show(Properties.Resource1.TheEditMessage);
+                                        this.Close();
+                                    }
+                                }
+                                break; 
                         }
                         break; 
                 }
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
-
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -498,7 +504,14 @@ namespace Survey
         /// </summary>
         private void Cancel_Click(object sender, EventArgs e)
         {
-            this.Close();
+            try
+            {
+                this.Close();
+            }catch(Exception ex)
+            {
+                Qustion.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+            }
         }
         private void textBox2_PreviewKeyDown(object sender, PreviewKeyDownEventArgs e)
         {

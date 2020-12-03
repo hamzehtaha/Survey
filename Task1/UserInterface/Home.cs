@@ -15,7 +15,6 @@ using System.Windows.Forms;
 using Task1;
 using Question;
 using BaseLog;
-using Global;
 using DataBaseConnection;
 using OperationManger; 
 namespace Survey
@@ -27,23 +26,23 @@ namespace Survey
     }
     public partial class Home : Form
     {
-
         private Qustion QuestionWillDeleteOrEdit = null;
         private static List<Qustion> ListOfAllQuestion = new List<Qustion>();
+        private static Boolean f = true; 
         private static string Languge = "English";
         private const string ErrorString = "Error";
         private const string EnglishMark = "en-US";
         private const string ArabicMark = "ar-EG";
         private const string DELETE = "Delete";
+        Thread MainThread = System.Threading.Thread.CurrentThread;  
         public Home()
         {
             try
             {
                 StartFunction();
-                //NewThread();
             }catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -55,28 +54,39 @@ namespace Survey
             try
             {
                 InitializeComponent();
+                NewThread(); 
                 ListOfAllQuestion.Clear();
                 ListOfAllQuestion = DataBaseConnections.GetQuestionFromDataBase();
                 ShowData();
             }catch(Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
         }
         private void NewThread()
         {
-            Thread ThreadForRefresh = new Thread(RefreshData);
+            Thread ThreadForRefresh = new Thread(delegate () {
+                RefreshData();
+            });
+            ThreadForRefresh.IsBackground = true; 
             ThreadForRefresh.Start(); 
         }
-        private void RefreshData()
+        private async void RefreshData()
         {
-            int ThreadSleepValue = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["Thread.Sleep.Value"]);
-            MessageBox.Show(ThreadSleepValue + ""); 
-            Thread.Sleep(ThreadSleepValue);
-            NewThread(); 
+            while (true)
+            {
+                if (this.IsHandleCreated)
+                {
+                    ListOfAllQuestion = Operation.GetQustion();
+                    ShowData();
+                    int ThreadSleepValue = Convert.ToInt32(System.Configuration.ConfigurationManager.AppSettings["Thread.Sleep.Value"]);
+                    Thread.Sleep(ThreadSleepValue);
 
+                }
+
+            }
         }
         /// <summary>
         /// This function will return object is select in datagridview for edit and delete 
@@ -101,7 +111,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
                 return null;
             }
@@ -114,17 +124,20 @@ namespace Survey
         {
             try
             {
-                ListOfQuestion.Rows.Clear();
-                foreach (Qustion Temp in ListOfAllQuestion)
-                {
-                    int Index = ListOfQuestion.Rows.Add();
-                    ListOfQuestion.Rows[Index].Cells[0].Value = Temp.NewText;
-                    ListOfQuestion.Rows[Index].Cells[2].Value = Temp.Order;
-                    ListOfQuestion.Rows[Index].Cells[1].Value = Temp.TypeOfQuestion;
-                }
+                    ListOfQuestion.Rows.Clear();
+                    foreach (Qustion Temp in ListOfAllQuestion)
+                    {
+                    if (Temp != null)
+                    {
+                        int Index = ListOfQuestion.Rows.Add();
+                        ListOfQuestion.Rows[Index].Cells[0].Value = Temp.NewText;
+                        ListOfQuestion.Rows[Index].Cells[2].Value = Temp.Order;
+                        ListOfQuestion.Rows[Index].Cells[1].Value = Temp.TypeOfQuestion;
+                    }
+                    }
             } catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
             ListOfQuestion.ClearSelection();
@@ -139,15 +152,11 @@ namespace Survey
                 ListOfQuestion.ClearSelection();
                 QuestionsInformation QuestionsInformationPage = new QuestionsInformation(QuestionWillDeleteOrEdit, TypeOfChoice.Add);
                 QuestionsInformationPage.ShowDialog();
-                if (StaticObjects.SuccOfFail == 1)
-                {
-                    ListOfAllQuestion = Operation.GetQustion();
-                    ShowData();
-                    StaticObjects.SuccOfFail = 0;
-                }
+                ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion); 
+                ShowData();
             } catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -158,31 +167,29 @@ namespace Survey
         {
             try
             {
-
                 QuestionWillDeleteOrEdit = GetObjectSelect();
+                Qustion OldObject = QuestionWillDeleteOrEdit; 
                 ListOfQuestion.ClearSelection();
                 if (QuestionWillDeleteOrEdit != null)
                 {
-
+                    
                     QuestionsInformation QuestionsInformationPage = new QuestionsInformation(QuestionWillDeleteOrEdit, TypeOfChoice.Edit);
                     QuestionsInformationPage.ShowDialog();
-                    if (StaticObjects.SuccOfFail == 1)
+                    if (QuestionsInformation.ReturnNewQuestion != null)
                     {
-                        ListOfAllQuestion = Operation.GetQustion();
+                        ListOfAllQuestion.Remove(OldObject);
+                        ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
                         ShowData();
-                        StaticObjects.SuccOfFail = 0;
                     }
                 }
                 else
                 {
                     MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
-
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -193,24 +200,21 @@ namespace Survey
                 QuestionWillDeleteOrEdit = GetObjectSelect();
                 if (QuestionWillDeleteOrEdit != null)
                 {
+                    ListOfAllQuestion.Remove(QuestionWillDeleteOrEdit);
                     QuestionsInformation QuestionsInformationPage = new QuestionsInformation(QuestionWillDeleteOrEdit, TypeOfChoice.Edit);
                     QuestionsInformationPage.ShowDialog();
-                    if (StaticObjects.SuccOfFail == 1)
-                    {
-                        ListOfAllQuestion = Operation.GetQustion();
-                        ShowData();
-                        StaticObjects.SuccOfFail = 0;
-                    }
+                    ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
+                    ShowData();
+                    ShowData();
                 }
                 else
                 {
                     MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
@@ -227,7 +231,6 @@ namespace Survey
                 if (QuestionWillDeleteOrEdit == null)
                 {
                     MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    StaticObjects.SuccOfFail = 0;
                 }
                 else
                 {
@@ -252,12 +255,11 @@ namespace Survey
                                 ListOfAllQuestion.Remove(StarWillDelete);
                                 break;
                         }
+                        ListOfAllQuestion = Operation.GetQustion(); 
                         if (Check == 1)
                         {
-
                             MessageBox.Show(Survey.Properties.Resource1.TheQuestionDeleted);
                             ShowData();
-                            StaticObjects.SuccOfFail = 1;
                         }
                         else
                         {
@@ -268,8 +270,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
-                StaticObjects.SuccOfFail = 0;
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
 
             }
@@ -298,14 +299,13 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                StaticObjects.Erros.Log(ex);
+                Qustion.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
 
         private void Home_Load(object sender, EventArgs e)
         {
-
         }
 
         private void ListOfQuestion_DataBindingComplete(object sender, DataGridViewBindingCompleteEventArgs e)

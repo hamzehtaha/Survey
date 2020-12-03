@@ -33,6 +33,7 @@ namespace BaseLog
             try
             {
                 this.CurrentDirectory = Directory.GetCurrentDirectory();
+                Console.WriteLine(Directory.GetCurrentDirectory()); 
                 this.FileName = "Log.txt";
                 this.FilePath = this.CurrentDirectory + "/" + this.FileName;
             }
