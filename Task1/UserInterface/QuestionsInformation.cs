@@ -287,7 +287,6 @@ namespace Survey
         /// </summary>
         private void InitHide()
         {
-            
             try
             {
                 GroupOfSlider.Visible = false;
