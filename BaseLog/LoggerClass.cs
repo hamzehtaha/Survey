@@ -42,14 +42,14 @@ namespace BaseLog
                 Console.WriteLine(ex.Message);
             }
         }
-
+        /// <summary>
+        /// This Function OVERRIDE FROM AbstractLog that is write Errors and dates in log file 
+        /// </summary>
         public void Log(Exception ex)
         {
-            //This Function OVERRIDE FROM AbstractLog that is write Errors and dates in log file  
-
-            StreamWriter writer = new StreamWriter(this.FilePath);
             try
             {
+                StreamWriter writer = new StreamWriter(this.FilePath);
                 StackTrace st = new StackTrace(ex, true);
                 StackFrame frame = st.GetFrame(0);
                 int LineNumber = Convert.ToInt32(ex.StackTrace.Substring(ex.StackTrace.LastIndexOf(' ')));
@@ -60,14 +60,12 @@ namespace BaseLog
                 writer.WriteLine("{0} {1}", "Method name is", MethodName);
                 writer.WriteLine("{0} {1}", "The Number of line :", LineNumber);
                 writer.WriteLine("------------------------------------");
+                writer.Close(); 
             }
             catch (Exception Ex)
             {
                 Console.WriteLine(Ex.Message);
-            }
-            finally
-            {
-                writer.Close();
+                
             }
         }
     }
