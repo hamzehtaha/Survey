@@ -19,21 +19,13 @@ using DataBaseConnection;
 using OperationManger; 
 namespace Survey
 {
-    public enum Langugaes
-    {
-        English,
-        Arabic
-    }
+    
     public partial class Home : Form
     {
         private Qustion QuestionWillDeleteOrEdit = null;
         private static List<Qustion> ListOfAllQuestion = new List<Qustion>();
         private delegate void SafeCallDelegate();
-        private static string Languge = "English";
-        private const string ErrorString = "Error";
-        private const string EnglishMark = "en-US";
-        private const string ArabicMark = "ar-EG";
-        private const string DELETE = "Delete";  
+  
         public Home()
         {
             try
@@ -41,7 +33,7 @@ namespace Survey
                 StartFunction();
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -61,7 +53,7 @@ namespace Survey
             }
             catch(Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
@@ -78,7 +70,7 @@ namespace Survey
                 ThreadForRefresh.Start();
             }catch(Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -100,7 +92,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -113,7 +105,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError); 
             }
         }
@@ -139,7 +131,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
                 return null;
             }
@@ -164,7 +156,7 @@ namespace Survey
                     } 
             } catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
             ListOfQuestion.ClearSelection();
@@ -183,7 +175,7 @@ namespace Survey
                 ShowData();
             } catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -210,12 +202,12 @@ namespace Survey
                 }
                 else
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -239,12 +231,12 @@ namespace Survey
                 }
                 else
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
@@ -260,11 +252,11 @@ namespace Survey
                 int Check = 0;
                 if (QuestionWillDeleteOrEdit == null)
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 else
                 {
-                    DialogResult dialogResult = MessageBox.Show(Survey.Properties.Resource1.SureToDeleteMessage,DELETE, MessageBoxButtons.YesNo);
+                    DialogResult dialogResult = MessageBox.Show(Survey.Properties.Resource1.SureToDeleteMessage, GenralVariables.DELETE, MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
                         switch (QuestionWillDeleteOrEdit.TypeOfQuestion)
@@ -300,7 +292,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
 
             }
@@ -312,24 +304,24 @@ namespace Survey
         {
             try
             {
-                if (Languge.Equals(Langugaes.English.ToString()))
+                if (GenralVariables.Languge.Equals(Langugaes.English.ToString()))
                 {
-                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(ArabicMark);
-                    Languge = Langugaes.Arabic.ToString();
+                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(GenralVariables.ArabicMark);
+                    GenralVariables.Languge = Langugaes.Arabic.ToString();
                     ListOfAllQuestion.Clear();
                 }
                 else
                 {
-                    Languge = Langugaes.English.ToString();
+                    GenralVariables.Languge = Langugaes.English.ToString();
                     ListOfAllQuestion.Clear();
-                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(EnglishMark);
+                    Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo(GenralVariables.EnglishMark);
                 }
                 this.Controls.Clear();
                 StartFunction();
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -341,7 +333,7 @@ namespace Survey
                 NewThread();
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }

@@ -27,7 +27,6 @@ namespace Survey
         private Qustion QustionForOperations = null;
         public static Qustion ReturnNewQuestion { get; set; }
         private TypeOfChoice AddOrEditChoice;
-        private const string ErrorString = "Error";
         /// <summary>
         /// This constructor for hide and if i choose edit will show the variable for types of question
         /// </summary>
@@ -72,7 +71,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -87,7 +86,7 @@ namespace Survey
                 GroupOfSlider.Visible = true; 
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -103,7 +102,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -119,7 +118,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -161,7 +160,7 @@ namespace Survey
                 }
             }catch(Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -176,7 +175,7 @@ namespace Survey
             }
             catch(Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
                 return false;
             }
@@ -190,18 +189,18 @@ namespace Survey
             {
                 if (TypeQuestion.NewText == "")
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsEmptyMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
+                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsEmptyMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error); ;
                     return false;
                 }
                 else if (IsNumber(TypeQuestion.NewText))
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsJustANumberMessage,ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Survey.Properties.Resource1.QuestionIsJustANumberMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
                 else if (TypeQuestion.Order <= 0)
                 {
-                    MessageBox.Show(Survey.Properties.Resource1.NewOrderLessThanZeroMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show(Survey.Properties.Resource1.NewOrderLessThanZeroMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return false;
                 }
 
@@ -210,47 +209,47 @@ namespace Survey
                     Slider SliderCheck = (Slider)TypeQuestion;
                     if (SliderCheck.StartValue <= 0)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartValueLessThanZeroMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartValueLessThanZeroMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.EndValue <= 0)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndValueLessThanZeroMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndValueLessThanZeroMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.StartValue > 100)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartValueGreaterThanOneHundredMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartValueGreaterThanOneHundredMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.EndValue > 100)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndValueGreaterThanOneHundredMessage,ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndValueGreaterThanOneHundredMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.StartValue >= SliderCheck.EndValue)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.TheEndValueSholudGreaterThanStartValueMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.TheEndValueSholudGreaterThanStartValueMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.StartCaption == "")
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionEmptyMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionEmptyMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (IsNumber(SliderCheck.StartCaption))
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionJustNumberMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.StartCaptionJustNumberMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (SliderCheck.EndCaption == "")
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionEmptyMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionEmptyMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                     else if (IsNumber(SliderCheck.EndCaption))
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionJustNumberMessage, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.EndCaptionJustNumberMessage, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -259,7 +258,7 @@ namespace Survey
                     Smiles SmilesCheck = (Smiles)TypeQuestion;
                     if (SmilesCheck.NumberOfSmiles <= 1 || SmilesCheck.NumberOfSmiles > 5)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.NumberOfSmileBetweenFiveAndTow, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.NumberOfSmileBetweenFiveAndTow, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
@@ -268,14 +267,14 @@ namespace Survey
                     Stars StarCheck = (Stars)TypeQuestion;
                     if (StarCheck.NumberOfStars <= 0 || StarCheck.NumberOfStars > 10)
                     {
-                        MessageBox.Show(Survey.Properties.Resource1.NumberOfStrasBetweenTenAndOne, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show(Survey.Properties.Resource1.NumberOfStrasBetweenTenAndOne, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return false;
                     }
                 }
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
 
                 return false;
@@ -294,7 +293,7 @@ namespace Survey
                 GroupOfStars.Visible = false; 
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
@@ -313,7 +312,7 @@ namespace Survey
                 }
             } catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -331,7 +330,7 @@ namespace Survey
                 }
             } catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -349,7 +348,7 @@ namespace Survey
                 }
             } catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -364,7 +363,7 @@ namespace Survey
                 this.Close();
             }catch(Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
 
@@ -381,7 +380,7 @@ namespace Survey
                 return NewQuestion;
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
                 return null; 
             }
@@ -400,7 +399,7 @@ namespace Survey
                 }
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -415,7 +414,7 @@ namespace Survey
                 NewQuestion.EndCaption = NewEndValueCaption.Text;
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -427,7 +426,7 @@ namespace Survey
                 NewQuestion.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Text);
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -439,95 +438,110 @@ namespace Survey
                 NewQuestion.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Text);
             }catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
         private int AddQuestionFromOperation()
         {
-            if (SliderRadio.Checked)
+            try
             {
-                Slider NewQuestion = new Slider();
-                NewQuestion = (Slider)AddAttrubitesForQuestion(NewQuestion);
-                AddAttrubitesForSlider(ref NewQuestion);
-                CheckAndAddQuestion(NewQuestion);
-                return 1;
-            }
-            else if (SmilyRadio.Checked)
+                if (SliderRadio.Checked)
+                {
+                    Slider NewQuestion = new Slider();
+                    NewQuestion = (Slider)AddAttrubitesForQuestion(NewQuestion);
+                    AddAttrubitesForSlider(ref NewQuestion);
+                    CheckAndAddQuestion(NewQuestion);
+                    return 1;
+                }
+                else if (SmilyRadio.Checked)
+                {
+                    Smiles NewQuestion = new Smiles();
+                    NewQuestion = (Smiles)AddAttrubitesForQuestion(NewQuestion);
+                    AddAttrubitesForSmile(ref NewQuestion);
+                    CheckAndAddQuestion(NewQuestion);
+                    return 1;
+                }
+                else if (StarsRadio.Checked)
+                {
+                    Stars NewQuestion = new Stars();
+                    NewQuestion = (Stars)AddAttrubitesForQuestion(NewQuestion);
+                    AddAttrubitesForStar(ref NewQuestion);
+                    CheckAndAddQuestion(NewQuestion);
+                    return 1;
+                }
+                else
+                {
+                    MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return 0;
+                }
+            }catch (Exception ex)
             {
-                Smiles NewQuestion = new Smiles();
-                NewQuestion = (Smiles)AddAttrubitesForQuestion(NewQuestion);
-                AddAttrubitesForSmile(ref NewQuestion);
-                CheckAndAddQuestion(NewQuestion);
-                return 1;
-            }
-            else if (StarsRadio.Checked)
-            {
-                Stars NewQuestion = new Stars();
-                NewQuestion = (Stars)AddAttrubitesForQuestion(NewQuestion);
-                AddAttrubitesForStar(ref NewQuestion);
-                CheckAndAddQuestion(NewQuestion);
-                return 1;
-            }
-            else
-            {
-                MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                GenralVariables.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
                 return 0; 
             }
         }
         private int EditQuestionFromOpertion()
         {
-            switch (QustionForOperations.TypeOfQuestion)
-            {
-                case TypeOfQuestion.Slider:
-                    Slider SliderForEdit = (Slider)QustionForOperations;
-                    SliderForEdit = (Slider)AddAttrubitesForQuestion(SliderForEdit);
-                    
-                    AddAttrubitesForSlider(ref SliderForEdit);
-                    if (CheckTheData(SliderForEdit))
-                    {
-                        if (Operation.EditQustion(SliderForEdit) != 0)
-                        {
-                            ReturnNewQuestion = SliderForEdit;
-                            MessageBox.Show(Properties.Resource1.TheEditMessage);
-                            this.Close();
-                        }
+            try {
+                switch (QustionForOperations.TypeOfQuestion)
+                {
+                    case TypeOfQuestion.Slider:
+                        Slider SliderForEdit = (Slider)QustionForOperations;
+                        SliderForEdit = (Slider)AddAttrubitesForQuestion(SliderForEdit);
 
-                    }
-                    return 1; 
-                    break;
-                case TypeOfQuestion.Smily:
-                    Smiles SmileForEdit = (Smiles)QustionForOperations;
-                    SmileForEdit = (Smiles)AddAttrubitesForQuestion(SmileForEdit);
-                    AddAttrubitesForSmile(ref SmileForEdit);
-                    if (CheckTheData(SmileForEdit))
-                    {
-                        if (Operation.EditQustion(SmileForEdit) != 0)
+                        AddAttrubitesForSlider(ref SliderForEdit);
+                        if (CheckTheData(SliderForEdit))
                         {
-                            ReturnNewQuestion = SmileForEdit;
-                            MessageBox.Show(Properties.Resource1.TheEditMessage);
-                            this.Close();
+                            if (Operation.EditQustion(SliderForEdit) != 0)
+                            {
+                                ReturnNewQuestion = SliderForEdit;
+                                MessageBox.Show(Properties.Resource1.TheEditMessage);
+                                this.Close();
+                            }
+
                         }
-                    }
-                    return 1; 
-                    break;
-                case TypeOfQuestion.Stars:
-                    Stars StarForEdit = (Stars)QustionForOperations;
-                    StarForEdit = (Stars)AddAttrubitesForQuestion(StarForEdit);
-                    AddAttrubitesForStar(ref StarForEdit);
-                    if (CheckTheData(StarForEdit))
-                    {
-                        if (Operation.EditQustion(StarForEdit) != 0)
+                        return 1;
+                        break;
+                    case TypeOfQuestion.Smily:
+                        Smiles SmileForEdit = (Smiles)QustionForOperations;
+                        SmileForEdit = (Smiles)AddAttrubitesForQuestion(SmileForEdit);
+                        AddAttrubitesForSmile(ref SmileForEdit);
+                        if (CheckTheData(SmileForEdit))
                         {
-                            ReturnNewQuestion = StarForEdit;
-                            MessageBox.Show(Properties.Resource1.TheEditMessage);
-                            this.Close();
+                            if (Operation.EditQustion(SmileForEdit) != 0)
+                            {
+                                ReturnNewQuestion = SmileForEdit;
+                                MessageBox.Show(Properties.Resource1.TheEditMessage);
+                                this.Close();
+                            }
                         }
-                    }
-                    return 1; 
-                    break;
-                default:
-                    return 0;
+                        return 1;
+                        break;
+                    case TypeOfQuestion.Stars:
+                        Stars StarForEdit = (Stars)QustionForOperations;
+                        StarForEdit = (Stars)AddAttrubitesForQuestion(StarForEdit);
+                        AddAttrubitesForStar(ref StarForEdit);
+                        if (CheckTheData(StarForEdit))
+                        {
+                            if (Operation.EditQustion(StarForEdit) != 0)
+                            {
+                                ReturnNewQuestion = StarForEdit;
+                                MessageBox.Show(Properties.Resource1.TheEditMessage);
+                                this.Close();
+                            }
+                        }
+                        return 1;
+                        break;
+                    default:
+                        return 0;
+                }
+            }catch (Exception ex)
+            {
+                GenralVariables.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+                return 0; 
             }
             
         }
@@ -546,7 +560,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
@@ -560,7 +574,7 @@ namespace Survey
                 this.Close();
             }catch(Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
