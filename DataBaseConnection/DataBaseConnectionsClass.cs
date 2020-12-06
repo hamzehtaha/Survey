@@ -72,7 +72,6 @@ namespace DataBaseConnection
         /// <summary>
         /// For Add Qustion return new OBJECT OF QUESTION
         /// </summary>
-        /// 
         private static int AddQustionInDataBase(Qustion Question,out int Id)
         {
             
