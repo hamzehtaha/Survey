@@ -25,7 +25,7 @@ namespace Survey
         private Qustion QuestionWillDeleteOrEdit = null;
         private static List<Qustion> ListOfAllQuestion = new List<Qustion>();
         private delegate void SafeCallDelegate();
-  
+        private bool flag = true; 
         public Home()
         {
             try
@@ -61,7 +61,7 @@ namespace Survey
         /// <summary>
         /// This Functions for thread to refresh data 
         /// </summary>
-        private void NewThread()
+        private void RefreshList()
         {
             try
             {
@@ -81,7 +81,7 @@ namespace Survey
          
                 if (IsHandleCreated)
                 {
-                    while (true)
+                    while (flag)
                     {
                         var DelegateFunction = new SafeCallDelegate(GetListFromDataBase);
                         ListOfQuestion.Invoke(DelegateFunction);
@@ -330,7 +330,7 @@ namespace Survey
         {
             try
             {
-                NewThread();
+                RefreshList(); 
             }catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
@@ -351,6 +351,17 @@ namespace Survey
 
         }
 
+        private void Home_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            try
+            {
+                flag = false;
+            }catch (Exception ex)
+            {
+                GenralVariables.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+            }
+        }
     }
 }
 
