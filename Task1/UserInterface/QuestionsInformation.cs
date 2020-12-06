@@ -166,7 +166,7 @@ namespace Survey
             }
         }
         /// <summary>
-        /// to check the string is number or not ?
+        /// to check the string is number or not 
         /// </summary>
         private bool IsNumber(string Number)
         {
@@ -404,91 +404,143 @@ namespace Survey
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
             }
         }
+        private void AddAttrubitesForSlider (ref Slider NewQuestion)
+        {
+            try
+            {
+                NewQuestion.TypeOfQuestion = TypeOfQuestion.Slider;
+                NewQuestion.StartValue = Convert.ToInt32(NewStartValue.Text);
+                NewQuestion.EndValue = Convert.ToInt32(NewEndValue.Text);
+                NewQuestion.StartCaption = NewStartValueCaption.Text;
+                NewQuestion.EndCaption = NewEndValueCaption.Text;
+            }catch (Exception ex)
+            {
+                Qustion.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+            }
+        }
+        private void AddAttrubitesForSmile (ref Smiles NewQuestion)
+        {
+            try
+            {
+                NewQuestion.TypeOfQuestion = TypeOfQuestion.Smily;
+                NewQuestion.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Text);
+            }catch (Exception ex)
+            {
+                Qustion.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+            }
+        }
+        private void AddAttrubitesForStar (ref Stars NewQuestion)
+        {
+            try
+            {
+                NewQuestion.TypeOfQuestion = TypeOfQuestion.Stars;
+                NewQuestion.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Text);
+            }catch (Exception ex)
+            {
+                Qustion.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+            }
+        }
+        private int AddQuestionFromOperation()
+        {
+            if (SliderRadio.Checked)
+            {
+                Slider NewQuestion = new Slider();
+                NewQuestion = (Slider)AddAttrubitesForQuestion(NewQuestion);
+                AddAttrubitesForSlider(ref NewQuestion);
+                CheckAndAddQuestion(NewQuestion);
+                return 1;
+            }
+            else if (SmilyRadio.Checked)
+            {
+                Smiles NewQuestion = new Smiles();
+                NewQuestion = (Smiles)AddAttrubitesForQuestion(NewQuestion);
+                AddAttrubitesForSmile(ref NewQuestion);
+                CheckAndAddQuestion(NewQuestion);
+                return 1;
+            }
+            else if (StarsRadio.Checked)
+            {
+                Stars NewQuestion = new Stars();
+                NewQuestion = (Stars)AddAttrubitesForQuestion(NewQuestion);
+                AddAttrubitesForStar(ref NewQuestion);
+                CheckAndAddQuestion(NewQuestion);
+                return 1;
+            }
+            else
+            {
+                MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0; 
+            }
+        }
+        private int EditQuestionFromOpertion()
+        {
+            switch (QustionForOperations.TypeOfQuestion)
+            {
+                case TypeOfQuestion.Slider:
+                    Slider SliderForEdit = (Slider)QustionForOperations;
+                    SliderForEdit = (Slider)AddAttrubitesForQuestion(SliderForEdit);
+                    
+                    AddAttrubitesForSlider(ref SliderForEdit);
+                    if (CheckTheData(SliderForEdit))
+                    {
+                        if (Operation.EditQustion(SliderForEdit) != 0)
+                        {
+                            ReturnNewQuestion = SliderForEdit;
+                            MessageBox.Show(Properties.Resource1.TheEditMessage);
+                            this.Close();
+                        }
+
+                    }
+                    return 1; 
+                    break;
+                case TypeOfQuestion.Smily:
+                    Smiles SmileForEdit = (Smiles)QustionForOperations;
+                    SmileForEdit = (Smiles)AddAttrubitesForQuestion(SmileForEdit);
+                    AddAttrubitesForSmile(ref SmileForEdit);
+                    if (CheckTheData(SmileForEdit))
+                    {
+                        if (Operation.EditQustion(SmileForEdit) != 0)
+                        {
+                            ReturnNewQuestion = SmileForEdit;
+                            MessageBox.Show(Properties.Resource1.TheEditMessage);
+                            this.Close();
+                        }
+                    }
+                    return 1; 
+                    break;
+                case TypeOfQuestion.Stars:
+                    Stars StarForEdit = (Stars)QustionForOperations;
+                    StarForEdit = (Stars)AddAttrubitesForQuestion(StarForEdit);
+                    AddAttrubitesForStar(ref StarForEdit);
+                    if (CheckTheData(StarForEdit))
+                    {
+                        if (Operation.EditQustion(StarForEdit) != 0)
+                        {
+                            ReturnNewQuestion = StarForEdit;
+                            MessageBox.Show(Properties.Resource1.TheEditMessage);
+                            this.Close();
+                        }
+                    }
+                    return 1; 
+                    break;
+                default:
+                    return 0;
+            }
+            
+        }
         private void Save_Click(object sender, EventArgs e)
         {
             try {
                 switch (AddOrEditChoice)
                 {
                     case TypeOfChoice.Add:
-                        if (SliderRadio.Checked)
-                        {
-                            Slider NewQuestion = new Slider();
-                            NewQuestion = (Slider)AddAttrubitesForQuestion(NewQuestion);
-                            NewQuestion.TypeOfQuestion = TypeOfQuestion.Slider; 
-                            NewQuestion.StartValue = Convert.ToInt32(NewStartValue.Text);
-                            NewQuestion.EndValue = Convert.ToInt32(NewEndValue.Text);
-                            NewQuestion.StartCaption = NewStartValueCaption.Text;
-                            NewQuestion.EndCaption = NewEndValueCaption.Text;
-                            CheckAndAddQuestion(NewQuestion); 
-                        }
-                        else if (SmilyRadio.Checked)
-                        {
-                            Smiles NewQuestion = new Smiles();
-                            NewQuestion = (Smiles)AddAttrubitesForQuestion(NewQuestion);
-                            NewQuestion.TypeOfQuestion = TypeOfQuestion.Smily;
-                            NewQuestion.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Text);
-                            CheckAndAddQuestion(NewQuestion);
-                        }
-                        else if (StarsRadio.Checked)
-                        {
-                            Stars NewQuestion = new Stars();
-                            NewQuestion = (Stars)AddAttrubitesForQuestion(NewQuestion);
-                            NewQuestion.TypeOfQuestion = TypeOfQuestion.Stars;
-                            NewQuestion.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Text);
-                            CheckAndAddQuestion(NewQuestion);
-                        }
-                        else
-                            MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        AddQuestionFromOperation();
                         break;
                     case TypeOfChoice.Edit:
-                        switch (QustionForOperations.TypeOfQuestion) 
-                        {
-                            case TypeOfQuestion.Slider:
-                                Slider SliderForEdit = (Slider)QustionForOperations;
-                                SliderForEdit = (Slider)AddAttrubitesForQuestion(SliderForEdit); 
-                                SliderForEdit.StartValue = Convert.ToInt32(NewStartValue.Value);
-                                SliderForEdit.EndValue = Convert.ToInt32(NewEndValue.Value);
-                                SliderForEdit.StartCaption = NewStartValueCaption.Text;
-                                SliderForEdit.EndCaption = NewEndValueCaption.Text;
-                                if (CheckTheData(SliderForEdit))
-                                {
-                                    if (Operation.EditQustion(SliderForEdit) != 0) {
-                                        ReturnNewQuestion = SliderForEdit;
-                                        MessageBox.Show(Properties.Resource1.TheEditMessage);
-                                        this.Close();
-                                    }
-
-                                }
-                                break;
-                            case TypeOfQuestion.Smily:
-                                Smiles SmileForEdit = (Smiles)QustionForOperations;
-                                SmileForEdit= (Smiles)AddAttrubitesForQuestion(SmileForEdit); 
-                                SmileForEdit.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Value);
-                                if (CheckTheData(SmileForEdit))
-                                {
-                                    if (Operation.EditQustion(SmileForEdit) != 0)
-                                    {
-                                        ReturnNewQuestion = SmileForEdit;
-                                        MessageBox.Show(Properties.Resource1.TheEditMessage);
-                                        this.Close();
-                                    }
-                                }
-                                break;
-                            case TypeOfQuestion.Stars:
-                                Stars StarForEdit = (Stars)QustionForOperations;
-                                StarForEdit = (Stars)AddAttrubitesForQuestion(StarForEdit);
-                                StarForEdit.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Value);
-                                if (CheckTheData(StarForEdit))
-                                {
-                                    if (Operation.EditQustion(StarForEdit) != 0)
-                                    {
-                                        ReturnNewQuestion = StarForEdit;
-                                        MessageBox.Show(Properties.Resource1.TheEditMessage);
-                                        this.Close();
-                                    }
-                                }
-                                break; 
-                        }
+                        EditQuestionFromOpertion();
                         break; 
                 }
             }

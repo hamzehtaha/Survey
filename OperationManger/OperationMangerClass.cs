@@ -27,7 +27,7 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 NewQuestion = null; 
                 return 0;
             }
@@ -48,7 +48,7 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 return 0;
             }
         }
@@ -68,7 +68,7 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 return 0;
             }
         }
@@ -80,7 +80,7 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
                 return null;
             }
         }

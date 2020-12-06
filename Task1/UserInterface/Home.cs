@@ -91,8 +91,8 @@ namespace Survey
                 {
                     while (true)
                     {
-                        var d = new SafeCallDelegate(GetListFromDataBase);
-                        ListOfQuestion.Invoke(d);
+                        var DelegateFunction = new SafeCallDelegate(GetListFromDataBase);
+                        ListOfQuestion.Invoke(DelegateFunction);
                         int TimeSleep = Convert.ToInt32(ConfigurationManager.AppSettings["Thread.Sleep.Value"]); 
                         Thread.Sleep(TimeSleep);
                     }
@@ -134,7 +134,6 @@ namespace Survey
                         }
 
                     }
-
                 }
                 return null;
             }
@@ -144,7 +143,6 @@ namespace Survey
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
                 return null;
             }
-
         }
         /// <summary>
         /// Show data function get the question from MyList and show it in datagridview
@@ -208,7 +206,6 @@ namespace Survey
                     {
                         ListOfAllQuestion.Remove(OldObject);
                         ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
-                        ShowData();
                     }
                 }
                 else
@@ -227,14 +224,18 @@ namespace Survey
             try
             {
                 QuestionWillDeleteOrEdit = GetObjectSelect();
+                Qustion OldObject = QuestionWillDeleteOrEdit;
+                ListOfQuestion.ClearSelection();
                 if (QuestionWillDeleteOrEdit != null)
                 {
-                    ListOfAllQuestion.Remove(QuestionWillDeleteOrEdit);
+
                     QuestionsInformation QuestionsInformationPage = new QuestionsInformation(QuestionWillDeleteOrEdit, TypeOfChoice.Edit);
                     QuestionsInformationPage.ShowDialog();
-                    ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
-                    ShowData();
-                    ShowData();
+                    if (QuestionsInformation.ReturnNewQuestion != null)
+                    {
+                        ListOfAllQuestion.Remove(OldObject);
+                        ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
+                    }
                 }
                 else
                 {

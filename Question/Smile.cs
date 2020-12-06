@@ -24,7 +24,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
             }
         }
         public Smiles(int idForType, string NewText, Question.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfSmiles)
@@ -39,7 +39,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
             }
 
         }

@@ -24,7 +24,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
             }
         }
         public Stars(int IdForType, string NewText, Question.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfStars)
@@ -39,7 +39,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
             }
         }
         public Stars()

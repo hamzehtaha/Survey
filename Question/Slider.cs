@@ -27,7 +27,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
             }
         }
         public Slider(string NewText, Question.TypeOfQuestion TypeOfQuestion, int IdForType, int Order, int StartValue, int EndValue, string StartCaption, string EndCaption)
@@ -45,7 +45,7 @@ namespace Question
             }
             catch (Exception ex)
             {
-                Qustion.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex);
             }
         }
         public Slider()
