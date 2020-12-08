@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BaseLog; 
+using BaseLog;
+using System.Windows.Forms;
 namespace Question
 {
     public class Smiles : Qustion
@@ -24,6 +25,7 @@ namespace Question
             }
             catch (Exception ex)
             {
+                MessageBox.Show(Properties.Resource1.ErrorModels);
                 GenralVariables.Errors.Log(ex);
             }
         }
@@ -39,6 +41,7 @@ namespace Question
             }
             catch (Exception ex)
             {
+                MessageBox.Show(Properties.Resource1.ErrorModels);
                 GenralVariables.Errors.Log(ex);
             }
 

@@ -106,7 +106,7 @@ namespace Survey.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &quot;Smomething went wrong!&quot;.
+        ///   Looks up a localized string similar to There were some problems with your form submission.
         /// </summary>
         internal static string MessageError {
             get {

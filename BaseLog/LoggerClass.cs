@@ -5,7 +5,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
 namespace BaseLog
 {
     /// <summary>
@@ -57,8 +56,7 @@ namespace BaseLog
                 writer.Write("\r\nLog Entry : ");
                 writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
                 writer.WriteLine("{0}", ex.Message);
-                writer.WriteLine("{0} {1}", "Method name is", MethodName);
-                writer.WriteLine("{0} {1}", "The Number of line :", LineNumber);
+                writer.WriteLine("{0} {1}", "Method Name,Line Number:",ex.StackTrace.Trim());
                 writer.WriteLine("------------------------------------");
                 writer.Close(); 
             }

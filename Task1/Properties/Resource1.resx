@@ -133,7 +133,7 @@
     <value>"The end value must be greater than 0."</value>
   </data>
   <data name="MessageError" xml:space="preserve">
-    <value>"Smomething went wrong!"</value>
+    <value>There were some problems with your form submission</value>
   </data>
   <data name="NewOrderLessThanZeroMessage" xml:space="preserve">
     <value>"The order must be more than 0"</value>

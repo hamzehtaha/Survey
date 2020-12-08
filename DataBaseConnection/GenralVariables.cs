@@ -4,22 +4,24 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BaseLog; 
+using BaseLog;
+using System.Windows.Forms; 
 namespace DataBaseConnection
 {
     public class GenralVariables
     {
         public static Logger Errors = new Logger();
+        
         /// <summary>
         /// This strings attrubites for connection string 
         /// and concatnate and bulid connection string 
         /// </summary>
-        public static string ServerName = ConfigurationManager.AppSettings["Server"];
-        public static string ProviderName = ConfigurationManager.AppSettings["ProviderName"];
-        public static string Database = ConfigurationManager.AppSettings["Database"];
-        public static string UserId = ConfigurationManager.AppSettings["UserId"];
-        public static string Password = ConfigurationManager.AppSettings["Password"];
-        public static string connectionString = "Data Source=" + ServerName + "; Initial Catalog =" + Database + "; User ID = " + UserId + "; Password=" + Password;
+        public static string ServerName;
+        public static string ProviderName;
+        public static string Database;
+        public static string UserName;
+        public static string Password;
+        public static string ConnectionString; 
         /// <summary>
         /// This string for value to add or edit or delete in database opeartions
         /// </summary>
@@ -57,6 +59,13 @@ namespace DataBaseConnection
         public const string DeleteQustionAttrubites = "DELETE FROM Qustions Where ID = @ID;";
         public const string UpdateQuestion = "update Qustions Set Qustions_text = @Qustions_text, Qustion_order=@Qustion_order where ID = @ID;";
         public const string InsertIntoQustion = "INSERT INTO Qustions(Qustions_text, Type_Of_Qustion,Qustion_order) VALUES(@Qustions_text,@Type_Of_Qustion,@Qustion_order);";
-        public const string SelectMaxId = "select max(ID) as ID from "; 
+        public const string SelectMaxId = "select max(ID) as ID from ";
+
+        /// <summary>
+        /// This is return vriable 0 = Succeeded , -1 =  Faild , -2 = Error
+        /// </summary>
+        public const int Succeeded = 0;
+        public const int NoData = -1;
+        public const int Error = -2; 
     }
 }

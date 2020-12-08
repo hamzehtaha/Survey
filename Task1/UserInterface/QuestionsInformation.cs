@@ -24,19 +24,17 @@ namespace Survey
         /// <summary>
         /// privtae objects for add,edit and delete 
         /// </summary>
-        private Qustion QustionForOperations = null;
         public static Qustion ReturnNewQuestion { get; set; }
         private TypeOfChoice AddOrEditChoice;
         /// <summary>
         /// This constructor for hide and if i choose edit will show the variable for types of question
         /// </summary>
-        public QuestionsInformation(Qustion QustionForOperations, TypeOfChoice AddOrEdit)
+        public QuestionsInformation(TypeOfChoice AddOrEdit)
         {
             try
             {
                 InitializeComponent();
                 InitHide();
-                this.QustionForOperations = QustionForOperations;
                 NewText.Focus();
                 AddOrEditChoice = AddOrEdit;
                 switch (AddOrEdit)
@@ -45,9 +43,9 @@ namespace Survey
                     //For Change Ttitle 
                     this.Text = Survey.Properties.Resource1.TitleOfQuestionEdit;
                     ShowDataForEdit();
-                    if (QustionForOperations != null)
+                    if (ReturnNewQuestion != null)
                     {
-                            switch (QustionForOperations.TypeOfQuestion) 
+                            switch (ReturnNewQuestion.TypeOfQuestion) 
                             {
                                 case TypeOfQuestion.Slider:
                                     ShowForSlider();
@@ -131,10 +129,10 @@ namespace Survey
             {
                 GroupOfTypes.Visible = true;
                 GroupOfTypes.Enabled = false;
-                switch (QustionForOperations.TypeOfQuestion)
+                switch (ReturnNewQuestion.TypeOfQuestion)
                 {
                     case TypeOfQuestion.Slider:
-                        Slider EditSlider = (Slider)QustionForOperations;
+                        Slider EditSlider = (Slider)ReturnNewQuestion;
                         NewText.Text = EditSlider.NewText;
                         NewOrder.Value = EditSlider.Order;
                         NewStartValue.Value = EditSlider.StartValue;
@@ -144,14 +142,14 @@ namespace Survey
                         SliderRadio.Checked = true;
                         break;
                     case TypeOfQuestion.Stars:
-                        Stars EditStar = (Stars)QustionForOperations;
+                        Stars EditStar = (Stars)ReturnNewQuestion;
                         NewText.Text = EditStar.NewText;
                         NewOrder.Value = EditStar.Order;
                         NewNumberOfStars.Value = EditStar.NumberOfStars;
                         StarsRadio.Checked = true;
                         break;
                     case TypeOfQuestion.Smily:
-                        Smiles EditSmile = (Smiles)QustionForOperations;
+                        Smiles EditSmile = (Smiles)ReturnNewQuestion;
                         NewText.Text = EditSmile.NewText;
                         NewOrder.Value = EditSmile.Order;
                         NewNumberOfSmiles.Value = EditSmile.NumberOfSmiles;
@@ -360,6 +358,7 @@ namespace Survey
             try
             {
                 MessageBox.Show(Survey.Properties.Resource1.DataIsEnterd);
+                this.DialogResult = DialogResult.OK; 
                 this.Close();
             }catch(Exception ex)
             {
@@ -371,39 +370,49 @@ namespace Survey
         /// <summary>
         /// when i press save button go to this function and from AddOrEdit var will know i edit or add the question 
         /// </summary>
-        private Qustion AddAttrubitesForQuestion (Qustion NewQuestion)
+        private int CheckAndAddQuestion(Qustion NewQuestion)
+        {
+            try
+            {
+                if (CheckTheData(NewQuestion))
+                {
+                    if (Operation.AddQustion(NewQuestion) == GenralVariables.Succeeded)
+                    {
+                        DataEnter();
+                        ReturnNewQuestion = NewQuestion; 
+                        return GenralVariables.Succeeded; 
+                    }
+                }
+                this.DialogResult = DialogResult.Cancel; 
+                return GenralVariables.NoData;
+            }catch (Exception ex)
+            {
+                this.DialogResult = DialogResult.Cancel;
+                GenralVariables.Errors.Log(ex);
+                MessageBox.Show(Survey.Properties.Resource1.MessageError);
+                return GenralVariables.Error;
+            }
+        }
+        private Qustion AddAttrubitesForQuestion(Qustion NewQuestion)
         {
             try
             {
                 NewQuestion.NewText = NewText.Text;
                 NewQuestion.Order = Convert.ToInt32(NewOrder.Value);
                 return NewQuestion;
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
+                this.DialogResult = DialogResult.Cancel;
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
-                return null; 
+                return null;
             }
         }
-        private void CheckAndAddQuestion(Qustion NewQuestion)
-        {
-            try
-            {
-                if (CheckTheData(NewQuestion))
-                {
-                    if (Operation.AddQustion(NewQuestion, out QustionForOperations) == 1)
-                    {
-                        DataEnter();
-                        ReturnNewQuestion = QustionForOperations;
-                    }
-                }
-            }catch (Exception ex)
-            {
-                GenralVariables.Errors.Log(ex);
-                MessageBox.Show(Survey.Properties.Resource1.MessageError);
-            }
-        }
-        private void AddAttrubitesForSlider (ref Slider NewQuestion)
+        /// <summary>
+        /// This function for add Attrubites for any Question
+        /// </summary>
+        private int AddAttrubitesForSlider (ref Slider NewQuestion)
         {
             try
             {
@@ -412,36 +421,56 @@ namespace Survey
                 NewQuestion.EndValue = Convert.ToInt32(NewEndValue.Text);
                 NewQuestion.StartCaption = NewStartValueCaption.Text;
                 NewQuestion.EndCaption = NewEndValueCaption.Text;
+                return GenralVariables.Succeeded; 
             }catch (Exception ex)
             {
+                this.DialogResult = DialogResult.Cancel;
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
+                return GenralVariables.Error; 
             }
         }
-        private void AddAttrubitesForSmile (ref Smiles NewQuestion)
+        /// <summary>
+        /// This function for add Attrubites for type Slider
+        /// </summary>
+        private int AddAttrubitesForSmile (ref Smiles NewQuestion)
         {
             try
             {
                 NewQuestion.TypeOfQuestion = TypeOfQuestion.Smily;
                 NewQuestion.NumberOfSmiles = Convert.ToInt32(NewNumberOfSmiles.Text);
-            }catch (Exception ex)
+                return GenralVariables.Succeeded;
+            }
+            catch (Exception ex)
             {
+                this.DialogResult = DialogResult.Cancel;
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
+                return GenralVariables.Error;
             }
         }
-        private void AddAttrubitesForStar (ref Stars NewQuestion)
+        /// <summary>
+        /// This function for add Attrubites for type Smile
+        /// </summary>
+        private int AddAttrubitesForStar (ref Stars NewQuestion)
         {
             try
             {
                 NewQuestion.TypeOfQuestion = TypeOfQuestion.Stars;
                 NewQuestion.NumberOfStars = Convert.ToInt32(NewNumberOfStars.Text);
-            }catch (Exception ex)
+                return GenralVariables.Succeeded;
+            }
+            catch (Exception ex)
             {
+                this.DialogResult = DialogResult.Cancel;
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
+                return GenralVariables.Error;
             }
         }
+        /// <summary>
+        /// This function for add Attrubites for type Star
+        /// </summary>
         private int AddQuestionFromOperation()
         {
             try
@@ -450,101 +479,120 @@ namespace Survey
                 {
                     Slider NewQuestion = new Slider();
                     NewQuestion = (Slider)AddAttrubitesForQuestion(NewQuestion);
-                    AddAttrubitesForSlider(ref NewQuestion);
-                    CheckAndAddQuestion(NewQuestion);
-                    return 1;
+                    if (NewQuestion != null && AddAttrubitesForSlider(ref NewQuestion) == GenralVariables.Succeeded && CheckAndAddQuestion(NewQuestion) == GenralVariables.Succeeded)
+                            return GenralVariables.Succeeded; 
+                    return GenralVariables.NoData; 
                 }
                 else if (SmilyRadio.Checked)
                 {
                     Smiles NewQuestion = new Smiles();
                     NewQuestion = (Smiles)AddAttrubitesForQuestion(NewQuestion);
-                    AddAttrubitesForSmile(ref NewQuestion);
-                    CheckAndAddQuestion(NewQuestion);
-                    return 1;
+                    if (NewQuestion != null && AddAttrubitesForSmile(ref NewQuestion) == GenralVariables.Succeeded && CheckAndAddQuestion(NewQuestion) == GenralVariables.Succeeded)
+                        return GenralVariables.Succeeded;
+                    return GenralVariables.NoData;
                 }
                 else if (StarsRadio.Checked)
                 {
                     Stars NewQuestion = new Stars();
                     NewQuestion = (Stars)AddAttrubitesForQuestion(NewQuestion);
-                    AddAttrubitesForStar(ref NewQuestion);
-                    CheckAndAddQuestion(NewQuestion);
-                    return 1;
+                    if (NewQuestion != null && AddAttrubitesForStar(ref NewQuestion) == GenralVariables.Succeeded && CheckAndAddQuestion(NewQuestion) == GenralVariables.Succeeded)
+                        return GenralVariables.Succeeded;
+                    return GenralVariables.NoData;
                 }
                 else
                 {
+                    this.DialogResult = DialogResult.Cancel;
                     MessageBox.Show(Survey.Properties.Resource1.NotChooseTheType, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return 0;
+                    return GenralVariables.NoData; 
                 }
             }catch (Exception ex)
             {
+                this.DialogResult = DialogResult.Cancel;
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
-                return 0; 
+                return GenralVariables.Error;  
             }
         }
+        /// <summary>
+        /// This function call functions for any type of question for ADD
+        /// and call this function in SaveClick function and call anthor function for ADD 
+        /// </summary>
         private int EditQuestionFromOpertion()
         {
             try {
-                switch (QustionForOperations.TypeOfQuestion)
+                switch (ReturnNewQuestion.TypeOfQuestion)
                 {
                     case TypeOfQuestion.Slider:
-                        Slider SliderForEdit = (Slider)QustionForOperations;
+                        Slider SliderForEdit = (Slider)ReturnNewQuestion;
                         SliderForEdit = (Slider)AddAttrubitesForQuestion(SliderForEdit);
-
-                        AddAttrubitesForSlider(ref SliderForEdit);
-                        if (CheckTheData(SliderForEdit))
+                        
+                        if (AddAttrubitesForSlider(ref SliderForEdit) == GenralVariables.Succeeded && CheckTheData(SliderForEdit))
                         {
-                            if (Operation.EditQustion(SliderForEdit) != 0)
+                            if (Operation.EditQustion(SliderForEdit) == GenralVariables.Succeeded)
                             {
                                 ReturnNewQuestion = SliderForEdit;
+                                this.DialogResult = DialogResult.OK;
                                 MessageBox.Show(Properties.Resource1.TheEditMessage);
                                 this.Close();
+                                return GenralVariables.Succeeded;
                             }
-
+                           
+                            
                         }
-                        return 1;
-                        break;
+                           this.DialogResult = DialogResult.Cancel;
+                           return GenralVariables.NoData;
                     case TypeOfQuestion.Smily:
-                        Smiles SmileForEdit = (Smiles)QustionForOperations;
+                        Smiles SmileForEdit = (Smiles)ReturnNewQuestion;
                         SmileForEdit = (Smiles)AddAttrubitesForQuestion(SmileForEdit);
                         AddAttrubitesForSmile(ref SmileForEdit);
                         if (CheckTheData(SmileForEdit))
                         {
-                            if (Operation.EditQustion(SmileForEdit) != 0)
+                            if (Operation.EditQustion(SmileForEdit) == GenralVariables.Succeeded)
                             {
                                 ReturnNewQuestion = SmileForEdit;
+                                this.DialogResult = DialogResult.OK;
                                 MessageBox.Show(Properties.Resource1.TheEditMessage);
                                 this.Close();
+                                return GenralVariables.Succeeded;
                             }
                         }
-                        return 1;
-                        break;
+                        this.DialogResult = DialogResult.Cancel;
+                        return GenralVariables.NoData;
                     case TypeOfQuestion.Stars:
-                        Stars StarForEdit = (Stars)QustionForOperations;
+                        Stars StarForEdit = (Stars)ReturnNewQuestion;
                         StarForEdit = (Stars)AddAttrubitesForQuestion(StarForEdit);
                         AddAttrubitesForStar(ref StarForEdit);
                         if (CheckTheData(StarForEdit))
                         {
-                            if (Operation.EditQustion(StarForEdit) != 0)
+                            if (Operation.EditQustion(StarForEdit) == GenralVariables.Succeeded)
                             {
                                 ReturnNewQuestion = StarForEdit;
                                 MessageBox.Show(Properties.Resource1.TheEditMessage);
+                                this.DialogResult = DialogResult.OK;
                                 this.Close();
+                                return GenralVariables.Succeeded;
                             }
                         }
-                        return 1;
-                        break;
+                        this.DialogResult = DialogResult.Cancel;
+                        return GenralVariables.NoData;
                     default:
-                        return 0;
+                        this.DialogResult = DialogResult.Cancel; 
+                        return GenralVariables.NoData;
+                        
                 }
             }catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
+                Save.DialogResult = DialogResult.Cancel;
                 MessageBox.Show(Survey.Properties.Resource1.MessageError);
-                return 0; 
+                return GenralVariables.Error; 
             }
             
         }
+        /// <summary>
+        /// This function call functions for any type of question for EDIT
+        /// and call this function in SaveClick function and call anthor function for EDIT
+        /// </summary>
         private void Save_Click(object sender, EventArgs e)
         {
             try {

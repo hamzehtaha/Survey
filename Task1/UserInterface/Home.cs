@@ -22,7 +22,6 @@ namespace Survey
     
     public partial class Home : Form
     {
-        private Qustion QuestionWillDeleteOrEdit = null;
         private static List<Qustion> ListOfAllQuestion = new List<Qustion>();
         private delegate void SafeCallDelegate();
         private bool flag = true; 
@@ -47,9 +46,9 @@ namespace Survey
                 InitializeComponent();
                 
                 ListOfAllQuestion.Clear();
-                ListOfAllQuestion = DataBaseConnections.GetQuestionFromDataBase();
-                ShowData();
-   
+                
+                if (Operation.GetQustion(ref ListOfAllQuestion) == GenralVariables.Succeeded)
+                     ShowData();
             }
             catch(Exception ex)
             {
@@ -68,6 +67,7 @@ namespace Survey
                 Thread ThreadForRefresh = new Thread(RefreshData);
                 ThreadForRefresh.IsBackground = true;
                 ThreadForRefresh.Start();
+                MessageBox.Show("dedede"); 
             }catch(Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
@@ -100,8 +100,10 @@ namespace Survey
         {
             try
             {
-                ListOfAllQuestion = Operation.GetQustion();
-                ShowData();
+                if (Operation.GetQustion(ref ListOfAllQuestion) == GenralVariables.Succeeded)
+                {
+                    ShowData();
+                }
             }
             catch (Exception ex)
             {
@@ -169,10 +171,12 @@ namespace Survey
             try
             {
                 ListOfQuestion.ClearSelection();
-                QuestionsInformation QuestionsInformationPage = new QuestionsInformation(QuestionWillDeleteOrEdit, TypeOfChoice.Add);
-                QuestionsInformationPage.ShowDialog();
-                ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
-                ShowData();
+                QuestionsInformation QuestionsInformationPage = new QuestionsInformation(TypeOfChoice.Add);
+                if (QuestionsInformationPage.ShowDialog() == DialogResult.OK)
+                {
+                    ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
+                    ShowData();
+                }
             } catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
@@ -186,18 +190,17 @@ namespace Survey
         {
             try
             {
-                QuestionWillDeleteOrEdit = GetObjectSelect();
-                Qustion OldObject = QuestionWillDeleteOrEdit; 
+                QuestionsInformation.ReturnNewQuestion = GetObjectSelect();
+                Qustion OldObject = QuestionsInformation.ReturnNewQuestion; 
                 ListOfQuestion.ClearSelection();
-                if (QuestionWillDeleteOrEdit != null)
+                if (QuestionsInformation.ReturnNewQuestion != null)
                 {
-                    
-                    QuestionsInformation QuestionsInformationPage = new QuestionsInformation(QuestionWillDeleteOrEdit, TypeOfChoice.Edit);
-                    QuestionsInformationPage.ShowDialog();
-                    if (QuestionsInformation.ReturnNewQuestion != null)
+                    QuestionsInformation QuestionsInformationPage = new QuestionsInformation(TypeOfChoice.Edit);
+                    if (QuestionsInformationPage.ShowDialog() == DialogResult.OK)
                     {
-                        ListOfAllQuestion.Remove(OldObject);
-                        ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
+                            ListOfAllQuestion.Remove(OldObject);
+                            ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
+                            ShowData();
                     }
                 }
                 else
@@ -215,18 +218,18 @@ namespace Survey
         {
             try
             {
-                QuestionWillDeleteOrEdit = GetObjectSelect();
-                Qustion OldObject = QuestionWillDeleteOrEdit;
+                QuestionsInformation.ReturnNewQuestion = GetObjectSelect();
+                Qustion OldObject = QuestionsInformation.ReturnNewQuestion;
+                ListOfAllQuestion.Remove(OldObject);
                 ListOfQuestion.ClearSelection();
-                if (QuestionWillDeleteOrEdit != null)
+                if (QuestionsInformation.ReturnNewQuestion != null)
                 {
-
-                    QuestionsInformation QuestionsInformationPage = new QuestionsInformation(QuestionWillDeleteOrEdit, TypeOfChoice.Edit);
-                    QuestionsInformationPage.ShowDialog();
-                    if (QuestionsInformation.ReturnNewQuestion != null)
+                    QuestionsInformation QuestionsInformationPage = new QuestionsInformation(TypeOfChoice.Edit);
+                    if (QuestionsInformationPage.ShowDialog() == DialogResult.OK)
                     {
                         ListOfAllQuestion.Remove(OldObject);
                         ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
+                        ShowData();
                     }
                 }
                 else
@@ -248,9 +251,9 @@ namespace Survey
         {
             try
             {
-                QuestionWillDeleteOrEdit = GetObjectSelect();
+                Qustion QuestionForDelete = GetObjectSelect();
                 int Check = 0;
-                if (QuestionWillDeleteOrEdit == null)
+                if (QuestionForDelete == null)
                 {
                     MessageBox.Show(Survey.Properties.Resource1.NoSelectItem, GenralVariables.ErrorString, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
@@ -259,26 +262,25 @@ namespace Survey
                     DialogResult dialogResult = MessageBox.Show(Survey.Properties.Resource1.SureToDeleteMessage, GenralVariables.DELETE, MessageBoxButtons.YesNo);
                     if (dialogResult == DialogResult.Yes)
                     {
-                        switch (QuestionWillDeleteOrEdit.TypeOfQuestion)
+                        switch (QuestionForDelete.TypeOfQuestion)
                         {
                             case TypeOfQuestion.Slider:
-                                Slider SliderWillDelete = (Slider)QuestionWillDeleteOrEdit;
+                                Slider SliderWillDelete = (Slider)QuestionForDelete;
                                 Check = Operation.DeleteQustion(SliderWillDelete);
                                 ListOfAllQuestion.Remove(SliderWillDelete);
                                 break;
                             case TypeOfQuestion.Smily:
-                                Smiles SmileWillDelete = (Smiles)QuestionWillDeleteOrEdit;
+                                Smiles SmileWillDelete = (Smiles)QuestionForDelete;
                                 Check = Operation.DeleteQustion(SmileWillDelete);
                                 ListOfAllQuestion.Remove(SmileWillDelete);
                                 break;
                             case TypeOfQuestion.Stars:
-                                Stars StarWillDelete = (Stars)QuestionWillDeleteOrEdit;
+                                Stars StarWillDelete = (Stars)QuestionForDelete;
                                 Check = Operation.DeleteQustion(StarWillDelete);
                                 ListOfAllQuestion.Remove(StarWillDelete);
                                 break;
                         }
-                        ListOfAllQuestion = Operation.GetQustion(); 
-                        if (Check == 1)
+                        if (Check == GenralVariables.Succeeded)
                         {
                             MessageBox.Show(Survey.Properties.Resource1.TheQuestionDeleted);
                             ShowData();
@@ -330,7 +332,7 @@ namespace Survey
         {
             try
             {
-                RefreshList(); 
+              //  RefreshList(); 
             }catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
@@ -355,7 +357,7 @@ namespace Survey
         {
             try
             {
-                flag = false;
+               //flag = false;
             }catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);

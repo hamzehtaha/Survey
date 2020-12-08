@@ -19,5 +19,8 @@ namespace Survey
         public const string EnglishMark = "en-US";
         public const string ArabicMark = "ar-EG";
         public const string DELETE = "Delete";
+        public const int Succeeded = 0;
+        public const int NoData = -1;
+        public const int Error = -2;
     }
 }

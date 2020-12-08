@@ -20,6 +20,7 @@ namespace Question
     }
     public class GenralVariables
     {
+
         public static Logger Errors = new Logger();
     }
 }
