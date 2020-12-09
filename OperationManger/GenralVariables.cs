@@ -12,8 +12,15 @@ namespace OperationManger
     {
         public static Logger Errors = new Logger();
         public const int Succeeded = 0;
-        public const int NoData = -1;
-        public const int Error = -2;
+        public const int ErrorInManger = 400;
+        public const int ErrorInMangerAdd = 401;
+        public const int ErrorInMangerEdit = 402;
+        public const int ErrorInMangerDelete = 403;
+        public const int ErrorInMangerGetQuestion = 404;
+
+
+
+
         public static DataGridView ListOfQuestion = new DataGridView();
     }
 }

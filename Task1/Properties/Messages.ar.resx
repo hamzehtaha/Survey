@@ -132,6 +132,42 @@
   <data name="EndValueLessThanZeroMessage" xml:space="preserve">
     <value>"يجب أن تكون القيمة النهائية أكبر من 0"</value>
   </data>
+  <data name="ErrorDataBase" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في قاعدة البيانات</value>
+  </data>
+  <data name="ErrorDataBaseAddQuestion" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في قاعدة البيانات أثناء إضافة السؤال</value>
+  </data>
+  <data name="ErrorDataBaseConnectionString" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في قاعدة البيانات في سلسلة الاتصال</value>
+  </data>
+  <data name="ErrorDataBaseDeleteQuestion" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في قاعدة البيانات أثناء حذف السؤال</value>
+  </data>
+  <data name="ErrorDataBaseEditQuestion" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في قاعدة البيانات أثناء تعديل السؤال</value>
+  </data>
+  <data name="ErrorDataBaseGetQuestion" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في قاعدة البيانات أثناء الحصول على سؤال</value>
+  </data>
+  <data name="ErrorDataBaseSelectQuestion" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في قاعدة البيانات أثناء اختيار السؤال</value>
+  </data>
+  <data name="ErrorManger" xml:space="preserve">
+    <value>كانت هناك بعض المشاكل في مدير العمليات</value>
+  </data>
+  <data name="ErrorMangerAddQuestion" xml:space="preserve">
+    <value>كان هناك بعض المشاكل في مدير العمليات عند إضافة سؤال</value>
+  </data>
+  <data name="ErrorMangerDeleteQuestion" xml:space="preserve">
+    <value>حدثت بعض المشاكل في مدير العمليات عند حذف السؤال</value>
+  </data>
+  <data name="ErrorMangerEditQuestion" xml:space="preserve">
+    <value>حدثت بعض المشاكل في مدير العمليات عند تعديل السؤال</value>
+  </data>
+  <data name="ErrorMangerGetQuestion" xml:space="preserve">
+    <value>حدثت بعض المشاكل في مدير العمليات عند جلب السؤال</value>
+  </data>
   <data name="MessageError" xml:space="preserve">
     <value>كانت هناك بعض المشاكل في إرسال النموذج الخاص بك</value>
   </data>

@@ -20,7 +20,6 @@ namespace DataBaseConnection
     /// </summary>
     public class DataBaseConnections
     {
-        
         /// <summary>
         /// This function for concatneate attrubites for bulid connection string 
         /// </summary>
@@ -38,8 +37,7 @@ namespace DataBaseConnection
             }catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData); 
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorConnectionString; 
             }
         }
         /// <summary>
@@ -54,8 +52,9 @@ namespace DataBaseConnection
             try
             {
                 Id = -1;
-                BuildConnectionString();
-                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         SqlCommand ComandForInsertQustion = new SqlCommand(GenralVariables.InsertIntoQustion, Connection);
                         ComandForInsertQustion.CommandText = GenralVariables.InsertIntoQustion;
@@ -63,21 +62,21 @@ namespace DataBaseConnection
                         ComandForInsertQustion.Parameters.AddWithValue(GenralVariables.NewQuestionType, Question.TypeOfQuestion);
                         ComandForInsertQustion.Parameters.AddWithValue(GenralVariables.NewQuestionOrder, Question.Order);
                         ComandForInsertQustion.Connection.Open();
-                        int result = ComandForInsertQustion.ExecuteNonQuery();
-                        if (result >= 1 && SelectIdType(TypeOfQuestion.Qustions, ref Id) == GenralVariables.Succeeded)
+                        int NumberOfRowsaffected = ComandForInsertQustion.ExecuteNonQuery();
+                        if (NumberOfRowsaffected >= 1 && SelectIdType(TypeOfQuestion.Qustions, ref Id) == GenralVariables.Succeeded)
                         {
                             return GenralVariables.Succeeded;
                         }
                     }
-                return GenralVariables.NoData; 
-                 
+                    return GenralVariables.ErrorInDataBase;
+                }
+                return ResultOfBulid; 
             }
             catch (Exception ex)
             {
                 Id = -1;
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInAddQuestion; 
             }
             
         }
@@ -85,9 +84,11 @@ namespace DataBaseConnection
         {
             try
             {
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
                     string SelectIdTypeStatment = GenralVariables.SelectMaxId + TypeOfQustion.ToString();
                     Id = -1;
-                    BuildConnectionString();
                     using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         SqlCommand CommandForSelectIdType = new SqlCommand(SelectIdTypeStatment, Connection);
@@ -100,25 +101,28 @@ namespace DataBaseConnection
                             return GenralVariables.Succeeded;
 
                     }
-                return GenralVariables.NoData;
-
+                    return GenralVariables.ErrorInDataBase;
+                }
+                return ResultOfBulid; 
             }
             catch (Exception ex)
             {
                 Id = -1; 
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error;
+                return GenralVariables.ErrorInSelectionQuestion;
             }
         }
         public static int AddNewSlider(Qustion NewQuestion)
         {
             try
             {
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
                     Slider SliderQuestion = (Slider)NewQuestion;
                     int Id;
-                    BuildConnectionString();
-                    if (AddQustionInDataBase(NewQuestion, out Id) == GenralVariables.Succeeded)
+                    int ResultOfAdd = AddQustionInDataBase(NewQuestion, out Id);
+                    if (ResultOfAdd == GenralVariables.Succeeded)
                     {
                         using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                         {
@@ -130,8 +134,8 @@ namespace DataBaseConnection
                             CommandForInsertSlider.Parameters.AddWithValue(GenralVariables.QustionIdDataBase, Id);
                             SliderQuestion.Id = Id;
                             CommandForInsertSlider.Connection.Open();
-                            int result = CommandForInsertSlider.ExecuteNonQuery();
-                            if (result >= 1)
+                            int NumberOfRowsaffected = CommandForInsertSlider.ExecuteNonQuery();
+                            if (NumberOfRowsaffected >= 1)
                             {
                                 if (SelectIdType(TypeOfQuestion.Slider, ref Id) == GenralVariables.Succeeded)
                                 {
@@ -140,24 +144,29 @@ namespace DataBaseConnection
                                     return GenralVariables.Succeeded;
                                 }
                             }
+                        }
+                        return GenralVariables.ErrorInDataBase;
                     }
+                    return ResultOfAdd;
                 }
-                return GenralVariables.NoData; 
+                return ResultOfBulid; 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error;
+                return GenralVariables.ErrorInAddQuestion;
             }
         }
         public static int AddNewSmile(Qustion NewQuestion)
         {
             try
             {
-                BuildConnectionString();
-                int Id = -1;
-                    if (AddQustionInDataBase(NewQuestion, out Id) == GenralVariables.Succeeded)
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    int Id = -1;
+                    int ResultOfAdd = AddQustionInDataBase(NewQuestion, out Id);
+                    if (ResultOfAdd == GenralVariables.Succeeded)
                     {
                         Smiles SmileQuestion = (Smiles)NewQuestion;
                         using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
@@ -166,9 +175,9 @@ namespace DataBaseConnection
                             CommandForInsertSmile.Parameters.AddWithValue(GenralVariables.NewNumberOfSmily, SmileQuestion.NumberOfSmiles);
                             CommandForInsertSmile.Parameters.AddWithValue(GenralVariables.QustionIdDataBase, Id);
                             CommandForInsertSmile.Connection.Open();
-                            int result = CommandForInsertSmile.ExecuteNonQuery();
+                            int NumberOfRowsaffected = CommandForInsertSmile.ExecuteNonQuery();
                             CommandForInsertSmile.Parameters.Clear();
-                            if (result >= 1)
+                            if (NumberOfRowsaffected >= 1)
                             {
                                 SmileQuestion.Id = Id;
                                 if (SelectIdType(TypeOfQuestion.Smily, ref Id) == GenralVariables.Succeeded)
@@ -178,27 +187,30 @@ namespace DataBaseConnection
                                     return GenralVariables.Succeeded;
                                 }
                             }
+                        }
+                        return GenralVariables.ErrorInDataBase;
                     }
+                    return ResultOfAdd;
                 }
-                return GenralVariables.NoData;
+                return ResultOfBulid; 
+                
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                NewQuestion = null;
-                return GenralVariables.Error; 
-
+                return GenralVariables.ErrorInAddQuestion; 
             }
-            
         }
         public static int AddNewStar(Qustion NewQuestion)
         {
             try
             {
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
                     int Id;
-                BuildConnectionString();
-                if (AddQustionInDataBase(NewQuestion, out Id) == GenralVariables.Succeeded)
+                    int ResultOfAdd = AddQustionInDataBase(NewQuestion, out Id);
+                    if (ResultOfAdd == GenralVariables.Succeeded)
                     {
                         Stars StarQuestion = (Stars)NewQuestion;
                         using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
@@ -207,9 +219,9 @@ namespace DataBaseConnection
                             CommandForInsertStar.Parameters.AddWithValue(GenralVariables.NewNumberOfStars, StarQuestion.NumberOfStars);
                             CommandForInsertStar.Parameters.AddWithValue(GenralVariables.QustionIdDataBase, Id);
                             CommandForInsertStar.Connection.Open();
-                            int result = CommandForInsertStar.ExecuteNonQuery();
+                            int NumberOfRowsaffected = CommandForInsertStar.ExecuteNonQuery();
                             CommandForInsertStar.Parameters.Clear();
-                            if (result >= 1)
+                            if (NumberOfRowsaffected >= 1)
                             {
                                 StarQuestion.Id = Id;
                                 if (SelectIdType(TypeOfQuestion.Stars, ref Id) == GenralVariables.Succeeded)
@@ -219,15 +231,17 @@ namespace DataBaseConnection
                                     return GenralVariables.Succeeded;
                                 }
                             }
+                        }
+                        return GenralVariables.ErrorInDataBase;
                     }
+                    return ResultOfAdd;
                 }
-                return GenralVariables.NoData; 
+                return ResultOfBulid; 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInAddQuestion; 
             }
             
         }
@@ -238,38 +252,44 @@ namespace DataBaseConnection
         {
             try
             {
-                BuildConnectionString();
-                using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         SqlCommand CommandForUpdateQustion = new SqlCommand(GenralVariables.UpdateQuestion, Connection);
                         CommandForUpdateQustion.Parameters.AddWithValue(GenralVariables.NewQuestionText, Question.NewText);
                         CommandForUpdateQustion.Parameters.AddWithValue(GenralVariables.NewQuestionOrder, Question.Order);
                         CommandForUpdateQustion.Parameters.AddWithValue(GenralVariables.IdQuestion, Question.Id);
                         CommandForUpdateQustion.Connection.Open();
-                        int result = CommandForUpdateQustion.ExecuteNonQuery();
+                        int NumberOfRowsaffected = CommandForUpdateQustion.ExecuteNonQuery();
                         CommandForUpdateQustion.Parameters.Clear();
-                        if (result >= 1)
+                        if (NumberOfRowsaffected >= 1)
                             return GenralVariables.Succeeded;
                     }
-                return GenralVariables.NoData; 
+                    return GenralVariables.ErrorInDataBase;
+                }
+                return ResultOfBulid; 
             }
 
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error;
+                return GenralVariables.ErrorInEditQuestion;
             }
         }
         public static int EditSlider(Qustion Qustion)
         {
             try
             {
-                BuildConnectionString();
-                using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         Slider SliderForEdit = (Slider)Qustion;
-                        if (EditQuestion(SliderForEdit) == GenralVariables.Succeeded)
+                        int ResultOfEdit = EditQuestion(SliderForEdit);
+                        if (ResultOfEdit == GenralVariables.Succeeded)
                         {
                             SqlCommand CommandForUpdateSlider = new SqlCommand(GenralVariables.UpdateSlider, Connection);
                             CommandForUpdateSlider.Parameters.AddWithValue(GenralVariables.NewStartValue, SliderForEdit.StartValue);
@@ -278,78 +298,94 @@ namespace DataBaseConnection
                             CommandForUpdateSlider.Parameters.AddWithValue(GenralVariables.NewEndValueCaption, SliderForEdit.EndCaption);
                             CommandForUpdateSlider.Parameters.AddWithValue(GenralVariables.IdQuestion, SliderForEdit.Id);
                             CommandForUpdateSlider.Connection.Open();
-                            int result = CommandForUpdateSlider.ExecuteNonQuery();
+                            int NumberOfRowsaffected = CommandForUpdateSlider.ExecuteNonQuery();
                             CommandForUpdateSlider.Parameters.Clear();
-                            if (result >= 1)
+                            if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
+                            return GenralVariables.ErrorInDataBase;
                         }
+                        return ResultOfEdit;
+                    }
                 }
-                return GenralVariables.NoData; 
+                return ResultOfBulid; 
+                 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInEditQuestion; 
             }
         }
         public static int EditSmile(Qustion Qustion)
         {
             try
             {
-                BuildConnectionString();
-                Smiles SmileForEdit = (Smiles)Qustion;
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    Smiles SmileForEdit = (Smiles)Qustion;
                     using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
-                        if (EditQuestion(SmileForEdit) == GenralVariables.Succeeded)
+                        int ResultOfEdit = EditQuestion(SmileForEdit);
+                        if (ResultOfEdit == GenralVariables.Succeeded)
                         {
                             SqlCommand CommandForUpdateSmile = new SqlCommand(GenralVariables.UpdateSmile, Connection);
                             CommandForUpdateSmile.Parameters.AddWithValue(GenralVariables.NewNumberOfSmily, SmileForEdit.NumberOfSmiles);
                             CommandForUpdateSmile.Parameters.AddWithValue(GenralVariables.IdQuestion, SmileForEdit.Id);
                             CommandForUpdateSmile.Connection.Open();
-                            int result = CommandForUpdateSmile.ExecuteNonQuery();
+                            int NumberOfRowsaffected = CommandForUpdateSmile.ExecuteNonQuery();
                             CommandForUpdateSmile.Parameters.Clear();
-                            if (result >= 1)
+                            if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
+                            return GenralVariables.ErrorInDataBase;
                         }
+                        return ResultOfEdit;
+
+                    }
                 }
-                return GenralVariables.NoData; 
+                return ResultOfBulid; 
+                
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInEditQuestion; 
             }
         }
         public static int EditStar(Qustion Qustion)
         {
             try
             {
-                BuildConnectionString();
-                Stars StarForEdit = (Stars)Qustion;
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    Stars StarForEdit = (Stars)Qustion;
                     using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
-                        if (EditQuestion(StarForEdit) == GenralVariables.Succeeded)
+                        int ResultOfEdit = EditQuestion(StarForEdit);
+                        if (ResultOfEdit == GenralVariables.Succeeded)
                         {
                             SqlCommand CommandForUpdateStar = new SqlCommand(GenralVariables.UpdateStar, Connection);
                             CommandForUpdateStar.Parameters.AddWithValue(GenralVariables.NewNumberOfStars, StarForEdit.NumberOfStars);
                             CommandForUpdateStar.Parameters.AddWithValue(GenralVariables.IdQuestion, StarForEdit.Id);
                             CommandForUpdateStar.Connection.Open();
-                            int result = CommandForUpdateStar.ExecuteNonQuery();
+                            int NumberOfRowsaffected = CommandForUpdateStar.ExecuteNonQuery();
                             CommandForUpdateStar.Parameters.Clear();
-                            if (result >= 1)
+                            if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
+                            return GenralVariables.ErrorInDataBase;
                         }
+                        return ResultOfEdit;
+                    }
                 }
-                return GenralVariables.NoData; 
+                return ResultOfBulid; 
+                 
 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInEditQuestion; 
             }
         }
         /// <summary>
@@ -359,110 +395,130 @@ namespace DataBaseConnection
         {
             try
             {
-                BuildConnectionString();
-                using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         SqlCommand CommandFroDeleteQustion = new SqlCommand(GenralVariables.DeleteQustionAttrubites, Connection);
                         CommandFroDeleteQustion.Parameters.AddWithValue(GenralVariables.IdQuestion, Id);
                         CommandFroDeleteQustion.Connection.Open();
-                        int result = CommandFroDeleteQustion.ExecuteNonQuery();
+                        int NumberOfRowsaffected = CommandFroDeleteQustion.ExecuteNonQuery();
                         CommandFroDeleteQustion.Parameters.Clear();
-                        if (result >= 1)
+                        if (NumberOfRowsaffected >= 1)
                         {
                             return GenralVariables.Succeeded;
                         }
+                    }
+                    return GenralVariables.ErrorInDataBase;
                 }
-                return GenralVariables.NoData; 
+                return ResultOfBulid; 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInDeleteQuestion; 
             }
         }
         public static int DeleteSlider(Qustion Question)
         {
             try
             {
-                BuildConnectionString();
-                using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         Slider QustionWillDeleteSlider = (Slider)Question;
                         SqlCommand CommandForDeleteQustion = null;
                         CommandForDeleteQustion = new SqlCommand(GenralVariables.DeleteSliderString, Connection);
                         CommandForDeleteQustion.Parameters.AddWithValue(GenralVariables.IdQuestionWithAt, QustionWillDeleteSlider.IdForType);
                         CommandForDeleteQustion.Connection.Open();
-                        int result = CommandForDeleteQustion.ExecuteNonQuery();
+                        int NumberOfRowsaffected = CommandForDeleteQustion.ExecuteNonQuery();
                         CommandForDeleteQustion.Parameters.Clear();
-                        if (DeleteQustion(Question.Id) == GenralVariables.Succeeded && result >= 1)
+                        int ResultOfDelete = DeleteQustion(Question.Id);
+                        if (ResultOfDelete == GenralVariables.Succeeded && NumberOfRowsaffected >= 1)
                         {
                             return GenralVariables.Succeeded;
                         }
-                        return GenralVariables.NoData;
+                        return ResultOfDelete;
+                    }
                 }
+                return ResultOfBulid; 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInDeleteQuestion; 
             }
         }
         public static int DeleteSmile(Qustion Question)
         {
             try
             {
-                BuildConnectionString();
-                using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         Smiles QustionWillDeleteSmile = (Smiles)Question;
                         SqlCommand CommandForDeleteQustion = null;
                         CommandForDeleteQustion = new SqlCommand(GenralVariables.DeleteSmilyString, Connection);
                         CommandForDeleteQustion.Parameters.AddWithValue(GenralVariables.IdQuestionWithAt, QustionWillDeleteSmile.IdForType);
                         CommandForDeleteQustion.Connection.Open();
-                        int result = CommandForDeleteQustion.ExecuteNonQuery();
+                        int NumberOfRowsaffected = CommandForDeleteQustion.ExecuteNonQuery();
                         CommandForDeleteQustion.Parameters.Clear();
-                        if (DeleteQustion(Question.Id) == GenralVariables.Succeeded && result >= 1)
+                        int ResultOfDelete = DeleteQustion(Question.Id);
+                        if (ResultOfDelete == GenralVariables.Succeeded && NumberOfRowsaffected >= 1)
                         {
                             return GenralVariables.Succeeded;
                         }
+                        return ResultOfDelete;
+                    }
                 }
-                return GenralVariables.NoData; 
+                return ResultOfBulid; 
+                 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error;
+                return GenralVariables.ErrorInDeleteQuestion;
             }
         }
         public static int DeleteStar(Qustion Question)
         {
             try
             {
-                BuildConnectionString();
-                using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         Stars QustionWillDeleteStar = (Stars)Question;
                         SqlCommand CommandForDeleteQustion = null;
                         CommandForDeleteQustion = new SqlCommand(GenralVariables.DeleteStarString, Connection);
                         CommandForDeleteQustion.Parameters.AddWithValue(GenralVariables.IdQuestionWithAt, QustionWillDeleteStar.IdForType);
                         CommandForDeleteQustion.Connection.Open();
-                        int result = CommandForDeleteQustion.ExecuteNonQuery();
+                        int NumberOfRowsaffected = CommandForDeleteQustion.ExecuteNonQuery();
                         CommandForDeleteQustion.Parameters.Clear();
-                        if (DeleteQustion(Question.Id) == GenralVariables.Succeeded && result >= 1)
+                        int ResultOfDelete = DeleteQustion(Question.Id);
+                        if (ResultOfDelete == GenralVariables.Succeeded && NumberOfRowsaffected >= 1)
                         {
                             return GenralVariables.Succeeded;
                         }
+                        return ResultOfDelete;
+                    }
                 }
-                return GenralVariables.NoData;
+                return ResultOfBulid;  
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInDeleteQuestion; 
             }
         }
         /// <summary>
@@ -473,7 +529,9 @@ namespace DataBaseConnection
         {
             try
             {
-                BuildConnectionString();
+                int ResultInBulid = BuildConnectionString();
+                if (ResultInBulid == GenralVariables.Succeeded)
+                {
                     SqlDataReader DataReader = null;
                     Smiles NewSmile = null;
                     Slider NewSlider = null;
@@ -494,7 +552,7 @@ namespace DataBaseConnection
                             NewSmile.TypeOfQuestion = TypeOfQuestion.Smily;
                             TempListOfQustion.Add(NewSmile);
 
-                    }
+                        }
                         DataReader.Close();
                         CommandForJoinQustion.CommandText = GenralVariables.JoinSliderAndQuestion;
                         DataReader = CommandForJoinQustion.ExecuteReader();
@@ -527,18 +585,16 @@ namespace DataBaseConnection
                             TempListOfQustion.Add(NewStars);
                         }
                     }
-                return GenralVariables.Succeeded ;
+                    return GenralVariables.Succeeded;
+                }
+                return ResultInBulid; 
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
-                return GenralVariables.Error;
+                return GenralVariables.ErrorInGetQuestion;
             }
-        }
-        public static DataGridView Fun()
-        {
-            return null; 
         }
     }
 }

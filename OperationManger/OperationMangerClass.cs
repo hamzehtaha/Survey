@@ -13,48 +13,44 @@ namespace OperationManger
 {
     public class Operation
     {
-        private delegate int SafeCallDelegate(ref List<Qustion> ListOfQuestion);
-        
-        public static void RefrshData(ref DataGridView ListOfQuestion)
-        {
-            DataGridView ListOfQuestionTemp = ListOfQuestion; 
-            Thread ThreadForRefresh = new Thread(delegate () { GetDatafORefresh(ref ListOfQuestionTemp); });
-            ThreadForRefresh.IsBackground = true;
-            ThreadForRefresh.Start();
-        }
-        private static void GetDatafORefresh(ref DataGridView ListOfQuestion)
-        {
-            while (true)
-            {
-                List<Qustion> Temp = new List<Qustion>(); 
-                var DelegateFunction = new SafeCallDelegate(DataBaseConnections.GetQuestionFromDataBase);
-                ListOfQuestion.Invoke(DelegateFunction,Temp);
-                ListOfQuestion.Rows.Clear();
-                foreach (Qustion temp in Temp)
-                {
-                    if (temp != null)
-                    {
-                        int Index = ListOfQuestion.Rows.Add();
-                        ListOfQuestion.Rows[Index].Cells[0].Value = temp.NewText;
-                        ListOfQuestion.Rows[Index].Cells[2].Value = temp.Order;
-                        ListOfQuestion.Rows[Index].Cells[1].Value = temp.TypeOfQuestion;
-                    }
-                }
-                int TimeSleep = Convert.ToInt32(ConfigurationManager.AppSettings["Thread.Sleep.Value"]);
-                Thread.Sleep(TimeSleep);
-            }
-        }
+        public  delegate void ShowDataDelegate();
+        public static ShowDataDelegate PutListToShow;
+        public static List<Qustion> ListOfAllQuestion = new List<Qustion>();
+        public static List<Qustion> TempListOfQuestion = new List<Qustion>();
+        public static Boolean Flag = true; 
         public static void RefreshData()
         {
             try
             {
-                Thread ThreadForRefresh = new Thread(RefreshData);
+                Thread ThreadForRefresh = new Thread(GetDataAndCheckForRefresh);
                 ThreadForRefresh.IsBackground = true;
-                ThreadForRefresh.Start();
-            }
-            catch (Exception ex)
+                ThreadForRefresh.Start(); 
+
+            }catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resource1.ErrorModels);
+                GenralVariables.Errors.Log(ex);
+            }
+        } 
+        public static void GetDataAndCheckForRefresh()
+        {
+            try
+            { 
+                while (Flag)
+                {
+                    TempListOfQuestion.Clear(); 
+                    DataBaseConnections.GetQuestionFromDataBase(ref TempListOfQuestion);
+                   
+                    if (!ListOfAllQuestion.Equals(TempListOfQuestion))
+                    {
+                       
+                        ListOfAllQuestion.Clear();
+                        ListOfAllQuestion = TempListOfQuestion;
+                        PutListToShow();  
+                    }
+                    Thread.Sleep(6000);
+                }
+            }catch (Exception ex)
+            {
                 GenralVariables.Errors.Log(ex);
             }
         }
@@ -62,100 +58,75 @@ namespace OperationManger
         {
             try
             {
-                int result = GenralVariables.NoData; 
                 switch (NewQuestion.TypeOfQuestion)
                 {
                     case TypeOfQuestion.Slider:
-                        result = DataBaseConnections.AddNewSlider(NewQuestion);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfAddSlider = DataBaseConnections.AddNewSlider(NewQuestion);
+                        return ResultOfAddSlider; 
                     case TypeOfQuestion.Smily:
-                        result =  DataBaseConnections.AddNewSmile(NewQuestion);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfAddSmile  =  DataBaseConnections.AddNewSmile(NewQuestion);
+                        return ResultOfAddSmile;
                     case TypeOfQuestion.Stars:
-                        result=  DataBaseConnections.AddNewStar(NewQuestion);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfAddStar=  DataBaseConnections.AddNewStar(NewQuestion);
+                        return ResultOfAddStar;
                     default:
-                        NewQuestion = null; 
-                        return GenralVariables.NoData; 
+                        return GenralVariables.ErrorInManger; 
                 }
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
-                MessageBox.Show(Properties.Resource1.ErrorModels); 
-                return GenralVariables.Error;
+                GenralVariables.Errors.Log(ex); 
+                return GenralVariables.ErrorInMangerAdd;
             }
         }
         public static int EditQustion(Qustion Question)
         {
             try
             {
-                int result = GenralVariables.NoData;
                 switch (Question.TypeOfQuestion)
                 {
                     case TypeOfQuestion.Slider:
-                        result = DataBaseConnections.EditSlider(Question);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfEditSlider = DataBaseConnections.EditSlider(Question);
+                        return ResultOfEditSlider;
                     case TypeOfQuestion.Smily:
-                        result= DataBaseConnections.EditSmile(Question);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfEditSmile= DataBaseConnections.EditSmile(Question);
+                        return ResultOfEditSmile;
                     case TypeOfQuestion.Stars:
-                        result= DataBaseConnections.EditStar(Question);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfStar= DataBaseConnections.EditStar(Question);
+                        return ResultOfStar;
                     default:
-                        return GenralVariables.NoData;
+                        return GenralVariables.ErrorInManger;
                 }
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(Properties.Resource1.ErrorModels);
-                return GenralVariables.Error;
+                return GenralVariables.ErrorInMangerEdit;
             }
         }
         public static int DeleteQustion(Qustion Question)
         {
             try
             {
-                int result = GenralVariables.NoData;
                 switch (Question.TypeOfQuestion)
                 {
                     case TypeOfQuestion.Slider:
-                        result = DataBaseConnections.DeleteSlider(Question);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfDeleteSlider = DataBaseConnections.DeleteSlider(Question);
+                        return ResultOfDeleteSlider;
                     case TypeOfQuestion.Smily:
-                        result = DataBaseConnections.DeleteSmile(Question);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfDeleteSmile = DataBaseConnections.DeleteSmile(Question);
+                        return ResultOfDeleteSmile;
                     case TypeOfQuestion.Stars:
-                        result = DataBaseConnections.DeleteStar(Question);
-                        if (result == GenralVariables.Succeeded)
-                            return GenralVariables.Succeeded;
-                        return GenralVariables.NoData;
+                        int ResultOfDeleteStar = DataBaseConnections.DeleteStar(Question);
+                        return ResultOfDeleteStar;
                     default:
-                        return GenralVariables.NoData;
+                        return GenralVariables.ErrorInManger;
                 }
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(Properties.Resource1.ErrorModels);
-                return GenralVariables.Error; 
+                return GenralVariables.ErrorInMangerDelete; 
             }
         }
         public static int GetQustion(ref List<Qustion> TempList)
@@ -163,14 +134,11 @@ namespace OperationManger
             try
             {
                   return DataBaseConnections.GetQuestionFromDataBase(ref TempList);
-                  
-
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex);
-                MessageBox.Show(Properties.Resource1.ErrorModels);
-                return GenralVariables.Error;
+                return GenralVariables.ErrorInMangerGetQuestion;
             }
         }
 

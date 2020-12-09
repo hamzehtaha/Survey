@@ -22,14 +22,14 @@ namespace Survey.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource1 {
+    internal class Messages {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource1() {
+        internal Messages() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Survey.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Survey.Properties.Resource1", typeof(Resource1).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Survey.Properties.Messages", typeof(Messages).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -102,6 +102,114 @@ namespace Survey.Properties {
         internal static string EndValueLessThanZeroMessage {
             get {
                 return ResourceManager.GetString("EndValueLessThanZeroMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in database.
+        /// </summary>
+        internal static string ErrorDataBase {
+            get {
+                return ResourceManager.GetString("ErrorDataBase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in database while adding question.
+        /// </summary>
+        internal static string ErrorDataBaseAddQuestion {
+            get {
+                return ResourceManager.GetString("ErrorDataBaseAddQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in database in connection string.
+        /// </summary>
+        internal static string ErrorDataBaseConnectionString {
+            get {
+                return ResourceManager.GetString("ErrorDataBaseConnectionString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in database while deleting question.
+        /// </summary>
+        internal static string ErrorDataBaseDeleteQuestion {
+            get {
+                return ResourceManager.GetString("ErrorDataBaseDeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in database while editting question.
+        /// </summary>
+        internal static string ErrorDataBaseEditQuestion {
+            get {
+                return ResourceManager.GetString("ErrorDataBaseEditQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in database while getting question.
+        /// </summary>
+        internal static string ErrorDataBaseGetQuestion {
+            get {
+                return ResourceManager.GetString("ErrorDataBaseGetQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in database while selecting question.
+        /// </summary>
+        internal static string ErrorDataBaseSelectQuestion {
+            get {
+                return ResourceManager.GetString("ErrorDataBaseSelectQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in operation manger.
+        /// </summary>
+        internal static string ErrorManger {
+            get {
+                return ResourceManager.GetString("ErrorManger", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There was some problem in Operations Manager when adding a question.
+        /// </summary>
+        internal static string ErrorMangerAddQuestion {
+            get {
+                return ResourceManager.GetString("ErrorMangerAddQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in operation manger when deleting question.
+        /// </summary>
+        internal static string ErrorMangerDeleteQuestion {
+            get {
+                return ResourceManager.GetString("ErrorMangerDeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in operation manger when editing question.
+        /// </summary>
+        internal static string ErrorMangerEditQuestion {
+            get {
+                return ResourceManager.GetString("ErrorMangerEditQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There were some problems in operation manger when getting question.
+        /// </summary>
+        internal static string ErrorMangerGetQuestion {
+            get {
+                return ResourceManager.GetString("ErrorMangerGetQuestion", resourceCulture);
             }
         }
         

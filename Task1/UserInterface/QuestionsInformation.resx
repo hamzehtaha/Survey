@@ -387,6 +387,9 @@
   <data name="GroupOfSlider.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 187</value>
   </data>
+  <data name="GroupOfSlider.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>Yes</value>
+  </data>
   <data name="GroupOfSlider.Size" type="System.Drawing.Size, System.Drawing">
     <value>199, 145</value>
   </data>
@@ -696,6 +699,9 @@
   <data name="GroupOfStars.Location" type="System.Drawing.Point, System.Drawing">
     <value>0, 193</value>
   </data>
+  <data name="GroupOfStars.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
+  </data>
   <data name="GroupOfStars.Size" type="System.Drawing.Size, System.Drawing">
     <value>191, 35</value>
   </data>
@@ -743,6 +749,9 @@
   </data>
   <data name="GroupOfSmile.Location" type="System.Drawing.Point, System.Drawing">
     <value>3, 183</value>
+  </data>
+  <data name="GroupOfSmile.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
+    <value>No</value>
   </data>
   <data name="GroupOfSmile.Size" type="System.Drawing.Size, System.Drawing">
     <value>206, 30</value>

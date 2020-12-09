@@ -65,7 +65,14 @@ namespace DataBaseConnection
         /// This is return vriable 0 = Succeeded , -1 =  Faild , -2 = Error
         /// </summary>
         public const int Succeeded = 0;
-        public const int NoData = -1;
-        public const int Error = -2; 
+        public const int ErrorInDataBase = 500; 
+        public const int ErrorConnectionString = 501;
+        public const int ErrorInAddQuestion = 502;
+        public const int ErrorInSelectionQuestion = 503;
+        public const int ErrorInEditQuestion = 504;
+        public const int ErrorInDeleteQuestion = 505;
+        public const int ErrorInGetQuestion = 506; 
+
+
     }
 }
