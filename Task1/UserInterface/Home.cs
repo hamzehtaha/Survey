@@ -150,7 +150,7 @@ namespace Survey
             try
             {
                 QuestionsInformation.ReturnNewQuestion = GetObjectSelect();
-                Qustion OldObject = QuestionsInformation.ReturnNewQuestion; 
+                Qustion OldObject = QuestionsInformation.ReturnNewQuestion;
                 ListOfQuestion.ClearSelection();
                 if (QuestionsInformation.ReturnNewQuestion != null)
                 {
@@ -159,8 +159,9 @@ namespace Survey
                     {
                         Operation.ListOfAllQuestion.Remove(OldObject);
                         Operation.ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
-                        ShowData(Operation.ListOfAllQuestion);
+                        ShowData(Operation.ListOfAllQuestion); 
                     }
+                     
                 }
                 else
                 {
@@ -228,8 +229,9 @@ namespace Survey
                                 Check = Operation.DeleteQustion(SliderWillDelete);
                                 if (CheckMessageError(Check))
                                 {
-                                    ShowData(Operation.ListOfAllQuestion);
+                                    
                                     Operation.ListOfAllQuestion.Remove(SliderWillDelete);
+                                    ShowData(Operation.ListOfAllQuestion);
                                 }
                                 break;
                             case TypeOfQuestion.Smily:
@@ -237,8 +239,9 @@ namespace Survey
                                 Check = Operation.DeleteQustion(SmileWillDelete);
                                 if (CheckMessageError(Check))
                                 {
-                                    ShowData(Operation.ListOfAllQuestion);
+                                    
                                     Operation.ListOfAllQuestion.Remove(SmileWillDelete);
+                                    ShowData(Operation.ListOfAllQuestion);
                                 }
                                 break;
                             case TypeOfQuestion.Stars:
@@ -246,8 +249,9 @@ namespace Survey
                                 Check = Operation.DeleteQustion(StarWillDelete);
                                 if (CheckMessageError(Check))
                                 {
-                                    ShowData(Operation.ListOfAllQuestion);
+                                    
                                     Operation.ListOfAllQuestion.Remove(StarWillDelete);
+                                    ShowData(Operation.ListOfAllQuestion);
                                 }
                                 break;
                         }

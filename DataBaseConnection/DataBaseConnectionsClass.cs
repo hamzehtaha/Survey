@@ -54,7 +54,7 @@ namespace DataBaseConnection
                 Id = -1;
                 int ResultOfBulid = BuildConnectionString();
                 if (ResultOfBulid == GenralVariables.Succeeded)
-                {                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                {    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                     {
                         SqlCommand ComandForInsertQustion = new SqlCommand(GenralVariables.InsertIntoQustion, Connection);
                         ComandForInsertQustion.CommandText = GenralVariables.InsertIntoQustion;
@@ -63,9 +63,13 @@ namespace DataBaseConnection
                         ComandForInsertQustion.Parameters.AddWithValue(GenralVariables.NewQuestionOrder, Question.Order);
                         ComandForInsertQustion.Connection.Open();
                         int NumberOfRowsaffected = ComandForInsertQustion.ExecuteNonQuery();
-                        if (NumberOfRowsaffected >= 1 && SelectIdType(TypeOfQuestion.Qustions, ref Id) == GenralVariables.Succeeded)
+                        if (NumberOfRowsaffected >= 1)
                         {
+                            if (SelectIdType(TypeOfQuestion.Qustions, ref Id) == GenralVariables.Succeeded)
                             return GenralVariables.Succeeded;
+                        }else
+                        {
+                            GenralVariables.Errors.LogMessage("Warning You don't add any question in database"); 
                         }
                     }
                     return GenralVariables.ErrorInDataBase;
@@ -144,6 +148,10 @@ namespace DataBaseConnection
                                     return GenralVariables.Succeeded;
                                 }
                             }
+                            else
+                            {
+                                GenralVariables.Errors.LogMessage("Warning You don't add slider question in database");
+                            }
                         }
                         return GenralVariables.ErrorInDataBase;
                     }
@@ -186,6 +194,10 @@ namespace DataBaseConnection
                                     NewQuestion = SmileQuestion;
                                     return GenralVariables.Succeeded;
                                 }
+                            }
+                            else
+                            {
+                                GenralVariables.Errors.LogMessage("Warning You don't add smile question in database");
                             }
                         }
                         return GenralVariables.ErrorInDataBase;
@@ -231,6 +243,10 @@ namespace DataBaseConnection
                                     return GenralVariables.Succeeded;
                                 }
                             }
+                            else
+                            {
+                                GenralVariables.Errors.LogMessage("Warning You don't add star question in database");
+                            }
                         }
                         return GenralVariables.ErrorInDataBase;
                     }
@@ -266,6 +282,8 @@ namespace DataBaseConnection
                         CommandForUpdateQustion.Parameters.Clear();
                         if (NumberOfRowsaffected >= 1)
                             return GenralVariables.Succeeded;
+                        else
+                            GenralVariables.Errors.LogMessage("Warning You don't edit question in database");
                     }
                     return GenralVariables.ErrorInDataBase;
                 }
@@ -302,6 +320,8 @@ namespace DataBaseConnection
                             CommandForUpdateSlider.Parameters.Clear();
                             if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
+                            else
+                                GenralVariables.Errors.LogMessage("Warning You don't edit slider question in database");
                             return GenralVariables.ErrorInDataBase;
                         }
                         return ResultOfEdit;
@@ -337,6 +357,8 @@ namespace DataBaseConnection
                             CommandForUpdateSmile.Parameters.Clear();
                             if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
+                            else
+                                GenralVariables.Errors.LogMessage("Warning You don't edit smile question in database");
                             return GenralVariables.ErrorInDataBase;
                         }
                         return ResultOfEdit;
@@ -373,6 +395,8 @@ namespace DataBaseConnection
                             CommandForUpdateStar.Parameters.Clear();
                             if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
+                            else
+                                GenralVariables.Errors.LogMessage("Warning You don't edit star question in database");
                             return GenralVariables.ErrorInDataBase;
                         }
                         return ResultOfEdit;
@@ -409,6 +433,10 @@ namespace DataBaseConnection
                         {
                             return GenralVariables.Succeeded;
                         }
+                        else
+                        {
+                            GenralVariables.Errors.LogMessage("Warning You don't delete question in database");
+                        }
                     }
                     return GenralVariables.ErrorInDataBase;
                 }
@@ -438,9 +466,16 @@ namespace DataBaseConnection
                         int NumberOfRowsaffected = CommandForDeleteQustion.ExecuteNonQuery();
                         CommandForDeleteQustion.Parameters.Clear();
                         int ResultOfDelete = DeleteQustion(Question.Id);
-                        if (ResultOfDelete == GenralVariables.Succeeded && NumberOfRowsaffected >= 1)
+                        if (NumberOfRowsaffected >= 1)
                         {
-                            return GenralVariables.Succeeded;
+                            if (ResultOfDelete == GenralVariables.Succeeded)
+                            {
+                                return GenralVariables.Succeeded;
+                            }
+                        }
+                        else
+                        {
+                            GenralVariables.Errors.LogMessage("Warning You don't delete slider question in database");
                         }
                         return ResultOfDelete;
                     }
@@ -471,10 +506,15 @@ namespace DataBaseConnection
                         int NumberOfRowsaffected = CommandForDeleteQustion.ExecuteNonQuery();
                         CommandForDeleteQustion.Parameters.Clear();
                         int ResultOfDelete = DeleteQustion(Question.Id);
-                        if (ResultOfDelete == GenralVariables.Succeeded && NumberOfRowsaffected >= 1)
+                        if (NumberOfRowsaffected >= 1)
                         {
-                            return GenralVariables.Succeeded;
+                            if (ResultOfDelete == GenralVariables.Succeeded)
+                            {
+                                return GenralVariables.Succeeded;
+                            }
                         }
+                        else
+                            GenralVariables.Errors.LogMessage("Warning You don't delete smile question in database");
                         return ResultOfDelete;
                     }
                 }
@@ -505,10 +545,15 @@ namespace DataBaseConnection
                         int NumberOfRowsaffected = CommandForDeleteQustion.ExecuteNonQuery();
                         CommandForDeleteQustion.Parameters.Clear();
                         int ResultOfDelete = DeleteQustion(Question.Id);
-                        if (ResultOfDelete == GenralVariables.Succeeded && NumberOfRowsaffected >= 1)
+                        if (NumberOfRowsaffected >= 1)
                         {
-                            return GenralVariables.Succeeded;
+                            if (ResultOfDelete == GenralVariables.Succeeded)
+                            {
+                                return GenralVariables.Succeeded;
+                            }
                         }
+                        else
+                        GenralVariables.Errors.LogMessage("Warning You don't delete smile question in database");
                         return ResultOfDelete;
                     }
                 }

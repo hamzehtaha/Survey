@@ -66,5 +66,14 @@ namespace BaseLog
                 
             }
         }
+        public void LogMessage (string Message)
+        {
+            StreamWriter writer = new StreamWriter(this.FilePath);
+           // StackTrace st = new StackTrace(, true);
+            //StackFrame frame = st.GetFrame(0);
+            writer.Write("\r\nLog Entry : ");
+            writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
+            writer.WriteLine("{0}",Message);
+        }
     }
 }
