@@ -133,6 +133,12 @@
   <data name="NewText.Size" type="System.Drawing.Size, System.Drawing">
     <value>304, 27</value>
   </data>
+  <data name="GroupOfSlider.Location" type="System.Drawing.Point, System.Drawing">
+    <value>293, 178</value>
+  </data>
+  <data name="GroupOfSlider.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 127</value>
+  </data>
   <data name="NewEndValue.Location" type="System.Drawing.Point, System.Drawing">
     <value>60, 29</value>
   </data>
@@ -181,17 +187,17 @@
   <data name="NewStartValueCaption.Location" type="System.Drawing.Point, System.Drawing">
     <value>60, 57</value>
   </data>
-  <data name="GroupOfSlider.Location" type="System.Drawing.Point, System.Drawing">
-    <value>293, 178</value>
-  </data>
-  <data name="GroupOfSlider.Size" type="System.Drawing.Size, System.Drawing">
-    <value>200, 127</value>
-  </data>
   <data name="NewNumberOfStars.Location" type="System.Drawing.Point, System.Drawing">
     <value>78, 3</value>
   </data>
   <data name="NewNumberOfSmiles.Location" type="System.Drawing.Point, System.Drawing">
     <value>71, 3</value>
+  </data>
+  <data name="GroupOfTypes.Location" type="System.Drawing.Point, System.Drawing">
+    <value>309, 88</value>
+  </data>
+  <data name="GroupOfTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 86</value>
   </data>
   <data name="StarsRadio.Location" type="System.Drawing.Point, System.Drawing">
     <value>62, 62</value>
@@ -229,12 +235,6 @@
   <data name="label2.Text" xml:space="preserve">
     <value>نوع السؤال </value>
   </data>
-  <data name="GroupOfTypes.Location" type="System.Drawing.Point, System.Drawing">
-    <value>309, 88</value>
-  </data>
-  <data name="GroupOfTypes.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 86</value>
-  </data>
   <data name="NewOrderName.Location" type="System.Drawing.Point, System.Drawing">
     <value>427, 57</value>
   </data>
@@ -256,36 +256,6 @@
   <data name="Cancel.Text" xml:space="preserve">
     <value>ألغاء</value>
   </data>
-  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>155, 7</value>
-  </data>
-  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 13</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>عدد النجوم</value>
-  </data>
-  <data name="panel1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>284, 183</value>
-  </data>
-  <data name="panel1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>213, 35</value>
-  </data>
-  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>145, 5</value>
-  </data>
-  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 13</value>
-  </data>
-  <data name="label3.Text" xml:space="preserve">
-    <value>عدد الوجوه</value>
-  </data>
-  <data name="panel2.Location" type="System.Drawing.Point, System.Drawing">
-    <value>287, 178</value>
-  </data>
-  <data name="NewOrder.Location" type="System.Drawing.Point, System.Drawing">
-    <value>335, 53</value>
-  </data>
   <data name="panel3.Location" type="System.Drawing.Point, System.Drawing">
     <value>2, 12</value>
   </data>
@@ -296,8 +266,38 @@
   <data name="panel3.Size" type="System.Drawing.Size, System.Drawing">
     <value>499, 391</value>
   </data>
+  <data name="GroupOfStars.Location" type="System.Drawing.Point, System.Drawing">
+    <value>273, 180</value>
+  </data>
+  <data name="GroupOfStars.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 35</value>
+  </data>
+  <data name="label1.Location" type="System.Drawing.Point, System.Drawing">
+    <value>155, 7</value>
+  </data>
+  <data name="label1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 13</value>
+  </data>
+  <data name="label1.Text" xml:space="preserve">
+    <value>عدد النجوم</value>
+  </data>
+  <data name="GroupOfSmile.Location" type="System.Drawing.Point, System.Drawing">
+    <value>287, 185</value>
+  </data>
+  <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
+    <value>145, 5</value>
+  </data>
+  <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 13</value>
+  </data>
+  <data name="label3.Text" xml:space="preserve">
+    <value>عدد الوجوه</value>
+  </data>
+  <data name="NewOrder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>335, 53</value>
+  </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>391, 355</value>
+    <value>512, 402</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

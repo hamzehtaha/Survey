@@ -29,7 +29,7 @@ namespace Question
             catch (Exception ex)
             {
                 MessageBox.Show(Properties.Resource1.ErrorModels);
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
             }
         }
         public Slider(string NewText, Question.TypeOfQuestion TypeOfQuestion, int IdForType, int Order, int StartValue, int EndValue, string StartCaption, string EndCaption)
@@ -48,7 +48,7 @@ namespace Question
             catch (Exception ex)
             {
                 MessageBox.Show(Properties.Resource1.ErrorModels);
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
             }
         }
         public Slider()

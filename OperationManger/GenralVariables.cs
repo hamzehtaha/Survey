@@ -17,10 +17,5 @@ namespace OperationManger
         public const int ErrorInMangerEdit = 402;
         public const int ErrorInMangerDelete = 403;
         public const int ErrorInMangerGetQuestion = 404;
-
-
-
-
-        public static DataGridView ListOfQuestion = new DataGridView();
     }
 }

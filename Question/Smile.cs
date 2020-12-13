@@ -26,7 +26,7 @@ namespace Question
             catch (Exception ex)
             {
                 MessageBox.Show(Properties.Resource1.ErrorModels);
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
             }
         }
         public Smiles(int idForType, string NewText, Question.TypeOfQuestion TypeOfQuestion, int Order, int NumberOfSmiles)
@@ -42,7 +42,7 @@ namespace Question
             catch (Exception ex)
             {
                 MessageBox.Show(Properties.Resource1.ErrorModels);
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
             }
 
         }

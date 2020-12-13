@@ -30,7 +30,7 @@ namespace Survey
                 StartFunction();
             }catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
         }
@@ -49,7 +49,7 @@ namespace Survey
             }
             catch(Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
 
@@ -66,7 +66,8 @@ namespace Survey
             }
             catch (Exception ex)
             {
-
+                GenralVariables.Errors.Log(ex.Message);
+                MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
         }
         /// <summary>
@@ -91,7 +92,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
                 return null;
             }
@@ -99,10 +100,11 @@ namespace Survey
         /// <summary>
         /// Show data function get the question from MyList and show it in datagridview
         /// </summary>
-        private void ShowData(List<Qustion> ListOfAllQuestion)
+        private void ShowData( List<Qustion> ListOfAllQuestion)
         {
             try
             {
+              
                     ListOfQuestion.Rows.Clear();
                     foreach (Qustion Temp in ListOfAllQuestion)
                     {
@@ -117,7 +119,7 @@ namespace Survey
                 ListOfQuestion.ClearSelection();
             } catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
             
@@ -138,7 +140,7 @@ namespace Survey
                 }
             } catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
         }
@@ -161,7 +163,6 @@ namespace Survey
                         Operation.ListOfAllQuestion.Add(QuestionsInformation.ReturnNewQuestion);
                         ShowData(Operation.ListOfAllQuestion); 
                     }
-                     
                 }
                 else
                 {
@@ -170,7 +171,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
         }
@@ -199,7 +200,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
 
@@ -261,79 +262,92 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
 
             }
         }
         private bool CheckMessageError(int ResultNumber)
         {
-            if (ResultNumber == GenralVariables.Succeeded)
-                return true;
-            else if (ResultNumber == OperationManger.GenralVariables.ErrorInManger)
+            try
             {
-                MessageBox.Show(Survey.Properties.Messages.ErrorManger);
-                return false;
-            }
-            else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerAdd)
+                if (ResultNumber == GenralVariables.Succeeded)
+                    return true;
+                else if (ResultNumber == OperationManger.GenralVariables.ErrorInManger)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorManger);
+                    return false;
+                }
+                else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerAdd)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorMangerAddQuestion);
+                    return false;
+                }
+                else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerDelete)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorMangerDeleteQuestion);
+                    return false;
+                }
+                else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerEdit)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorMangerEditQuestion);
+                    return false;
+                }
+                else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerGetQuestion)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorMangerGetQuestion);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorInDataBase)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorDataBase);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorConnectionString)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseConnectionString);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorInAddQuestion)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseAddQuestion);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorInDeleteQuestion)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseDeleteQuestion);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorInEditQuestion)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseEditQuestion);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorInGetQuestion)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseGetQuestion);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorInSelectionQuestion)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseSelectQuestion);
+                    return false;
+                }
+                else if (ResultNumber == GenralVariables.ErrorInOperation)
+                {
+                    MessageBox.Show(Survey.Properties.Messages.ErrorInOperation);
+                    return false;
+                }
+                else
+                {
+                    MessageBox.Show(Survey.Properties.Messages.MessageError);
+                    return false;
+                }
+            }catch (Exception ex)
             {
-                MessageBox.Show(Survey.Properties.Messages.ErrorMangerAddQuestion);
-                return false;
-            }
-            else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerDelete)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorMangerDeleteQuestion);
-                return false;
-            }
-            else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerEdit)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorMangerEditQuestion);
-                return false;
-            }
-            else if (ResultNumber == OperationManger.GenralVariables.ErrorInMangerGetQuestion)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorMangerGetQuestion);
-                return false;
-            }
-            else if (ResultNumber == GenralVariables.ErrorInDataBase)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorDataBase);
-                return false;
-            }
-            else if (ResultNumber == GenralVariables.ErrorConnectionString)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseConnectionString);
-                return false;
-            }
-            else if (ResultNumber == GenralVariables.ErrorInAddQuestion)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseAddQuestion);
-                return false;
-            }
-            else if (ResultNumber == GenralVariables.ErrorInDeleteQuestion)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseDeleteQuestion);
-                return false;
-            }
-            else if (ResultNumber == GenralVariables.ErrorInEditQuestion)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseEditQuestion);
-                return false;
-            }
-            else if (ResultNumber == GenralVariables.ErrorInGetQuestion)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseGetQuestion);
-                return false;
-            }
-            else if (ResultNumber == GenralVariables.ErrorInSelectionQuestion)
-            {
-                MessageBox.Show(Survey.Properties.Messages.ErrorDataBaseSelectQuestion);
-                return false;
-            }
-            else
-            {
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
-                return false;
+                return false; 
             }
         }
         /// <summary>
@@ -360,7 +374,7 @@ namespace Survey
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
         }
@@ -369,10 +383,11 @@ namespace Survey
         {
             try
             {
-                Operation.RefreshData();
+               Operation.RefreshData();
             }catch (Exception ex)
             {
-
+                GenralVariables.Errors.Log(ex.Message);
+                MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
         }
 
@@ -392,11 +407,14 @@ namespace Survey
         private void Home_FormClosed(object sender, FormClosedEventArgs e)
         {
            try
+           {
+                Operation.Flag = false;
+           }
+            catch (Exception ex)
             {
-
-            }catch (Exception ex)
-            {
-                Operation.Flag = false; 
+                Operation.Flag = false;
+                GenralVariables.Errors.Log(ex.Message);
+                MessageBox.Show(Survey.Properties.Messages.MessageError);
             }
         }
     }

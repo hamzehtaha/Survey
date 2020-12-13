@@ -280,7 +280,7 @@
     <value>107, 110</value>
   </data>
   <data name="NewEndValueCaption.MaxLength" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>15</value>
   </data>
   <data name="NewEndValueCaption.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -361,7 +361,7 @@
     <value>108, 74</value>
   </data>
   <data name="NewStartValueCaption.MaxLength" type="System.Int32, mscorlib">
-    <value>3</value>
+    <value>15</value>
   </data>
   <data name="NewStartValueCaption.Multiline" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -700,7 +700,7 @@
     <value>0, 193</value>
   </data>
   <data name="GroupOfStars.RightToLeft" type="System.Windows.Forms.RightToLeft, System.Windows.Forms">
-    <value>No</value>
+    <value>Yes</value>
   </data>
   <data name="GroupOfStars.Size" type="System.Drawing.Size, System.Drawing">
     <value>191, 35</value>
@@ -820,7 +820,7 @@
     <value>6, 13</value>
   </data>
   <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>349, 381</value>
+    <value>378, 412</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

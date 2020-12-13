@@ -153,6 +153,9 @@
   <data name="ErrorDataBaseSelectQuestion" xml:space="preserve">
     <value>There were some problems in database while selecting question</value>
   </data>
+  <data name="ErrorInOperation" xml:space="preserve">
+    <value>We cannot find this question.</value>
+  </data>
   <data name="ErrorManger" xml:space="preserve">
     <value>There were some problems in operation manger</value>
   </data>

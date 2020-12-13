@@ -44,19 +44,18 @@ namespace BaseLog
         /// <summary>
         /// This Function OVERRIDE FROM AbstractLog that is write Errors and dates in log file 
         /// </summary>
-        public void Log(Exception ex)
+        public void Log(string Message)
         {
             try
             {
                 StreamWriter writer = new StreamWriter(this.FilePath);
-                StackTrace st = new StackTrace(ex, true);
+                StackTrace st = new StackTrace(true);
                 StackFrame frame = st.GetFrame(0);
-                int LineNumber = Convert.ToInt32(ex.StackTrace.Substring(ex.StackTrace.LastIndexOf(' ')));
                 string MethodName = frame.GetMethod().Name;
                 writer.Write("\r\nLog Entry : ");
                 writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
-                writer.WriteLine("{0}", ex.Message);
-                writer.WriteLine("{0} {1}", "Method Name,Line Number:",ex.StackTrace.Trim());
+                writer.WriteLine("{0}", Message);
+                writer.WriteLine("{0} {1}", "Method Name,Line Number:",st.ToString().Trim());
                 writer.WriteLine("------------------------------------");
                 writer.Close(); 
             }
@@ -66,14 +65,6 @@ namespace BaseLog
                 
             }
         }
-        public void LogMessage (string Message)
-        {
-            StreamWriter writer = new StreamWriter(this.FilePath);
-           // StackTrace st = new StackTrace(, true);
-            //StackFrame frame = st.GetFrame(0);
-            writer.Write("\r\nLog Entry : ");
-            writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
-            writer.WriteLine("{0}",Message);
-        }
+      
     }
 }

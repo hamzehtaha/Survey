@@ -36,7 +36,7 @@ namespace DataBaseConnection
                 return GenralVariables.Succeeded; 
             }catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorConnectionString; 
             }
         }
@@ -69,7 +69,8 @@ namespace DataBaseConnection
                             return GenralVariables.Succeeded;
                         }else
                         {
-                            GenralVariables.Errors.LogMessage("Warning You don't add any question in database"); 
+                            GenralVariables.Errors.Log("Warning you can't add this question in database");
+                            return GenralVariables.ErrorInOperation;
                         }
                     }
                     return GenralVariables.ErrorInDataBase;
@@ -79,7 +80,7 @@ namespace DataBaseConnection
             catch (Exception ex)
             {
                 Id = -1;
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInAddQuestion; 
             }
             
@@ -112,7 +113,7 @@ namespace DataBaseConnection
             catch (Exception ex)
             {
                 Id = -1; 
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInSelectionQuestion;
             }
         }
@@ -150,7 +151,8 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.LogMessage("Warning You don't add slider question in database");
+                                GenralVariables.Errors.Log("Warning.... you can't add this question slider");
+                                return GenralVariables.ErrorInOperation;
                             }
                         }
                         return GenralVariables.ErrorInDataBase;
@@ -161,7 +163,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInAddQuestion;
             }
         }
@@ -197,7 +199,8 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.LogMessage("Warning You don't add smile question in database");
+                                GenralVariables.Errors.Log("Warning.... you can't add this question smile");
+                                return GenralVariables.ErrorInOperation;
                             }
                         }
                         return GenralVariables.ErrorInDataBase;
@@ -209,7 +212,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInAddQuestion; 
             }
         }
@@ -245,7 +248,8 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.LogMessage("Warning You don't add star question in database");
+                                GenralVariables.Errors.Log("Warning.... you can't add this question star");
+                                return GenralVariables.ErrorInOperation;
                             }
                         }
                         return GenralVariables.ErrorInDataBase;
@@ -256,7 +260,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInAddQuestion; 
             }
             
@@ -283,16 +287,19 @@ namespace DataBaseConnection
                         if (NumberOfRowsaffected >= 1)
                             return GenralVariables.Succeeded;
                         else
-                            GenralVariables.Errors.LogMessage("Warning You don't edit question in database");
+                        {
+                            GenralVariables.Errors.Log("Warning.... you can't edit this question maybe already deleted from anthor application");
+                            return GenralVariables.ErrorInOperation;
+                        }
                     }
-                    return GenralVariables.ErrorInDataBase;
+                    
                 }
                 return ResultOfBulid; 
             }
 
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInEditQuestion;
             }
         }
@@ -321,8 +328,10 @@ namespace DataBaseConnection
                             if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
                             else
-                                GenralVariables.Errors.LogMessage("Warning You don't edit slider question in database");
-                            return GenralVariables.ErrorInDataBase;
+                            {
+                                GenralVariables.Errors.Log("Warning.... you can't edit this question slider maybe already deleted from anthor application");
+                                return GenralVariables.ErrorInOperation;
+                            }
                         }
                         return ResultOfEdit;
                     }
@@ -332,7 +341,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInEditQuestion; 
             }
         }
@@ -358,8 +367,10 @@ namespace DataBaseConnection
                             if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
                             else
-                                GenralVariables.Errors.LogMessage("Warning You don't edit smile question in database");
-                            return GenralVariables.ErrorInDataBase;
+                            {
+                                GenralVariables.Errors.Log("Warning.... you can't edit this question smile maybe already deleted from anthor application");
+                                return GenralVariables.ErrorInOperation;
+                            }
                         }
                         return ResultOfEdit;
 
@@ -370,7 +381,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInEditQuestion; 
             }
         }
@@ -396,8 +407,10 @@ namespace DataBaseConnection
                             if (NumberOfRowsaffected >= 1)
                                 return GenralVariables.Succeeded;
                             else
-                                GenralVariables.Errors.LogMessage("Warning You don't edit star question in database");
-                            return GenralVariables.ErrorInDataBase;
+                            {
+                                GenralVariables.Errors.Log("Warning.... you can't edit this question star maybe already deleted from anthor application");
+                                return GenralVariables.ErrorInOperation; 
+                            }
                         }
                         return ResultOfEdit;
                     }
@@ -408,7 +421,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInEditQuestion; 
             }
         }
@@ -435,16 +448,17 @@ namespace DataBaseConnection
                         }
                         else
                         {
-                            GenralVariables.Errors.LogMessage("Warning You don't delete question in database");
+                            GenralVariables.Errors.Log("Warning.... you can't delete this questions maybe already deleted from anthor application");
+                            return GenralVariables.ErrorInOperation; 
                         }
                     }
-                    return GenralVariables.ErrorInDataBase;
+                    
                 }
                 return ResultOfBulid; 
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion; 
             }
@@ -475,7 +489,8 @@ namespace DataBaseConnection
                         }
                         else
                         {
-                            GenralVariables.Errors.LogMessage("Warning You don't delete slider question in database");
+                            GenralVariables.Errors.Log("Warning.... you can't delete this question slider maybe already deleted from anthor application");
+                            return GenralVariables.ErrorInOperation;
                         }
                         return ResultOfDelete;
                     }
@@ -484,7 +499,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion; 
             }
@@ -514,7 +529,10 @@ namespace DataBaseConnection
                             }
                         }
                         else
-                            GenralVariables.Errors.LogMessage("Warning You don't delete smile question in database");
+                        {
+                            GenralVariables.Errors.Log("Warning.... you can't delete this question smile maybe already deleted from anthor application");
+                            return GenralVariables.ErrorInOperation;
+                        }
                         return ResultOfDelete;
                     }
                 }
@@ -523,7 +541,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion;
             }
@@ -553,7 +571,10 @@ namespace DataBaseConnection
                             }
                         }
                         else
-                        GenralVariables.Errors.LogMessage("Warning You don't delete smile question in database");
+                        {
+                            GenralVariables.Errors.Log("Warning.... you can't delete this question star maybe already deleted from anthor application");
+                            return GenralVariables.ErrorInOperation;
+                        }
                         return ResultOfDelete;
                     }
                 }
@@ -561,7 +582,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion; 
             }
@@ -636,7 +657,7 @@ namespace DataBaseConnection
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInGetQuestion;
             }

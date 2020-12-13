@@ -169,6 +169,15 @@ namespace Survey.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to We cannot find this question..
+        /// </summary>
+        internal static string ErrorInOperation {
+            get {
+                return ResourceManager.GetString("ErrorInOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to There were some problems in operation manger.
         /// </summary>
         internal static string ErrorManger {

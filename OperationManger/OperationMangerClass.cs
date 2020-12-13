@@ -19,6 +19,9 @@ namespace OperationManger
         public static List<Qustion> TempListOfQuestion = new List<Qustion>();
         private static int TimeForChangeData = Convert.ToInt32(ConfigurationManager.AppSettings["TimeDataChange"]);
         public static Boolean Flag = true; 
+        /// <summary>
+        /// This function for start thread to refresh data 
+        /// </summary>
         public static void RefreshData()
         {
             try
@@ -29,36 +32,55 @@ namespace OperationManger
 
             }catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
             }
         }
+        /// <summary>
+        /// this for check if my data is changed if changed will refresh 
+        /// </summary>
         public static bool CheckFun(Qustion obj1, Qustion obj2)
-        { 
-            if (obj1.TypeOfQuestion == TypeOfQuestion.Slider &&obj2.TypeOfQuestion == TypeOfQuestion.Slider)
+        {
+            try
             {
-                Slider SliderobjCompare = (Slider)obj1;
-                Slider SliderobjCompare2 = (Slider)obj2;
-                if (SliderobjCompare.Id == SliderobjCompare2.Id && SliderobjCompare2.Order == SliderobjCompare.Order && SliderobjCompare2.StartValue == SliderobjCompare.StartValue && SliderobjCompare2.StartCaption == SliderobjCompare.StartCaption && SliderobjCompare2.EndValue == SliderobjCompare.EndValue && SliderobjCompare2.EndCaption == SliderobjCompare.EndCaption)
-                    return false;
-                return true; 
-            }if (obj1.TypeOfQuestion == TypeOfQuestion.Smily && obj2.TypeOfQuestion == TypeOfQuestion.Smily)
+
+                if (obj1.TypeOfQuestion == TypeOfQuestion.Slider && obj2.TypeOfQuestion == TypeOfQuestion.Slider)
+                {
+                    Slider SliderobjCompare = (Slider)obj1;
+                    Slider SliderobjCompare2 = (Slider)obj2;
+                    if (SliderobjCompare.Id == SliderobjCompare2.Id && SliderobjCompare2.Order == SliderobjCompare.Order && SliderobjCompare2.StartValue == SliderobjCompare.StartValue && SliderobjCompare2.StartCaption == SliderobjCompare.StartCaption && SliderobjCompare2.EndValue == SliderobjCompare.EndValue && SliderobjCompare2.EndCaption == SliderobjCompare.EndCaption && SliderobjCompare2.NewText == SliderobjCompare.NewText)
+                        return false;
+                    return true;
+                }
+                if (obj1.TypeOfQuestion == TypeOfQuestion.Smily && obj2.TypeOfQuestion == TypeOfQuestion.Smily)
+                {
+
+                    Smiles SmilesobjCompare = (Smiles)obj1;
+                    Smiles SmilesobjCompare2 = (Smiles)obj2;
+                    if (SmilesobjCompare.Id == SmilesobjCompare2.Id && SmilesobjCompare.Order == SmilesobjCompare2.Order && SmilesobjCompare.NumberOfSmiles == SmilesobjCompare2.NumberOfSmiles && SmilesobjCompare2.NewText.Equals(SmilesobjCompare.NewText))
+                        return false;
+                    return true;
+                }
+                if (obj1.TypeOfQuestion == TypeOfQuestion.Stars && obj2.TypeOfQuestion == TypeOfQuestion.Stars)
+                {
+                    Stars StarsobjCompare = (Stars)obj1;
+                    Stars StarsobjCompare2 = (Stars)obj2;
+
+                    if (StarsobjCompare.Id == StarsobjCompare2.Id && StarsobjCompare.Order == StarsobjCompare2.Order && StarsobjCompare2.NumberOfStars == StarsobjCompare.NumberOfStars && StarsobjCompare2.NewText == StarsobjCompare.NewText)
+                    {
+                        return false;
+                    }
+                    return true;
+                }
+                return false;
+            }catch (Exception ex)
             {
-                Smiles SmilesobjCompare = (Smiles)obj1;
-                Smiles SmilesobjCompare2 = (Smiles)obj2;
-                if (SmilesobjCompare.Id == SmilesobjCompare2.Id && SmilesobjCompare.Order == SmilesobjCompare2.Order && SmilesobjCompare.NumberOfSmiles == SmilesobjCompare2.NumberOfSmiles)
-                    return false;
-                return true; 
+                GenralVariables.Errors.Log(ex.Message);
+                return false; 
             }
-            if (obj1.TypeOfQuestion == TypeOfQuestion.Stars && obj2.TypeOfQuestion == TypeOfQuestion.Stars)
-            {
-                Stars StarsobjCompare = (Stars)obj1;
-                Stars StarsobjCompare2 = (Stars)obj2;
-                if (StarsobjCompare.Id == StarsobjCompare2.Id && StarsobjCompare.Order == StarsobjCompare2.Order && StarsobjCompare2.NumberOfStars == StarsobjCompare.NumberOfStars)
-                    return false;
-                return true; 
-            }
-            return false; 
         }
+        /// <summary>
+        /// this function for get new data from database 
+        /// </summary>
         public static void GetDataAndCheckForRefresh()
         {
 
@@ -71,11 +93,13 @@ namespace OperationManger
                     bool f = false;
                     if (TempListOfQuestion.Count == ListOfAllQuestion.Count)
                     {
-                        f = true; 
                         for (int i = 0; i < TempListOfQuestion.Count; ++i)
                         {
-                            if (!CheckFun(TempListOfQuestion[i], ListOfAllQuestion[i]))
-                                f = false;
+                            if (CheckFun(TempListOfQuestion[i], ListOfAllQuestion[i]))
+                            {
+                                f = true;
+                                break; 
+                            }
                         }
                     }
                     else
@@ -91,9 +115,12 @@ namespace OperationManger
                 }
             }catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
             }
         }
+        /// <summary>
+        /// add question will receive the data from ui and send it to database 
+        /// </summary>
         public static int AddQustion(Qustion NewQuestion)
         {
             try
@@ -115,10 +142,13 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex); 
+                GenralVariables.Errors.Log(ex.Message); 
                 return GenralVariables.ErrorInMangerAdd;
             }
         }
+        /// <summary>
+        ///edit  question will receive new data for edit from ui and send it to database 
+        /// </summary>
         public static int EditQustion(Qustion Question)
         {
             try
@@ -140,10 +170,13 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInMangerEdit;
             }
         }
+        /// <summary>
+        /// delete question will receive question from ui and send it to database to delete
+        /// </summary>
         public static int DeleteQustion(Qustion Question)
         {
             try
@@ -165,10 +198,13 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInMangerDelete; 
             }
         }
+        /// <summary>
+        /// to get a question as a list from database
+        /// </summary>
         public static int GetQustion(ref List<Qustion> TempList)
         {
             try
@@ -177,7 +213,7 @@ namespace OperationManger
             }
             catch (Exception ex)
             {
-                GenralVariables.Errors.Log(ex);
+                GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInMangerGetQuestion;
             }
         }

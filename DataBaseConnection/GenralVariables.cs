@@ -71,7 +71,8 @@ namespace DataBaseConnection
         public const int ErrorInSelectionQuestion = 503;
         public const int ErrorInEditQuestion = 504;
         public const int ErrorInDeleteQuestion = 505;
-        public const int ErrorInGetQuestion = 506; 
+        public const int ErrorInGetQuestion = 506;
+        public const int ErrorInOperation = 507; 
 
 
     }

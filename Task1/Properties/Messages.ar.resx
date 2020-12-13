@@ -153,6 +153,9 @@
   <data name="ErrorDataBaseSelectQuestion" xml:space="preserve">
     <value>كانت هناك بعض المشاكل في قاعدة البيانات أثناء اختيار السؤال</value>
   </data>
+  <data name="ErrorInOperation" xml:space="preserve">
+    <value>لا نستطيع أيجاد هاذا السؤال</value>
+  </data>
   <data name="ErrorManger" xml:space="preserve">
     <value>كانت هناك بعض المشاكل في مدير العمليات</value>
   </data>
