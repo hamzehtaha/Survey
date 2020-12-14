@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BaseLog;
-using System.Windows.Forms;
 namespace Question
 {
     public class Slider : Qustion
@@ -28,7 +27,6 @@ namespace Question
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resource1.ErrorModels);
                 GenralVariables.Errors.Log(ex.Message);
             }
         }
@@ -47,7 +45,6 @@ namespace Question
             }
             catch (Exception ex)
             {
-                MessageBox.Show(Properties.Resource1.ErrorModels);
                 GenralVariables.Errors.Log(ex.Message);
             }
         }

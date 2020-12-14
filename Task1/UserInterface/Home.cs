@@ -408,11 +408,11 @@ namespace Survey
         {
            try
            {
-                Operation.Flag = false;
+                Operation.StillRefresh = false;
            }
             catch (Exception ex)
             {
-                Operation.Flag = false;
+                Operation.StillRefresh = false;
                 GenralVariables.Errors.Log(ex.Message);
                 MessageBox.Show(Survey.Properties.Messages.MessageError);
             }

@@ -4,8 +4,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using BaseLog;
-using System.Windows.Forms; 
+using BaseLog; 
 namespace DataBaseConnection
 {
     public class GenralVariables
@@ -61,8 +60,31 @@ namespace DataBaseConnection
         public const string InsertIntoQustion = "INSERT INTO Qustions(Qustions_text, Type_Of_Qustion,Qustion_order) VALUES(@Qustions_text,@Type_Of_Qustion,@Qustion_order);";
         public const string SelectMaxId = "select max(ID) as ID from ";
 
+
         /// <summary>
-        /// This is return vriable 0 = Succeeded , -1 =  Faild , -2 = Error
+        /// This constant string for errors will write in log file
+        /// </summary>
+        public const string ErrorDeleteQuestionInLog = "Warning.... you can't delete this questions maybe already deleted from anthor application";
+        public const string ErrorDeleteSliderInLog = "Warning.... you can't delete this question slider maybe already deleted from anthor application";
+        public const string ErrorDeleteSmileInLog = "Warning.... you can't delete this question smile maybe already deleted from anthor application";
+        public const string ErrorDeleteStarInLog = "Warning.... you can't delete this question star maybe already deleted from anthor application";
+        public const string ErrorEditStarInLog = "Warning.... you can't edit this question star maybe already deleted from anthor application";
+        public const string ErrorEditSmileInLog = "Warning.... you can't edit this question smile maybe already deleted from anthor application";
+        public const string ErrorEditSliderInLog = "Warning.... you can't edit this question slider maybe already deleted from anthor application";
+        public const string ErrorEditQuestionInLog = "Warning.... you can't edit this question maybe already deleted from anthor application";
+        public const string ErrorAddStarInLog = "Warning.... you can't add this question star";
+        public const string ErrorAddSmileInLog = "Warning.... you can't add this question smile";
+        public const string ErrorAddSliderInLog = "Warning.... you can't add this question slider";
+        public const string ErrorAddQuestionInLog = "Warning you can't add this question in database";
+
+
+
+
+
+
+
+        /// <summary>
+        /// This is return vriable 0 = Succeeded , anthor number is error
         /// </summary>
         public const int Succeeded = 0;
         public const int ErrorInDataBase = 500; 

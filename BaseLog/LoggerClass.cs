@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace BaseLog
 {
     /// <summary>
-    /// This Class using  AbstractLog For Error 
+    /// This Class For print errors in log file 
     /// </summary>
     public  class Logger
     {
@@ -27,6 +27,9 @@ namespace BaseLog
             get;
             set;
         }
+        /// <summary>
+        /// In constructor the name and the location of file  
+        /// </summary>
         public Logger()
         {
             try
@@ -42,22 +45,20 @@ namespace BaseLog
             }
         }
         /// <summary>
-        /// This Function OVERRIDE FROM AbstractLog that is write Errors and dates in log file 
+        /// This function for print in log file will print message of exception and stack trace and line number
         /// </summary>
         public void Log(string Message)
         {
             try
             {
-                StreamWriter writer = new StreamWriter(this.FilePath);
-                StackTrace st = new StackTrace(true);
-                StackFrame frame = st.GetFrame(0);
-                string MethodName = frame.GetMethod().Name;
-                writer.Write("\r\nLog Entry : ");
-                writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
-                writer.WriteLine("{0}", Message);
-                writer.WriteLine("{0} {1}", "Method Name,Line Number:",st.ToString().Trim());
-                writer.WriteLine("------------------------------------");
-                writer.Close(); 
+                StreamWriter Writer = new StreamWriter(this.FilePath);
+                StackTrace StackTraceForPrintDetailsOfErrors = new StackTrace(true);
+                Writer.Write("\r\nLog Entry : ");
+                Writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());
+                Writer.WriteLine("{0}", Message);
+                Writer.WriteLine("{0} {1}", "Tracing the error : ", StackTraceForPrintDetailsOfErrors.ToString().Trim());
+                Writer.WriteLine("------------------------------------");
+                Writer.Close(); 
             }
             catch (Exception Ex)
             {

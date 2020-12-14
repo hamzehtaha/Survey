@@ -9,7 +9,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Question;
 using BaseLog;
-using System.Windows.Forms;
 using System.Threading;
 
 namespace DataBaseConnection
@@ -20,6 +19,7 @@ namespace DataBaseConnection
     /// </summary>
     public class DataBaseConnections
     {
+        
         /// <summary>
         /// This function for concatneate attrubites for bulid connection string 
         /// </summary>
@@ -41,11 +41,50 @@ namespace DataBaseConnection
             }
         }
         /// <summary>
+        /// This function to select a question from database using his type from manger.
+        /// </summary>
+        private static int SelectIdType(TypeOfQuestion TypeOfQustion, ref int Id)
+        {
+            try
+            {
+                int ResultOfBulid = BuildConnectionString();
+                if (ResultOfBulid == GenralVariables.Succeeded)
+                {
+                    string SelectIdTypeStatment = GenralVariables.SelectMaxId + TypeOfQustion.ToString();
+                    Id = -1;
+                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
+                    {
+                        SqlCommand CommandForSelectIdType = new SqlCommand(SelectIdTypeStatment, Connection);
+                        CommandForSelectIdType.Connection.Open();
+                        SqlDataReader Reader = CommandForSelectIdType.ExecuteReader();
+                        while (Reader.Read())
+                            Id = Convert.ToInt32(Reader[GenralVariables.IdQuestion]);
+                        Reader.Close();
+                        if (Id != -1)
+                            return GenralVariables.Succeeded;
+
+                    }
+                    return GenralVariables.ErrorInDataBase;
+                }
+                return ResultOfBulid;
+            }
+            catch (Exception ex)
+            {
+                Id = -1;
+                GenralVariables.Errors.Log(ex.Message);
+                return GenralVariables.ErrorInSelectionQuestion;
+            }
+        }
+        /// <summary>
         /// This functions for add or edit and delete and select from database,
         /// And connections in database 
         /// </summary>
+
+
+
         /// <summary>
-        /// For Add Qustion return new OBJECT OF QUESTION
+        /// This functions for add a question in database get data from manger 
+        /// and return 0 if succeeded
         /// </summary>
         private static int AddQustionInDataBase(Qustion Question,out int Id)
         {
@@ -69,7 +108,7 @@ namespace DataBaseConnection
                             return GenralVariables.Succeeded;
                         }else
                         {
-                            GenralVariables.Errors.Log("Warning you can't add this question in database");
+                            GenralVariables.Errors.Log(GenralVariables.ErrorAddQuestionInLog);
                             return GenralVariables.ErrorInOperation;
                         }
                     }
@@ -84,38 +123,6 @@ namespace DataBaseConnection
                 return GenralVariables.ErrorInAddQuestion; 
             }
             
-        }
-        private static int SelectIdType (TypeOfQuestion TypeOfQustion, ref int Id)
-        {
-            try
-            {
-                int ResultOfBulid = BuildConnectionString();
-                if (ResultOfBulid == GenralVariables.Succeeded)
-                {
-                    string SelectIdTypeStatment = GenralVariables.SelectMaxId + TypeOfQustion.ToString();
-                    Id = -1;
-                    using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
-                    {
-                        SqlCommand CommandForSelectIdType = new SqlCommand(SelectIdTypeStatment, Connection);
-                        CommandForSelectIdType.Connection.Open();
-                        SqlDataReader Reader = CommandForSelectIdType.ExecuteReader();
-                        while (Reader.Read())
-                            Id = Convert.ToInt32(Reader[GenralVariables.IdQuestion]);
-                        Reader.Close();
-                        if (Id != -1)
-                            return GenralVariables.Succeeded;
-
-                    }
-                    return GenralVariables.ErrorInDataBase;
-                }
-                return ResultOfBulid; 
-            }
-            catch (Exception ex)
-            {
-                Id = -1; 
-                GenralVariables.Errors.Log(ex.Message);
-                return GenralVariables.ErrorInSelectionQuestion;
-            }
         }
         public static int AddNewSlider(Qustion NewQuestion)
         {
@@ -151,7 +158,7 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.Log("Warning.... you can't add this question slider");
+                                GenralVariables.Errors.Log(GenralVariables.ErrorAddSliderInLog);
                                 return GenralVariables.ErrorInOperation;
                             }
                         }
@@ -199,7 +206,7 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.Log("Warning.... you can't add this question smile");
+                                GenralVariables.Errors.Log(GenralVariables.ErrorAddSmileInLog);
                                 return GenralVariables.ErrorInOperation;
                             }
                         }
@@ -248,7 +255,7 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.Log("Warning.... you can't add this question star");
+                                GenralVariables.Errors.Log(GenralVariables.ErrorAddStarInLog);
                                 return GenralVariables.ErrorInOperation;
                             }
                         }
@@ -266,7 +273,8 @@ namespace DataBaseConnection
             
         }
         /// <summary>
-        /// For Edit Question retrun object after edited
+        /// This functions for edit a question in database and get a new data from manger
+        /// and return 0 if succeeded
         /// </summary>
         private static int EditQuestion(Qustion Question)
         {
@@ -288,7 +296,7 @@ namespace DataBaseConnection
                             return GenralVariables.Succeeded;
                         else
                         {
-                            GenralVariables.Errors.Log("Warning.... you can't edit this question maybe already deleted from anthor application");
+                            GenralVariables.Errors.Log(GenralVariables.ErrorEditQuestionInLog);
                             return GenralVariables.ErrorInOperation;
                         }
                     }
@@ -329,7 +337,7 @@ namespace DataBaseConnection
                                 return GenralVariables.Succeeded;
                             else
                             {
-                                GenralVariables.Errors.Log("Warning.... you can't edit this question slider maybe already deleted from anthor application");
+                                GenralVariables.Errors.Log(GenralVariables.ErrorEditSliderInLog);
                                 return GenralVariables.ErrorInOperation;
                             }
                         }
@@ -368,7 +376,7 @@ namespace DataBaseConnection
                                 return GenralVariables.Succeeded;
                             else
                             {
-                                GenralVariables.Errors.Log("Warning.... you can't edit this question smile maybe already deleted from anthor application");
+                                GenralVariables.Errors.Log(GenralVariables.ErrorEditSmileInLog);
                                 return GenralVariables.ErrorInOperation;
                             }
                         }
@@ -408,7 +416,7 @@ namespace DataBaseConnection
                                 return GenralVariables.Succeeded;
                             else
                             {
-                                GenralVariables.Errors.Log("Warning.... you can't edit this question star maybe already deleted from anthor application");
+                                GenralVariables.Errors.Log(GenralVariables.ErrorEditStarInLog);
                                 return GenralVariables.ErrorInOperation; 
                             }
                         }
@@ -426,7 +434,8 @@ namespace DataBaseConnection
             }
         }
         /// <summary>
-        /// For Delete Question and return 1 if deleted and if not return 0 
+        /// This functions for delete a question from database and get a question to delete it from manger
+        /// and return 0 if succeeded
         /// </summary>
         private static int DeleteQustion(int Id)
         {
@@ -448,7 +457,7 @@ namespace DataBaseConnection
                         }
                         else
                         {
-                            GenralVariables.Errors.Log("Warning.... you can't delete this questions maybe already deleted from anthor application");
+                            GenralVariables.Errors.Log(GenralVariables.ErrorDeleteQuestionInLog);
                             return GenralVariables.ErrorInOperation; 
                         }
                     }
@@ -459,7 +468,6 @@ namespace DataBaseConnection
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion; 
             }
         }
@@ -489,7 +497,7 @@ namespace DataBaseConnection
                         }
                         else
                         {
-                            GenralVariables.Errors.Log("Warning.... you can't delete this question slider maybe already deleted from anthor application");
+                            GenralVariables.Errors.Log(GenralVariables.ErrorDeleteSliderInLog);
                             return GenralVariables.ErrorInOperation;
                         }
                         return ResultOfDelete;
@@ -500,7 +508,6 @@ namespace DataBaseConnection
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion; 
             }
         }
@@ -530,7 +537,7 @@ namespace DataBaseConnection
                         }
                         else
                         {
-                            GenralVariables.Errors.Log("Warning.... you can't delete this question smile maybe already deleted from anthor application");
+                            GenralVariables.Errors.Log(GenralVariables.ErrorDeleteSmileInLog);
                             return GenralVariables.ErrorInOperation;
                         }
                         return ResultOfDelete;
@@ -542,7 +549,6 @@ namespace DataBaseConnection
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion;
             }
         }
@@ -572,7 +578,7 @@ namespace DataBaseConnection
                         }
                         else
                         {
-                            GenralVariables.Errors.Log("Warning.... you can't delete this question star maybe already deleted from anthor application");
+                            GenralVariables.Errors.Log(GenralVariables.ErrorDeleteStarInLog);
                             return GenralVariables.ErrorInOperation;
                         }
                         return ResultOfDelete;
@@ -583,14 +589,12 @@ namespace DataBaseConnection
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInDeleteQuestion; 
             }
         }
         /// <summary>
-        /// Return list of question from database
+        /// Get all my question from database as list and return the list to manger
         /// </summary>
-        /// 
         public static int GetQuestionFromDataBase(ref List<Qustion> TempListOfQustion)
         {
             try
@@ -658,7 +662,6 @@ namespace DataBaseConnection
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
-                MessageBox.Show(DataBaseConnection.Properties.Resource1.ErrorData);
                 return GenralVariables.ErrorInGetQuestion;
             }
         }

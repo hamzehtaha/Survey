@@ -7,26 +7,27 @@ using DataBaseConnection;
 using Question;
 using BaseLog;
 using System.Threading;
-using System.Windows.Forms;
 using System.Configuration;
 namespace OperationManger
 {
     public class Operation
     {
+
         public  delegate void ShowDataDelegate();
         public static ShowDataDelegate PutListToShow;
         public static List<Qustion> ListOfAllQuestion = new List<Qustion>();
-        public static List<Qustion> TempListOfQuestion = new List<Qustion>();
         private static int TimeForChangeData = Convert.ToInt32(ConfigurationManager.AppSettings["TimeDataChange"]);
-        public static Boolean Flag = true; 
+        public static Boolean StillRefresh = true;
+
+
         /// <summary>
-        /// This function for start thread to refresh data 
+        /// This function for start thread to call function GetAllQuestionAndCheckForRefresh
         /// </summary>
         public static void RefreshData()
         {
             try
             {
-                Thread ThreadForRefresh = new Thread(GetDataAndCheckForRefresh);
+                Thread ThreadForRefresh = new Thread(GetAllQuestionAndCheckForRefresh);
                 ThreadForRefresh.IsBackground = true;
                 ThreadForRefresh.Start(); 
 
@@ -36,36 +37,36 @@ namespace OperationManger
             }
         }
         /// <summary>
-        /// this for check if my data is changed if changed will refresh 
+        /// this for check if my tow object are equals or not
+        /// return true if objects are not equal and false if objects are equal for refresh data
         /// </summary>
-        public static bool CheckFun(Qustion obj1, Qustion obj2)
+        public static bool IsEqual(Qustion OldObject, Qustion NewObject)
         {
             try
             {
 
-                if (obj1.TypeOfQuestion == TypeOfQuestion.Slider && obj2.TypeOfQuestion == TypeOfQuestion.Slider)
+                if (OldObject.TypeOfQuestion == TypeOfQuestion.Slider && NewObject.TypeOfQuestion == TypeOfQuestion.Slider)
                 {
-                    Slider SliderobjCompare = (Slider)obj1;
-                    Slider SliderobjCompare2 = (Slider)obj2;
-                    if (SliderobjCompare.Id == SliderobjCompare2.Id && SliderobjCompare2.Order == SliderobjCompare.Order && SliderobjCompare2.StartValue == SliderobjCompare.StartValue && SliderobjCompare2.StartCaption == SliderobjCompare.StartCaption && SliderobjCompare2.EndValue == SliderobjCompare.EndValue && SliderobjCompare2.EndCaption == SliderobjCompare.EndCaption && SliderobjCompare2.NewText == SliderobjCompare.NewText)
+                    Slider SliderobjCompareOld = (Slider)OldObject;
+                    Slider SliderobjCompareNew = (Slider)NewObject;
+                    if (SliderobjCompareOld.Id == SliderobjCompareNew.Id && SliderobjCompareNew.Order == SliderobjCompareOld.Order && SliderobjCompareNew.StartValue == SliderobjCompareOld.StartValue && SliderobjCompareNew.StartCaption == SliderobjCompareOld.StartCaption && SliderobjCompareNew.EndValue == SliderobjCompareOld.EndValue && SliderobjCompareNew.EndCaption == SliderobjCompareOld.EndCaption && SliderobjCompareNew.NewText == SliderobjCompareOld.NewText)
                         return false;
                     return true;
                 }
-                if (obj1.TypeOfQuestion == TypeOfQuestion.Smily && obj2.TypeOfQuestion == TypeOfQuestion.Smily)
+                if (OldObject.TypeOfQuestion == TypeOfQuestion.Smily && NewObject.TypeOfQuestion == TypeOfQuestion.Smily)
                 {
 
-                    Smiles SmilesobjCompare = (Smiles)obj1;
-                    Smiles SmilesobjCompare2 = (Smiles)obj2;
-                    if (SmilesobjCompare.Id == SmilesobjCompare2.Id && SmilesobjCompare.Order == SmilesobjCompare2.Order && SmilesobjCompare.NumberOfSmiles == SmilesobjCompare2.NumberOfSmiles && SmilesobjCompare2.NewText.Equals(SmilesobjCompare.NewText))
+                    Smiles SmilesobjCompareOld = (Smiles)OldObject;
+                    Smiles SmilesobjCompareNew = (Smiles)NewObject;
+                    if (SmilesobjCompareOld.Id == SmilesobjCompareNew.Id && SmilesobjCompareOld.Order == SmilesobjCompareNew.Order && SmilesobjCompareOld.NumberOfSmiles == SmilesobjCompareNew.NumberOfSmiles && SmilesobjCompareNew.NewText.Equals(SmilesobjCompareOld.NewText))
                         return false;
                     return true;
                 }
-                if (obj1.TypeOfQuestion == TypeOfQuestion.Stars && obj2.TypeOfQuestion == TypeOfQuestion.Stars)
+                if (OldObject.TypeOfQuestion == TypeOfQuestion.Stars && NewObject.TypeOfQuestion == TypeOfQuestion.Stars)
                 {
-                    Stars StarsobjCompare = (Stars)obj1;
-                    Stars StarsobjCompare2 = (Stars)obj2;
-
-                    if (StarsobjCompare.Id == StarsobjCompare2.Id && StarsobjCompare.Order == StarsobjCompare2.Order && StarsobjCompare2.NumberOfStars == StarsobjCompare.NumberOfStars && StarsobjCompare2.NewText == StarsobjCompare.NewText)
+                    Stars StarsobjCompareOld = (Stars)OldObject;
+                    Stars StarsobjCompareNew = (Stars)NewObject;
+                    if (StarsobjCompareOld.Id == StarsobjCompareNew.Id && StarsobjCompareOld.Order == StarsobjCompareNew.Order && StarsobjCompareNew.NumberOfStars == StarsobjCompareOld.NumberOfStars && StarsobjCompareNew.NewText == StarsobjCompareOld.NewText)
                     {
                         return false;
                     }
@@ -78,35 +79,38 @@ namespace OperationManger
                 return false; 
             }
         }
-        /// <summary>
-        /// this function for get new data from database 
-        /// </summary>
-        public static void GetDataAndCheckForRefresh()
-        {
 
+
+        /// <summary>
+        /// this function for refresh my list if my list is changed 
+        /// using IsEqual function to check if my list is changed or not.
+        /// </summary>
+        public static void GetAllQuestionAndCheckForRefresh()
+        {
             try
-            { 
-                while (Flag)
+            {
+                List<Qustion> TempListOfQuestion = new List<Qustion>(); 
+                while (StillRefresh)
                 {
                     TempListOfQuestion.Clear();
                     DataBaseConnections.GetQuestionFromDataBase(ref TempListOfQuestion);
-                    bool f = false;
+                    bool IsDifferntList = false;
                     if (TempListOfQuestion.Count == ListOfAllQuestion.Count)
                     {
                         for (int i = 0; i < TempListOfQuestion.Count; ++i)
                         {
-                            if (CheckFun(TempListOfQuestion[i], ListOfAllQuestion[i]))
+                            if (IsEqual(TempListOfQuestion[i], ListOfAllQuestion[i]))
                             {
-                                f = true;
+                                IsDifferntList = true;
                                 break; 
                             }
                         }
                     }
                     else
                     {
-                        f = true; 
+                        IsDifferntList = true; 
                     }
-                    if (f)
+                    if (IsDifferntList)
                     {
                         ListOfAllQuestion = TempListOfQuestion.ToList();
                         PutListToShow();
@@ -118,8 +122,10 @@ namespace OperationManger
                 GenralVariables.Errors.Log(ex.Message);
             }
         }
+
         /// <summary>
-        /// add question will receive the data from ui and send it to database 
+        /// Add question will receive the data from UI and send it to database and return 0 
+        /// if add operation is succeeded
         /// </summary>
         public static int AddQustion(Qustion NewQuestion)
         {
@@ -146,8 +152,11 @@ namespace OperationManger
                 return GenralVariables.ErrorInMangerAdd;
             }
         }
+
+
         /// <summary>
-        ///edit  question will receive new data for edit from ui and send it to database 
+        /// Edit question will receive new data for edit from UI and send it to database
+        /// and delete 0 if succeeded
         /// </summary>
         public static int EditQustion(Qustion Question)
         {
@@ -174,8 +183,11 @@ namespace OperationManger
                 return GenralVariables.ErrorInMangerEdit;
             }
         }
+
+
         /// <summary>
-        /// delete question will receive question from ui and send it to database to delete
+        /// delete question will receive question from UI and send it to database to delete
+        /// and return 0 if delete operation is succeeded.
         /// </summary>
         public static int DeleteQustion(Qustion Question)
         {
@@ -202,14 +214,17 @@ namespace OperationManger
                 return GenralVariables.ErrorInMangerDelete; 
             }
         }
+
+
         /// <summary>
-        /// to get a question as a list from database
+        /// This function to get all question from database and put the questions in my list by refrence
+        /// and return 0 if getquestion is succeeded
         /// </summary>
-        public static int GetQustion(ref List<Qustion> TempList)
+        public static int GetQustion(ref List<Qustion> ListOfAllQuestion)
         {
             try
             {
-                  return DataBaseConnections.GetQuestionFromDataBase(ref TempList);
+                  return DataBaseConnections.GetQuestionFromDataBase(ref ListOfAllQuestion);
             }
             catch (Exception ex)
             {
