@@ -52,7 +52,7 @@ namespace Question
             {
                 Smiles Object2 = (Smiles)NewObject;
                 Smiles Object1 = (Smiles)this;
-                if (Object1.Order == Object1.Order && Object1.NumberOfSmiles == Object1.NumberOfSmiles && Object1.NewText == Object2.NewText)
+                if (Object1.Order == Object2.Order && Object1.NumberOfSmiles == Object2.NumberOfSmiles && Object1.NewText == Object2.NewText)
                     return false;
                 return true;
             }
