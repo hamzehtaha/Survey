@@ -17,9 +17,7 @@ namespace OperationManger
         public static ShowDataDelegate PutListToShow;
         public static List<Qustion> ListOfAllQuestion = new List<Qustion>();
         private static int TimeForChangeData = Convert.ToInt32(ConfigurationManager.AppSettings["TimeDataChange"]);
-        public static Boolean StillRefresh = true;
-
-
+        public static Boolean EnableAutoRefrsh = true;
         /// <summary>
         /// This function for start thread to call function GetAllQuestionAndCheckForRefresh
         /// </summary>
@@ -27,7 +25,7 @@ namespace OperationManger
         {
             try
             {
-                Thread ThreadForRefresh = new Thread(GetAllQuestionAndCheckForRefresh);
+                Thread ThreadForRefresh = new Thread(CheckForRefresh);
                 ThreadForRefresh.IsBackground = true;
                 ThreadForRefresh.Start(); 
 
@@ -40,57 +38,12 @@ namespace OperationManger
         /// this for check if my tow object are equals or not
         /// return true if objects are not equal and false if objects are equal for refresh data
         /// </summary>
-        public static bool IsEqual(Qustion OldObject, Qustion NewObject)
-        {
-            try
-            {
-
-                if (OldObject.TypeOfQuestion == TypeOfQuestion.Slider && NewObject.TypeOfQuestion == TypeOfQuestion.Slider)
-                {
-                    Slider SliderobjCompareOld = (Slider)OldObject;
-                    Slider SliderobjCompareNew = (Slider)NewObject;
-                    if (SliderobjCompareOld.Id == SliderobjCompareNew.Id && SliderobjCompareNew.Order == SliderobjCompareOld.Order && SliderobjCompareNew.StartValue == SliderobjCompareOld.StartValue && SliderobjCompareNew.StartCaption == SliderobjCompareOld.StartCaption && SliderobjCompareNew.EndValue == SliderobjCompareOld.EndValue && SliderobjCompareNew.EndCaption == SliderobjCompareOld.EndCaption && SliderobjCompareNew.NewText == SliderobjCompareOld.NewText)
-                        return false;
-                    return true;
-                }
-                if (OldObject.TypeOfQuestion == TypeOfQuestion.Smily && NewObject.TypeOfQuestion == TypeOfQuestion.Smily)
-                {
-
-                    Smiles SmilesobjCompareOld = (Smiles)OldObject;
-                    Smiles SmilesobjCompareNew = (Smiles)NewObject;
-                    if (SmilesobjCompareOld.Id == SmilesobjCompareNew.Id && SmilesobjCompareOld.Order == SmilesobjCompareNew.Order && SmilesobjCompareOld.NumberOfSmiles == SmilesobjCompareNew.NumberOfSmiles && SmilesobjCompareNew.NewText.Equals(SmilesobjCompareOld.NewText))
-                        return false;
-                    return true;
-                }
-                if (OldObject.TypeOfQuestion == TypeOfQuestion.Stars && NewObject.TypeOfQuestion == TypeOfQuestion.Stars)
-                {
-                    Stars StarsobjCompareOld = (Stars)OldObject;
-                    Stars StarsobjCompareNew = (Stars)NewObject;
-                    if (StarsobjCompareOld.Id == StarsobjCompareNew.Id && StarsobjCompareOld.Order == StarsobjCompareNew.Order && StarsobjCompareNew.NumberOfStars == StarsobjCompareOld.NumberOfStars && StarsobjCompareNew.NewText == StarsobjCompareOld.NewText)
-                    {
-                        return false;
-                    }
-                    return true;
-                }
-                return false;
-            }catch (Exception ex)
-            {
-                GenralVariables.Errors.Log(ex.Message);
-                return false; 
-            }
-        }
-
-
-        /// <summary>
-        /// this function for refresh my list if my list is changed 
-        /// using IsEqual function to check if my list is changed or not.
-        /// </summary>
-        public static void GetAllQuestionAndCheckForRefresh()
+        public static void CheckForRefresh()
         {
             try
             {
                 List<Qustion> TempListOfQuestion = new List<Qustion>(); 
-                while (StillRefresh)
+                while (EnableAutoRefrsh)
                 {
                     TempListOfQuestion.Clear();
                     DataBaseConnections.GetQuestionFromDataBase(ref TempListOfQuestion);
@@ -99,7 +52,7 @@ namespace OperationManger
                     {
                         for (int i = 0; i < TempListOfQuestion.Count; ++i)
                         {
-                            if (IsEqual(TempListOfQuestion[i], ListOfAllQuestion[i]))
+                            if (TempListOfQuestion[i].Equals(ListOfAllQuestion[i]))
                             {
                                 IsDifferntList = true;
                                 break; 

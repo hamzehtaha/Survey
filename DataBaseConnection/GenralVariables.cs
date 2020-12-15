@@ -10,10 +10,10 @@ namespace DataBaseConnection
     public class GenralVariables
     {
         public static Logger Errors = new Logger();
-        
         /// <summary>
         /// This strings attrubites for connection string 
-        /// and concatnate and bulid connection string 
+        /// and concatnate and bulid connection string
+        /// 
         /// </summary>
         public static string ServerName;
         public static string ProviderName;

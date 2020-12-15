@@ -80,8 +80,6 @@ namespace DataBaseConnection
         /// And connections in database 
         /// </summary>
 
-
-
         /// <summary>
         /// This functions for add a question in database get data from manger 
         /// and return 0 if succeeded

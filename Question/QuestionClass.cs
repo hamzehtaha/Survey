@@ -18,5 +18,6 @@ namespace Question
         public int Order { get; set; }
         public int Id { get; set; }
         public TypeOfQuestion TypeOfQuestion { get; set; }
+        public abstract override bool Equals(Object NewObject); 
     }
 }

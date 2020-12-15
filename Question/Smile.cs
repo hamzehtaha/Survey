@@ -46,6 +46,23 @@ namespace Question
         public Smiles() { }
         public int NumberOfSmiles { get; set; }
         public int IdForType { get; set; }
+        public override bool Equals(Object NewObject)
+        {
+            try
+            {
+                Smiles Object2 = (Smiles)NewObject;
+                Smiles Object1 = (Smiles)this;
+                if (Object1.Order == Object1.Order && Object1.NumberOfSmiles == Object1.NumberOfSmiles && Object1.NewText == Object2.NewText)
+                    return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+                return false;
+                
+            }
+        }
 
     }
 }

@@ -48,7 +48,23 @@ namespace Question
         }
         public int NumberOfStars { get; set; }
         public int IdForType { get; set; }
+        public override bool Equals(Object NewObject)
+        {
+            try
+            {
+                Stars Object2 = (Stars)NewObject;
+                Stars Object1 = (Stars)this;
+                if (Object1.Order == Object2.Order && Object1.NumberOfStars == Object2.NumberOfStars && Object1.NewText == Object2.NewText)
+                    return false;
+                return true;
+            }
+            catch (Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+                return false;
 
+            }
+        }
 
 
     }

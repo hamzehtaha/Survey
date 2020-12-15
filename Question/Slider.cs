@@ -57,5 +57,23 @@ namespace Question
         public int EndValue { get; set; }
         public string StartCaption { get; set; }
         public string EndCaption { get; set; }
+        /// <summary>
+        /// Check if tow object type slider is equal 
+        /// </summary>
+        public override bool Equals(Object NewObject)
+        {
+            try
+            {
+                Slider Object2 = (Slider)NewObject;
+                Slider Object1 = (Slider)this;
+                if (Object1.Order == Object2.Order && Object1.StartValue == Object2.StartValue && Object1.StartCaption == Object2.StartCaption && Object1.EndValue == Object2.EndValue && Object1.EndCaption == Object2.EndCaption && Object1.NewText == Object2.NewText)
+                    return false;
+                return true;
+            }catch (Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+                return false;
+            }
+        }
     }
 }
