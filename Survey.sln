@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaseLog", "BaseLog\BaseLog.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OperationManger", "OperationManger\OperationManger.csproj", "{4815D443-14B3-464B-BE30-EBC249F8F06C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SurveyWebSite", "SurveyWebSite\SurveyWebSite.csproj", "{C13BD796-ADC4-4A04-8070-D7F3E8136DF3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{4815D443-14B3-464B-BE30-EBC249F8F06C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4815D443-14B3-464B-BE30-EBC249F8F06C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4815D443-14B3-464B-BE30-EBC249F8F06C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C13BD796-ADC4-4A04-8070-D7F3E8136DF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C13BD796-ADC4-4A04-8070-D7F3E8136DF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C13BD796-ADC4-4A04-8070-D7F3E8136DF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C13BD796-ADC4-4A04-8070-D7F3E8136DF3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

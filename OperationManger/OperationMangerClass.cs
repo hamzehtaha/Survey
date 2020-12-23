@@ -176,7 +176,7 @@ namespace OperationManger
         public static int GetQustion(ref List<Qustion> ListOfAllQuestion)
         {
             try
-            {
+            { 
                   return DataBaseConnections.GetQuestionFromDataBase(ref ListOfAllQuestion);
             }
             catch (Exception ex)
@@ -184,6 +184,22 @@ namespace OperationManger
                 GenralVariables.Errors.Log(ex.Message);
                 return GenralVariables.ErrorInMangerGetQuestion;
             }
+        }
+        public static IEnumerable<Qustion> GetAll()
+        {
+            ListOfAllQuestion.Clear(); 
+            GetQustion(ref ListOfAllQuestion);
+            return ListOfAllQuestion.OrderBy(r => r.NewText); 
+        }
+
+        public static Qustion SelectById (int Id)
+        {
+            foreach (Qustion TempForSelect in ListOfAllQuestion)
+            {
+                if (Id == TempForSelect.Id)
+                    return TempForSelect; 
+            }
+            return null; 
         }
 
     }

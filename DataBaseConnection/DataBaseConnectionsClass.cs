@@ -179,23 +179,22 @@ namespace DataBaseConnection
                 int ResultOfBulid = BuildConnectionString();
                 if (ResultOfBulid == GenralVariables.Succeeded)
                 {
-                    int Id = -1;
+                    Smiles SmileQuestion = (Smiles)NewQuestion;
+                    int Id;
                     int ResultOfAdd = AddQustionInDataBase(NewQuestion, out Id);
                     if (ResultOfAdd == GenralVariables.Succeeded)
                     {
-                        Smiles SmileQuestion = (Smiles)NewQuestion;
                         using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                         {
                             SqlCommand CommandForInsertSmile = new SqlCommand(GenralVariables.InsertInSmile, Connection);
                             CommandForInsertSmile.Parameters.AddWithValue(GenralVariables.NewNumberOfSmily, SmileQuestion.NumberOfSmiles);
                             CommandForInsertSmile.Parameters.AddWithValue(GenralVariables.QustionIdDataBase, Id);
+                            SmileQuestion.Id = Id;
                             CommandForInsertSmile.Connection.Open();
                             int NumberOfRowsaffected = CommandForInsertSmile.ExecuteNonQuery();
-                            CommandForInsertSmile.Parameters.Clear();
                             if (NumberOfRowsaffected >= 1)
                             {
-                                SmileQuestion.Id = Id;
-                                if (SelectIdType(TypeOfQuestion.Smily, ref Id) == GenralVariables.Succeeded)
+                                if (SelectIdType(TypeOfQuestion.Slider, ref Id) == GenralVariables.Succeeded)
                                 {
                                     SmileQuestion.IdForType = Id;
                                     NewQuestion = SmileQuestion;
@@ -204,7 +203,7 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.Log(GenralVariables.ErrorAddSmileInLog);
+                                GenralVariables.Errors.Log(GenralVariables.ErrorAddSliderInLog);
                                 return GenralVariables.ErrorInOperation;
                             }
                         }
@@ -212,13 +211,12 @@ namespace DataBaseConnection
                     }
                     return ResultOfAdd;
                 }
-                return ResultOfBulid; 
-                
+                return ResultOfBulid;
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
-                return GenralVariables.ErrorInAddQuestion; 
+                return GenralVariables.ErrorInAddQuestion;
             }
         }
         public static int AddNewStar(Qustion NewQuestion)
@@ -228,23 +226,22 @@ namespace DataBaseConnection
                 int ResultOfBulid = BuildConnectionString();
                 if (ResultOfBulid == GenralVariables.Succeeded)
                 {
+                    Stars StarQuestion = (Stars)NewQuestion;
                     int Id;
                     int ResultOfAdd = AddQustionInDataBase(NewQuestion, out Id);
                     if (ResultOfAdd == GenralVariables.Succeeded)
                     {
-                        Stars StarQuestion = (Stars)NewQuestion;
                         using (SqlConnection Connection = new SqlConnection(GenralVariables.ConnectionString))
                         {
                             SqlCommand CommandForInsertStar = new SqlCommand(GenralVariables.InsertInStar, Connection);
                             CommandForInsertStar.Parameters.AddWithValue(GenralVariables.NewNumberOfStars, StarQuestion.NumberOfStars);
                             CommandForInsertStar.Parameters.AddWithValue(GenralVariables.QustionIdDataBase, Id);
+                            StarQuestion.Id = Id;
                             CommandForInsertStar.Connection.Open();
                             int NumberOfRowsaffected = CommandForInsertStar.ExecuteNonQuery();
-                            CommandForInsertStar.Parameters.Clear();
                             if (NumberOfRowsaffected >= 1)
                             {
-                                StarQuestion.Id = Id;
-                                if (SelectIdType(TypeOfQuestion.Stars, ref Id) == GenralVariables.Succeeded)
+                                if (SelectIdType(TypeOfQuestion.Slider, ref Id) == GenralVariables.Succeeded)
                                 {
                                     StarQuestion.IdForType = Id;
                                     NewQuestion = StarQuestion;
@@ -253,7 +250,7 @@ namespace DataBaseConnection
                             }
                             else
                             {
-                                GenralVariables.Errors.Log(GenralVariables.ErrorAddStarInLog);
+                                GenralVariables.Errors.Log(GenralVariables.ErrorAddSliderInLog);
                                 return GenralVariables.ErrorInOperation;
                             }
                         }
@@ -261,14 +258,14 @@ namespace DataBaseConnection
                     }
                     return ResultOfAdd;
                 }
-                return ResultOfBulid; 
+                return ResultOfBulid;
             }
             catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
-                return GenralVariables.ErrorInAddQuestion; 
+                return GenralVariables.ErrorInAddQuestion;
             }
-            
+
         }
         /// <summary>
         /// This functions for edit a question in database and get a new data from manger
@@ -663,5 +660,7 @@ namespace DataBaseConnection
                 return GenralVariables.ErrorInGetQuestion;
             }
         }
+
+        
     }
 }

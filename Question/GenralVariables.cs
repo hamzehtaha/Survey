@@ -12,6 +12,7 @@ namespace Question
         Smily,
         Stars,
         Qustions
+
     }
     public enum TypeOfChoice
     {
