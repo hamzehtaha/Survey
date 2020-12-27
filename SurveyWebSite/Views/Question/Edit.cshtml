@@ -1,0 +1,17 @@
+﻿@model Question.Qustion
+
+@{ 
+    switch (Model.TypeOfQuestion)
+    {
+        case Question.TypeOfQuestion.Slider:
+            Html.RenderPartial("SliderView");
+            break;
+        case Question.TypeOfQuestion.Smily:
+            break;
+        case Question.TypeOfQuestion.Stars:
+            break;
+
+    }
+}
+
+

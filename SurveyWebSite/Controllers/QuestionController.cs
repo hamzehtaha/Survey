@@ -4,7 +4,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using OperationManger;
-using Question; 
+using Question;
+using SurveyWebSite.Models;
+
 namespace SurveyWebSite.Controllers
 {
     public class QuestionController : Controller
@@ -15,58 +17,21 @@ namespace SurveyWebSite.Controllers
             var l = Operation.GetAll();
             return View(l);
         }
+        [HttpGet]
         public ActionResult Create()
         {
             return View(); 
         }
-
-
-        public ActionResult CreateSlider()
-        {
-            Slider NewSlider = new Slider();
-            return View(NewSlider);
-        }
         [HttpPost]
-        public ActionResult CreateSlider(Slider NewSlider)
+        public ActionResult Create([ModelBinder(typeof(QustionModelBinder))]Qustion NewQuestion)
         {
-            Operation.AddQustion(NewSlider);
-            ModelState.Clear();
-            ViewBag.SuccessMessage = "The Question is Added";
-            return View("CreateSlider", new Slider());
+                Operation.AddQustion(NewQuestion);
+                ModelState.Clear();
+                ViewBag.SuccessMessage = "The Question is Added";
+            return View();
         }
 
-
-        public ActionResult CreateSmile()
-        {
-            Smiles NewSmile = new Smiles();
-            
-            return View(NewSmile); 
-        }
-        [HttpPost]
-        public ActionResult CreateSmile(Smiles NewSmile)
-        {
-            NewSmile.TypeOfQuestion = TypeOfQuestion.Smily;
-            int result  = Operation.AddQustion(NewSmile);
-            ModelState.Clear();
-            ViewBag.SuccessMessage = "The Question is Added";
-            return View("CreateSmile", new Smiles());
-        }
-
-        public ActionResult CreateStar()
-        {
-            Stars NewStar = new Stars();
-            return View(NewStar);
-        }
-        [HttpPost]
-        public ActionResult CreateStar(Stars NewStar)
-        {
-            NewStar.TypeOfQuestion = TypeOfQuestion.Stars; 
-            Operation.AddQustion(NewStar);
-            ModelState.Clear();
-            ViewBag.SuccessMessage = "The Question is Added" + NewStar.TypeOfQuestion;
-            return View("CreateStar", new Stars());
-        }
-
+        
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -85,6 +50,41 @@ namespace SurveyWebSite.Controllers
             Operation.DeleteQustion(QuestionWillDelete);
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public ActionResult Edit (int Id)
+        {
+            var ObjectWillEdit = Operation.SelectById(Id);
+            if (ObjectWillEdit == null)
+            {
+                return HttpNotFound(); 
+            }
+            if (ObjectWillEdit.TypeOfQuestion == TypeOfQuestion.Slider)
+            {
+                var SliderEdit = (Slider)ObjectWillEdit;
+                FormCollection Form = new FormCollection();
+                Form["Text"] = SliderEdit.NewText;
+                Form["Order"] = SliderEdit.Order.ToString();
+                Form["StartV"] = SliderEdit.StartValue.ToString();
+                Form["EndV"] = SliderEdit.EndValue.ToString();
+                Form["StartC"] = SliderEdit.StartCaption.ToString();
+                Form["EndC"] = SliderEdit.EndCaption.ToString();
+
+                return View(SliderEdit);
+            }
+            else if (ObjectWillEdit.TypeOfQuestion == TypeOfQuestion.Smily)
+            {
+                var SmileEdit = (Smiles)ObjectWillEdit;
+                return View(SmileEdit);
+            }else if (ObjectWillEdit.TypeOfQuestion == TypeOfQuestion.Stars)
+            {
+                var StarForEdit = (Stars)ObjectWillEdit;
+                return View(StarForEdit);
+            }
+            return View(); 
+                
+        }
+        
+
 
 
 
