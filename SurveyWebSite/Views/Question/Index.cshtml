@@ -1,51 +1,30 @@
 ﻿@model IEnumerable<Question.Qustion>
-
 @{
-    ViewBag.Title = "list Of Question";
+    ViewBag.Title = SurveyWebSite.Resources.Resource.ListOfQuestion;
 }
-
-<h2>Question List</h2>
+<h2>@SurveyWebSite.Resources.Resource.ListOfQuestion</h2>
 <br />
-
-<table class="table" style="border: 1px solid black; background-color:silver">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.NewText)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Order)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TypeOfQuestion)
-        </th>
-
-        
-
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.NewText)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Order)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TypeOfQuestion)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-    </td>
-</tr>
- 
+@{
+    //Html.RenderPartial("_List",Model);
 }
 
-</table>
+<div id="ListOfQuestion">
+    @Html.Partial("_List", Model)
+</div>
 <p>
 
-    @Html.ActionLink("Create New Question", "Create")
-
+    @Html.ActionLink(SurveyWebSite.Resources.Resource.CreateNewQuestion, "Create")
 </p>
+<script>
+    
+    function GetData() {
+        $.ajax({
+            url: "/Question/GetView/",
+            type: "get",
+            success: function (result) {
+                $('#ListOfQuestion').html(result);
+            }
+        });
+    }
+    GetData();
+</script>

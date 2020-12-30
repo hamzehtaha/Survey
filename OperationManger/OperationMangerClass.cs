@@ -8,28 +8,36 @@ using Question;
 using BaseLog;
 using System.Threading;
 using System.Configuration;
+using System.Web.Mvc;
+
 namespace OperationManger
 {
     public class Operation
     {
 
         public  delegate void ShowDataDelegate();
+        public delegate ActionResult ShowDataDelegateMVC(string lang);
         public static ShowDataDelegate PutListToShow;
+        public static ShowDataDelegateMVC PutListToShowMVC;
+        public static Thread ThreadForRefresh; 
         public static List<Qustion> ListOfAllQuestion = new List<Qustion>();
         private static int TimeForChangeData = Convert.ToInt32(ConfigurationManager.AppSettings["TimeDataChange"]);
         public static Boolean EnableAutoRefrsh = true;
+        public static bool IsDifferntList = false;
+        public static string FunctionReload = ""; 
         /// <summary>
         /// This function for start thread to call function GetAllQuestionAndCheckForRefresh
         /// </summary>
-        public static void RefreshData()
+        public  static void RefreshData()
         {
             try
             {
-                Thread ThreadForRefresh = new Thread(CheckForRefresh);
+                ThreadForRefresh = new Thread(CheckForRefresh);
                 ThreadForRefresh.IsBackground = true;
-                ThreadForRefresh.Start(); 
+                ThreadForRefresh.Start();
 
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);
             }
@@ -47,7 +55,7 @@ namespace OperationManger
                 {
                     TempListOfQuestion.Clear();
                     DataBaseConnections.GetQuestionFromDataBase(ref TempListOfQuestion);
-                    bool IsDifferntList = false;
+                    IsDifferntList = false;
                     if (TempListOfQuestion.Count == ListOfAllQuestion.Count)
                     {
                         for (int i = 0; i < TempListOfQuestion.Count; ++i)
@@ -66,9 +74,12 @@ namespace OperationManger
                     if (IsDifferntList)
                     {
                         ListOfAllQuestion = TempListOfQuestion.ToList();
-                        PutListToShow();
+                        //FunctionReload = "ReloadPage();"; 
+                        PutListToShow(); 
                     }
                     Thread.Sleep(TimeForChangeData);
+                    FunctionReload = ""; 
+
                 }
             }catch (Exception ex)
             {

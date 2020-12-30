@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Question.Qustion>
+@{
+    ViewBag.Title = SurveyWebSite.Resources.Resource.ListOfQuestion;
+}
+<h2>@SurveyWebSite.Resources.Resource.ListOfQuestion</h2>
+<br />
+
+<table class="table" style="border: 1px solid black; background-color:silver">
+    <tr>
+        <th>
+            @SurveyWebSite.Resources.Resource.QuestionText
+        </th>
+        <th>
+            @SurveyWebSite.Resources.Resource.QuestionOrder
+        </th>
+        <th>
+            @SurveyWebSite.Resources.Resource.QuestionType
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfQuestion)
+            </td>
+            <td>
+                @Html.ActionLink(SurveyWebSite.Resources.Resource.Edit, "Edit", new { id = item.Id }) |
+                @Html.ActionLink(SurveyWebSite.Resources.Resource.Delete, "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>
+<p>
+
+    @Html.ActionLink(SurveyWebSite.Resources.Resource.CreateNewQuestion, "Create")
+
+</p>
+   
+<script>
+    @ViewBag.JS
+    function ReloadPage () {
+        location.reload(true);
+    }
+</script>
+

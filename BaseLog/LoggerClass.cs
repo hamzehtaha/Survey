@@ -37,7 +37,7 @@ namespace BaseLog
                 this.CurrentDirectory = Directory.GetCurrentDirectory();
                 Console.WriteLine(Directory.GetCurrentDirectory()); 
                 this.FileName = "Log.txt";
-                this.FilePath = this.CurrentDirectory + "/" + this.FileName;
+                this.FilePath = "D:\\Log.txt";
             }
             catch (Exception ex)
             {
@@ -51,7 +51,7 @@ namespace BaseLog
         {
             try
             {
-                StreamWriter Writer = new StreamWriter(this.FilePath);
+               StreamWriter Writer = new StreamWriter(this.FilePath);
                 StackTrace StackTraceForPrintDetailsOfErrors = new StackTrace(true);
                 Writer.Write("\r\nLog Entry : ");
                 Writer.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(), DateTime.Now.ToLongDateString());

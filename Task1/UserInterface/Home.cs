@@ -383,7 +383,7 @@ namespace Survey
         {
             try
             {
-               Operation.RefreshData();
+               //Operation.RefreshData();
             }catch (Exception ex)
             {
                 GenralVariables.Errors.Log(ex.Message);

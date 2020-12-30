@@ -1,0 +1,37 @@
+﻿
+@model IEnumerable<Question.Qustion>
+<meta http-equiv="refresh" content="6" />
+<table class="table" style="border: 1px solid black;">
+    
+    <tr>
+        <th>
+            @SurveyWebSite.Resources.Resource.QuestionText
+        </th>
+        <th>
+            @SurveyWebSite.Resources.Resource.QuestionOrder
+        </th>
+        <th>
+            @SurveyWebSite.Resources.Resource.QuestionType
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NewText)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Order)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TypeOfQuestion)
+            </td>
+            <td>
+                @Html.ActionLink(SurveyWebSite.Resources.Resource.Edit, "Edit", new { id = item.Id }) |
+                @Html.ActionLink(SurveyWebSite.Resources.Resource.Delete, "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+</table>

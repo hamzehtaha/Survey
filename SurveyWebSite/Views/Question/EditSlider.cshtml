@@ -1,22 +1,15 @@
 ﻿@model Question.Slider
 
-@{
-    ViewBag.Title = "CreateSlider";
-}
-
-<h2>CreateSlider</h2>
-
-
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Slider</h4>
+    <h2 style="color:black">@SurveyWebSite.Resources.Resource.EditSlider</h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        @Html.LabelFor(model => model.NewText, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.QuestionText</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.NewText, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.NewText, "", new { @class = "text-danger" })
@@ -24,16 +17,28 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.Order, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.QuestionOrder</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
         </div>
     </div>
-
-
+    <div class="form-group" hidden="hidden">
+        @Html.LabelFor(model => model.Id, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Id, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Id, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group" hidden="hidden">
+        @Html.LabelFor(model => model.IdForType, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.IdForType, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.IdForType, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <div class="form-group">
-        @Html.LabelFor(model => model.StartValue, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.StartValue</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.StartValue, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.StartValue, "", new { @class = "text-danger" })
@@ -41,7 +46,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.EndValue, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.EndValue</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.EndValue, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.EndValue, "", new { @class = "text-danger" })
@@ -49,7 +54,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.StartCaption, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.StartCaption</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.StartCaption, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.StartCaption, "", new { @class = "text-danger" })
@@ -57,7 +62,7 @@
     </div>
 
     <div class="form-group">
-        @Html.LabelFor(model => model.EndCaption, htmlAttributes: new { @class = "control-label col-md-2" })
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.EndCaption</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.EndCaption, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.EndCaption, "", new { @class = "text-danger" })
@@ -66,7 +71,7 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value=@SurveyWebSite.Resources.Resource.SaveButton class="btn btn-default" />
         </div>
     </div>
     <div class="form-group">
@@ -77,10 +82,4 @@
 </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
