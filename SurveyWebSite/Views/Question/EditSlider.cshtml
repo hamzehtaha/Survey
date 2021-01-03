@@ -3,13 +3,13 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
 <div class="form-horizontal">
-    <h2 style="color:black">@SurveyWebSite.Resources.Resource.EditSlider</h2>
+    <h2 style="color:black">@SurveyWebSite.Resources.Messages.EditSlider</h2>
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <div class="form-group">
-        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.QuestionText</label>
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Messages.QuestionText</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.NewText, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.NewText, "", new { @class = "text-danger" })
@@ -17,7 +17,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.QuestionOrder</label>
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Messages.QuestionOrder</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="form-group">
-        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.StartValue</label>
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Messages.StartValue</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.StartValue, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.StartValue, "", new { @class = "text-danger" })
@@ -46,7 +46,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.EndValue</label>
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Messages.EndValue</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.EndValue, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.EndValue, "", new { @class = "text-danger" })
@@ -54,7 +54,7 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.StartCaption</label>
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Messages.StartCaption</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.StartCaption, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.StartCaption, "", new { @class = "text-danger" })
@@ -62,18 +62,23 @@
     </div>
 
     <div class="form-group">
-        <label class="control-label col-md-2">@SurveyWebSite.Resources.Resource.EndCaption</label>
+        <label class="control-label col-md-2">@SurveyWebSite.Resources.Messages.EndCaption</label>
         <div class="col-md-10">
             @Html.EditorFor(model => model.EndCaption, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.EndCaption, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value=@SurveyWebSite.Resources.Resource.SaveButton class="btn btn-default" />
+            <input type="submit" value=@SurveyWebSite.Resources.Messages.SaveButton class="btn btn-default" />
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <p>@Html.ActionLink(@SurveyWebSite.Resources.Messages.GoBack, "Home", "Question", null)</p>
+        </div>
+    </div>
+
     <div class="form-group">
         <div class="col-md-offset-2 col-md-2">
             <label class="label-success">@ViewBag.SuccessMessage</label>

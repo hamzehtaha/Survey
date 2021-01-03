@@ -135,6 +135,9 @@
   <data name="DeleteQuestion" xml:space="preserve">
     <value>Delete Question</value>
   </data>
+  <data name="dir" xml:space="preserve">
+    <value>ltr</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
@@ -164,6 +167,9 @@
   </data>
   <data name="ErrorMessageForText" xml:space="preserve">
     <value>'Please fill out this filed !'</value>
+  </data>
+  <data name="GoBack" xml:space="preserve">
+    <value>Back</value>
   </data>
   <data name="ListOfQuestion" xml:space="preserve">
     <value>List Of Question</value>
@@ -202,6 +208,6 @@
     <value>StartValue</value>
   </data>
   <data name="SureForDelete" xml:space="preserve">
-    <value>Are you sure you want to delete this?</value>
+    <value>Are you sure you want to delete this question?</value>
   </data>
 </root>

@@ -1,41 +1,33 @@
-﻿@model Question.Qustion
+﻿
+@model Question.Qustion
+<div dir="@SurveyWebSite.Resources.Messages.dir">
 
 
-
-
-<div>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.NewText)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.NewText)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Order)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Order)
-        </dd>
-        <dd>
-            @Html.DisplayFor(model => model.TypeOfQuestion)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
-<div class="form-actions no-color">
-    <h3>@SurveyWebSite.Resources.Resource.SureForDelete</h3>
-    <br />
-    <input type="submit" value="Yes" class="btn btn-default" />
-    <input type="button" class="btn btn-default" onclick="goBack()" value="Cancel">
-</div>
+        <div class="form-actions no-color">
+            <h3>@SurveyWebSite.Resources.Messages.SureForDelete</h3>
+            <div class="modal-body">
+                <form action="Delete">
+                    <div class="form-group">
+                        <label asp-for="Text">@SurveyWebSite.Resources.Messages.QuestionText</label> :
+                        <label asp-for="Text">@Model.NewText</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Text">@SurveyWebSite.Resources.Messages.QuestionOrder</label> :
+                        <label asp-for="Order">@Model.Order</label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Text">@SurveyWebSite.Resources.Messages.QuestionType</label> :
+                        <label asp-for="Type">@Model.TypeOfQuestion</label>
+                    </div>
+                </form>
+            </div>
+            <input type="submit" value="Yes" class="btn btn-primary" />
+            <input type="button" class="btn btn-danger" onclick="goBack()" value="Cancel">
+        </div>
     }
 </div>
 

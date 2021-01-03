@@ -126,15 +126,15 @@
     </Compile>
     <Compile Include="Models\QustionModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Resource.ar.Designer.cs">
+    <Compile Include="Resources\Messages.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.ar.resx</DependentUpon>
+      <DependentUpon>Messages.ar.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Resource.Designer.cs">
+    <Compile Include="Resources\Messages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
+      <DependentUpon>Messages.resx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +146,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\PopUp.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
@@ -170,7 +171,7 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Question\Index.cshtml" />
+    <Content Include="Views\Question\Home.cshtml" />
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\Delete.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
@@ -178,7 +179,6 @@
     <Content Include="Views\Question\EditSmile.cshtml" />
     <Content Include="Views\Question\EditStar.cshtml" />
     <Content Include="Views\Shared\_LanguagePartial.cshtml" />
-    <Content Include="Views\Question\AutoRefresh.cshtml" />
     <Content Include="Views\Question\_List.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -220,13 +220,13 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Resource.ar.resx">
+    <EmbeddedResource Include="Resources\Messages.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.ar.Designer.cs</LastGenOutput>
+      <LastGenOutput>Messages.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Resource.resx">
+    <EmbeddedResource Include="Resources\Messages.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

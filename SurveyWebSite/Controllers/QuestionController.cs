@@ -11,38 +11,30 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web.UI.HtmlControls;
+using System.Web.UI;
 
 namespace SurveyWebSite.Controllers
 {
     public class QuestionController : Controller
     {
-
         public static FormCollection Form = new FormCollection();
         private static BaseLog.Logger Logger = new BaseLog.Logger();
-        private static List<Qustion> MyListOfAllQuestion = new List<Qustion>();
-        private static string Language = "en";
         // GET: Question
-        [ActionName("Index")]
-
-        public ActionResult Index(string language)
+        [ActionName("Home")]
+        public ActionResult Home(string language)
         {
             try
             {
-                Operation.PutListToShow = AutoRefresh;
-                // MyListOfAllQuestion = Operation.ListOfAllQuestion;
-                Operation.GetQustion(ref MyListOfAllQuestion); 
-                int C = MyListOfAllQuestion.Count; 
+                var ListOfQuestion = Operation.GetAllQuestion(); 
                  if (!String.IsNullOrEmpty(language))
                  {
                      Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(language);
                      Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
                  }
-                Language = language;
                 HttpCookie cookie = new HttpCookie("Languages");
                 cookie.Value = language;
                 Response.Cookies.Add(cookie);
-                Operation.RefreshData();
-                return View(MyListOfAllQuestion);
+                return View(ListOfQuestion);
             }
             catch(Exception ex)
             {
@@ -54,34 +46,75 @@ namespace SurveyWebSite.Controllers
         {
             try
             {
-
-                RefreshPartailView();
-            }catch(Exception ex)
+                Page page = new Page();
+                ScriptManager.RegisterStartupScript(page, this.GetType(), "Refresh", "GetData()", true);
+                RefreshPartailView(); 
+            }
+            catch(Exception ex)
             {
                 Logger.Log(ex.Message);
                 
             }
             
         }
-
-        private ActionResult RefreshPartailView()
+        public ActionResult RefreshPartailView()
         {
             try
             {
-                return RedirectToAction("Index");
+                ViewBag.JS = "GetData();";
+                return View("Index"); 
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                return View("Not Found");
+            }
+        }
+        public ActionResult GetView()
+        {
+            try
+            {
+                return PartialView("_List", Operation.ListOfAllQuestion);
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
                 return View("Not Found");
             }
         }
-
-        public ActionResult GetView()
+        public ActionResult SortByText()
         {
             try
             {
-                return PartialView("_List", MyListOfAllQuestion);
-            }catch (Exception ex)
+                Operation.ListOfAllQuestion = Operation.ListOfAllQuestion.OrderBy(r => r.NewText).ToList(); 
+                return PartialView("_List", Operation.ListOfAllQuestion);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                return View("Not Found");
+            }
+        }
+        public ActionResult SortByOrder()
+        {
+            try
+            {
+                Operation.ListOfAllQuestion = Operation.ListOfAllQuestion.OrderBy(r => r.Order).ToList();
+                return PartialView("_List", Operation.ListOfAllQuestion);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                return View("Not Found");
+            }
+        }
+        public ActionResult SortByType()
+        {
+            try
+            {
+                Operation.ListOfAllQuestion = Operation.ListOfAllQuestion.OrderBy(r => r.TypeOfQuestion).ToList();
+                return PartialView("_List", Operation.ListOfAllQuestion);
+            }
+            catch (Exception ex)
             {
                 Logger.Log(ex.Message);
                 return View("Not Found");
@@ -112,23 +145,32 @@ namespace SurveyWebSite.Controllers
             }
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create([ModelBinder(typeof(QustionModelBinder))]Qustion NewQuestion)
         {
             try
             {
-                
-                Operation.AddQustion(NewQuestion);
-                ModelState.Clear();
-                ViewBag.SuccessMessage = SurveyWebSite.Resources.Resource.AddQuestion;
-                return View();
+                int ResultOfCheck = Operation.CheckTheData(NewQuestion);
+
+
+                if (ResultOfCheck == OperationManger.GenralVariables.Succeeded)
+                {
+                        Operation.AddQustion(NewQuestion);
+                        ModelState.Clear();
+                    ViewBag.SuccessMessage = Operation.CheckMessageError(ResultOfCheck); 
+                        return View();
+                }
+                else
+                {
+                    ViewBag.FailMessage = Operation.CheckMessageError(ResultOfCheck);
+                    return View(); 
+                }
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
                 return View("Not Found");
             }
         }
-
-        
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -154,7 +196,7 @@ namespace SurveyWebSite.Controllers
             {
                 var QuestionWillDelete = Operation.SelectById(id);
                 Operation.DeleteQustion(QuestionWillDelete);
-                return RedirectToAction("Index");
+                return RedirectToAction("Home");
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
@@ -206,35 +248,19 @@ namespace SurveyWebSite.Controllers
             try
             {
                 NewQuestion.Id = Convert.ToInt32(Form["Id"]);
-                if (NewQuestion.TypeOfQuestion == TypeOfQuestion.Slider)
+                int ResultOfCheck = Operation.CheckTheData(NewQuestion);
+                if (ResultOfCheck == OperationManger.GenralVariables.Succeeded)
                 {
-                    Slider SliderForEdit = (Slider)NewQuestion;
-                    SliderForEdit.IdForType = Convert.ToInt32(Form["IdForType"]);
-                    Operation.EditQustion(SliderForEdit);
-                    ViewBag.SuccessMessage = SurveyWebSite.Resources.Resource.EditQuestionSlider;
+                    Operation.EditQustion(NewQuestion);
                     ModelState.Clear();
+                    ViewBag.SuccessMessage = Operation.CheckMessageError(ResultOfCheck);
                     return View(NewQuestion);
                 }
-                else if (NewQuestion.TypeOfQuestion == TypeOfQuestion.Smily)
+                else
                 {
-                    Smiles SmileForEdit = (Smiles)NewQuestion;
-                    SmileForEdit.IdForType = Convert.ToInt32(Form["IdForType"]);
-                    Operation.EditQustion(SmileForEdit);
-                    ViewBag.SuccessMessage = SurveyWebSite.Resources.Resource.EditQuestionSmile;
-                    ModelState.Clear();
-                    return View(NewQuestion);
-
+                    ViewBag.FailMessage = Operation.CheckMessageError(ResultOfCheck);
+                    return View("Not Found");
                 }
-                else if (NewQuestion.TypeOfQuestion == TypeOfQuestion.Stars)
-                {
-                    Stars StarForEdit = (Stars)NewQuestion;
-                    StarForEdit.IdForType = Convert.ToInt32(Form["IdForType"]);
-                    Operation.EditQustion(StarForEdit);
-                    ViewBag.SuccessMessage = SurveyWebSite.Resources.Resource.EditQuestionStar;
-                    ModelState.Clear();
-                    return View(NewQuestion);
-                }
-                return View("Not Found");
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);

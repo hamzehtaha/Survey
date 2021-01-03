@@ -16,14 +16,24 @@ namespace SurveyWebSite
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private static BaseLog.Logger Logger = new BaseLog.Logger();
         protected void Application_Start()
         {
-            AreaRegistration.RegisterAllAreas();
-            FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            BundleConfig.RegisterBundles(BundleTable.Bundles);
-            ModelBinders.Binders.Add(typeof(Qustion), new QustionModelBinder()); 
-            
+            try
+            {
+                AreaRegistration.RegisterAllAreas();
+                FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+                RouteConfig.RegisterRoutes(RouteTable.Routes);
+                BundleConfig.RegisterBundles(BundleTable.Bundles);
+                ModelBinders.Binders.Add(typeof(Qustion), new QustionModelBinder());
+                Operation.RefreshData();
+                QuestionController obj = new QuestionController(); 
+                Operation.PutListToShow = obj.AutoRefresh;
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message); 
+            }
         }
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
@@ -38,7 +48,7 @@ namespace SurveyWebSite
             }
             catch (Exception ex)
             {
-
+                Logger.Log(ex.Message);
             }
         }
     }

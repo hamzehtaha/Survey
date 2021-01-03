@@ -117,97 +117,118 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddQuestion" xml:space="preserve">
-    <value>!تم أضافة السؤال بنجاح</value>
+  <data name="DataIsEnterd" xml:space="preserve">
+    <value>"Your question has been successfully entered"</value>
   </data>
-  <data name="BackToList" xml:space="preserve">
-    <value>العودة الى القائمة الرئيسية</value>
+  <data name="EndCaptionEmptyMessage" xml:space="preserve">
+    <value>"Please enter the end caption."</value>
   </data>
-  <data name="CreateButton" xml:space="preserve">
-    <value>أنشاء</value>
+  <data name="EndCaptionJustNumberMessage" xml:space="preserve">
+    <value>"The end caption should not contain numbers only."</value>
   </data>
-  <data name="CreateNewQuestion" xml:space="preserve">
-    <value>انشاء سؤال جديد </value>
+  <data name="EndValueGreaterThanOneHundredMessage" xml:space="preserve">
+    <value>"The end value must be less than 100."</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>حذف</value>
+  <data name="EndValueLessThanZeroMessage" xml:space="preserve">
+    <value>"The end value must be greater than 0."</value>
   </data>
-  <data name="DeleteQuestion" xml:space="preserve">
-    <value>حذف السؤال</value>
+  <data name="ErrorDataBase" xml:space="preserve">
+    <value>There were some problems in database</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل</value>
+  <data name="ErrorDataBaseAddQuestion" xml:space="preserve">
+    <value>There were some problems in database while adding question</value>
   </data>
-  <data name="EditQuestionSlider" xml:space="preserve">
-    <value>تم تعديل سؤال المنزلق بنجاح</value>
+  <data name="ErrorDataBaseConnectionString" xml:space="preserve">
+    <value>There were some problems in database in connection string</value>
   </data>
-  <data name="EditQuestionSmile" xml:space="preserve">
-    <value>تم تعديل سؤال الوجه بنجاح</value>
+  <data name="ErrorDataBaseDeleteQuestion" xml:space="preserve">
+    <value>There were some problems in database while deleting question</value>
   </data>
-  <data name="EditQuestionStar" xml:space="preserve">
-    <value>تم تعديل سؤال النجم بنجاح</value>
+  <data name="ErrorDataBaseEditQuestion" xml:space="preserve">
+    <value>There were some problems in database while editting question</value>
   </data>
-  <data name="EditSlider" xml:space="preserve">
-    <value>تعديل سؤال المنزلق</value>
+  <data name="ErrorDataBaseGetQuestion" xml:space="preserve">
+    <value>There were some problems in database while getting question</value>
   </data>
-  <data name="EditSmile" xml:space="preserve">
-    <value>تعديل سؤال الوجه</value>
+  <data name="ErrorDataBaseSelectQuestion" xml:space="preserve">
+    <value>There were some problems in database while selecting question</value>
   </data>
-  <data name="EditStar" xml:space="preserve">
-    <value>تعجيل سؤال النجوم</value>
+  <data name="ErrorInOperation" xml:space="preserve">
+    <value>We cannot find this question.</value>
   </data>
-  <data name="EndCaption" xml:space="preserve">
-    <value>رمز النهاية</value>
+  <data name="ErrorManger" xml:space="preserve">
+    <value>There were some problems in operation manger</value>
   </data>
-  <data name="EndValue" xml:space="preserve">
-    <value>رقم النهاية</value>
+  <data name="ErrorMangerAddQuestion" xml:space="preserve">
+    <value>There was some problem in Operations Manager when adding a question</value>
   </data>
-  <data name="ErrorMessageForText" xml:space="preserve">
-    <value>'يرجى ملء هذا الحقل' </value>
+  <data name="ErrorMangerDeleteQuestion" xml:space="preserve">
+    <value>There were some problems in operation manger when deleting question</value>
   </data>
-  <data name="ListOfQuestion" xml:space="preserve">
-    <value>قائمة الأسئلة</value>
+  <data name="ErrorMangerEditQuestion" xml:space="preserve">
+    <value>There were some problems in operation manger when editing question</value>
   </data>
-  <data name="NumberOfSmileFaces" xml:space="preserve">
-    <value>عدد الوجوه</value>
+  <data name="ErrorMangerGetQuestion" xml:space="preserve">
+    <value>There were some problems in operation manger when getting question</value>
   </data>
-  <data name="NumberOfStars" xml:space="preserve">
-    <value>عدد النجوم</value>
+  <data name="MessageError" xml:space="preserve">
+    <value>There were some problems with your form submission</value>
   </data>
-  <data name="QuestionOrder" xml:space="preserve">
-    <value>الترتيب</value>
+  <data name="NewOrderLessThanZeroMessage" xml:space="preserve">
+    <value>"The order must be more than 0"</value>
   </data>
-  <data name="QuestionText" xml:space="preserve">
-    <value>النص</value>
+  <data name="NoSelectItem" xml:space="preserve">
+    <value>"Please select any question!"</value>
   </data>
-  <data name="QuestionType" xml:space="preserve">
-    <value>نوع السؤال</value>
+  <data name="NotChooseTheType" xml:space="preserve">
+    <value>"Please select the question type!"</value>
   </data>
-  <data name="SaveButton" xml:space="preserve">
-    <value>حفظ</value>
+  <data name="NumberOfSmileBetweenFiveAndTow" xml:space="preserve">
+    <value>"The number of smile faces must be between 2 and 5"</value>
   </data>
-  <data name="Slider" xml:space="preserve">
-    <value>المنزلق</value>
+  <data name="NumberOfStrasBetweenTenAndOne" xml:space="preserve">
+    <value>"The number of stars must be between 1 and 10"</value>
   </data>
-  <data name="Smile" xml:space="preserve">
-    <value>الوجه</value>
+  <data name="QuestionIsEmptyMessage" xml:space="preserve">
+    <value>"Please enter text"</value>
   </data>
-  <data name="Star" xml:space="preserve">
-    <value>النجم</value>
+  <data name="QuestionIsJustANumberMessage" xml:space="preserve">
+    <value>"The text is just numbers"</value>
   </data>
-  <data name="StartCaption" xml:space="preserve">
-    <value>رمز البداية</value>
+  <data name="StartCaptionEmptyMessage" xml:space="preserve">
+    <value>"Please enter the start caption"</value>
   </data>
-  <data name="StartValue" xml:space="preserve">
-    <value>رقم البداية</value>
+  <data name="StartCaptionJustNumberMessage" xml:space="preserve">
+    <value>"The start caption should not contain numbers only"</value>
   </data>
-  <data name="SureForDelete" xml:space="preserve">
-    <value>هل أنت متأكد من حذف السؤال؟</value>
+  <data name="StartValueGreaterThanOneHundredMessage" xml:space="preserve">
+    <value>"The start value must be less than 100"</value>
   </data>
-  <data name="wswqs" xml:space="preserve">
-    <value>ثث</value>
+  <data name="StartValueLessThanZeroMessage" xml:space="preserve">
+    <value>"The start value must be greater than 0"</value>
   </data>
-  <data name="ww" xml:space="preserve">
-    <value>خخ</value>
+  <data name="SureToDeleteMessage" xml:space="preserve">
+    <value>"Are you sure you want to delete this question?"</value>
+  </data>
+  <data name="TheEditMessage" xml:space="preserve">
+    <value>"Your question has been edit successfully"</value>
+  </data>
+  <data name="TheEndValueSholudGreaterThanStartValueMessage" xml:space="preserve">
+    <value>"The end value must be greater than the start value"</value>
+  </data>
+  <data name="TheOrderIsEmpty" xml:space="preserve">
+    <value>"The order number is empty"</value>
+  </data>
+  <data name="TheQuestionDeleted" xml:space="preserve">
+    <value>"Your question has been delete successfully"</value>
+  </data>
+  <data name="TheQuestionNotDeleted" xml:space="preserve">
+    <value>"Your question has not been deleted."</value>
+  </data>
+  <data name="TitleOfQuestionAdd" xml:space="preserve">
+    <value>Add Question</value>
+  </data>
+  <data name="TitleOfQuestionEdit" xml:space="preserve">
+    <value>Edit Question</value>
   </data>
 </root>

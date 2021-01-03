@@ -51,6 +51,12 @@ namespace SurveyWebSite.Models
                         NewStar.TypeOfQuestion = TypeOfQuestion.Stars;
                         NewStar.NumberOfStars = NumberOfStar;
                         return NewStar;
+                    }else
+                    {
+                        Slider obj = new Slider();
+                        obj.TypeOfQuestion = TypeOfQuestion.Qustions;
+                        return obj; 
+
                     }
 
                 }

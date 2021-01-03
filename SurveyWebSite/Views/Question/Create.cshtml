@@ -1,32 +1,30 @@
-﻿<html dir="@(System.Threading.Thread.CurrentThread.CurrentCulture.TextInfo.IsRightToLeft? "ltr" : "rtl")">
-@{
-    ViewBag.Title = SurveyWebSite.Resources.Resource.ListOfQuestion;
-}
-<h2>@SurveyWebSite.Resources.Resource.CreateNewQuestion</h2>
+﻿
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="form-horizontal">
-        <div class="form-group">
-            <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.QuestionText</label>
-            <input type="text" class="form-control" name="NewText" required
-                   oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)"
-                   oninput="this.setCustomValidity()" />
-        </div>
-        <div class="form-group">
-            <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.QuestionOrder</label>
-            <input type="number" class="form-control" name="Order" required="required"
-                   oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)"
-                   oninput="this.setCustomValidity()" />
-        </div>
-        <div class="form-group">
-            <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.Slider :</label>@Html.RadioButton("team", "Slider", new { onclick = "showResult(this)" })
-            <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.Smile :</label>@Html.RadioButton("team", "Smile", new { onclick = "showResult(this)" })
-            <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.Star :</label>@Html.RadioButton("team", "Star", new { onclick = "showResult(this)" })
-        </div>
+<div class="form-horizontal" dir="@SurveyWebSite.Resources.Messages.dir">
+    @{
+        ViewBag.Title = SurveyWebSite.Resources.Messages.ListOfQuestion;
+    }
+    <h2>@SurveyWebSite.Resources.Messages.CreateNewQuestion</h2>
+    <div class="form-group">
 
-        <div id="partialContainer"></div>
-        <script type="text/javascript">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionText</label>
+        <input type="text" class="form-control" name="NewText" id="Text" required />
+
+    </div>
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionOrder</label>
+        <input type="number" class="form-control" name="Order" required="required" min="1" />
+    </div>
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.Slider :</label>@Html.RadioButton("team", "Slider", new { onclick = "showResult(this)"})
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.Smile :</label>@Html.RadioButton("team", "Smile", new { onclick = "showResult(this)" })
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.Star :</label>@Html.RadioButton("team", "Star", new { onclick = "showResult(this)" })
+    </div>
+    <div id="partialContainer"></div>
+    <script type="text/javascript">
         function showResult(radio) {
             var selected = radio.value;
             if (selected == "Slider")
@@ -35,35 +33,27 @@
          <div id="SliderDiv">
 
                     <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.StartValue</label>
-                        <input type="number" class="form-control"  name="StartValue" min="1" max="100" required
-  oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)"
-  oninput="this.setCustomValidity()"/>
+                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.StartValue</label>
+                        <input type="number" class="form-control"  name="StartValue" min="1" max="100" required/>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.EndValue</label>
-                        <input type="number" class="form-control" id="EndValue" name="EndValue" min="1" max="100" required
-  oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)"
-  oninput="this.setCustomValidity()/>
+                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.EndValue</label>
+                        <input type="number" class="form-control"  name="EndValue" min="1" max="100" required/>
                     </div>
                     <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.StartCaption</label>
-                        <input type="text" class="form-control" id="StartCaption" name="StartCaption" minlength="1" maxlength="10" required
-  oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)"
-  oninput="this.setCustomValidity()/>
+                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.StartCaption</label>
+                        <input type="text" class="form-control" id="StartCaption" name="StartCaption" minlength="1" maxlength="10" required/>
                     </div>
                         <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.EndCaption</label>
-                        <input type="text" class="form-control" id="EndCaption" name="EndCaption" minlength="1" maxlength="10" required
-  oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)"
-  />
+                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.EndCaption</label>
+                        <input type="text" class="form-control" id="EndCaption" name="EndCaption" minlength="1" maxlength="10" required/>
                     </div></div>`
             else if (selected == "Smile")
                 document.getElementById("partialContainer").innerHTML
                     = `<div id="SmileDiv">
                     <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.NumberOfSmileFaces</label>
-                        <input type="number" class="form-control" name="NumberOfSmiles" min="2" max="5"  required oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)" />
+                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.NumberOfSmileFaces</label>
+                        <input type="number" class="form-control" name="NumberOfSmiles" min="2" max="5"  required />
                     </div>
 
                 </div>`
@@ -71,34 +61,38 @@
                 document.getElementById("partialContainer").innerHTML
                     = `<div id="StarDiv">
                     <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Resource.NumberOfStars</label>
-                        <input type="number" class="form-control" name="NumberOfStars" min="1" max="10"  required oninvalid="this.setCustomValidity(@SurveyWebSite.Resources.Resource.ErrorMessageForText)"/>
+                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.NumberOfStars</label>
+                        <input type="number" class="form-control" name="NumberOfStars" min="1" max="10" required/>
                     </div>
                 </div>`
         }
-        </script>
-        <div class="form-group">
-            <div col-md-10">
-                <input type="submit" value="@SurveyWebSite.Resources.Resource.CreateButton" class="btn btn-default" style="white-space: normal; width:250px;background-color:white;" />
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-2">
-                <label class="label-success">@ViewBag.SuccessMessage</label>
-            </div>
+        
+
+    </script>
+    <div class="form-group">
+        <div col-md-10">
+            <input type="submit" id="submit" value="@SurveyWebSite.Resources.Messages.CreateButton" class="btn btn-primary" />
+             <a href="Home">back</a>
         </div>
     </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-2">
+            <label class="label-success">@ViewBag.SuccessMessage</label>
+        </div>
+        <div class="col-md-offset-2 col-md-2">
+            <label class="label-danger">@ViewBag.FailMessage</label>
+        </div>
+    </div>
+</div>
 }
-</html>
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
-<script>
-    alert(@ViewBag.JS)
-      @ViewBag.JS
-    function ReloadPage () {
-        location.reload(true);
+<script type = "text/javascript" >
+    function GoBack() {
+        window.history.back();
     }
 </script>
+
 
 

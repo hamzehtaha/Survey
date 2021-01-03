@@ -1,37 +1,100 @@
 ﻿
 @model IEnumerable<Question.Qustion>
-<meta http-equiv="refresh" content="6" />
-<table class="table" style="border: 1px solid black;">
-    
-    <tr>
-        <th>
-            @SurveyWebSite.Resources.Resource.QuestionText
-        </th>
-        <th>
-            @SurveyWebSite.Resources.Resource.QuestionOrder
-        </th>
-        <th>
-            @SurveyWebSite.Resources.Resource.QuestionType
-        </th>
-        <th></th>
-    </tr>
+    <style>
+        i.fa {
+            margin: 0px 4px;
+        }
 
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.NewText)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Order)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TypeOfQuestion)
-            </td>
-            <td>
-                @Html.ActionLink(SurveyWebSite.Resources.Resource.Edit, "Edit", new { id = item.Id }) |
-                @Html.ActionLink(SurveyWebSite.Resources.Resource.Delete, "Delete", new { id = item.Id })
-            </td>
-        </tr>
+        a.sort > i.fa-sort-asc,
+        a.sort > i.fa-sort-desc {
+            display: none;
+        }
+
+        a.sort.asc > i.fa-sort {
+            display: none;
+        }
+
+        a.sort.asc > i.fa-sort-asc {
+            display: inherit;
+        }
+
+        a.sort.desc > i.fa-sort {
+            display: none;
+        }
+
+        a.sort.desc > i.fa-sort-desc {
+            display: inherit;
+        }
+
+    </style>
+<body dir="@SurveyWebSite.Resources.Messages.dir">
+    <div id="QuestionList">
+        <table class="table" style="border: 1px solid black;">
+
+            <tr>
+                <td><a class="sort" data-sort="NewText">Text<i class="fa fa-sort"></i><i class="fa fa-sort-asc"></i><i class="fa fa-sort-desc"></i></a></td>
+                <td>
+                    <p onclick="SortByOrder()"> <strong>@SurveyWebSite.Resources.Messages.QuestionOrder</strong></p>
+                </td>
+                <td>
+                    <p onclick="SortByType()"><strong>@SurveyWebSite.Resources.Messages.QuestionType</strong></p>
+                </td>
+                <td>
+                </td>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.NewText)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TypeOfQuestion)
+                    </td>
+                    <td>
+                        @Html.ActionLink(SurveyWebSite.Resources.Messages.Edit, "Edit", new { id = item.Id }) |
+                        @Html.ActionLink(SurveyWebSite.Resources.Messages.Delete, "Delete", new { id = item.Id })
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</body>
+<script type = "text/javascript">
+    function SortByText() {
+        $.ajax({
+            url: "/Question/SortByText/",
+            type: "get",
+            success: function (result) {
+                $('#ListOfQuestion').html(result);
+            }
+        });
     }
-</table>
+    function SortByOrder() {
+        $.ajax({
+            url: "/Question/SortByOrder/",
+            type: "get",
+            success: function (result) {
+                $('#ListOfQuestion').html(result);
+            }
+        });
+    }
+    function SortByType() {
+        $.ajax({
+            url: "/Question/SortByType/",
+            type: "get",
+            success: function (result) {
+                $('#ListOfQuestion').html(result);
+            }
+        });
+    }
+    options = {
+        valueNames: ['Text']
+    }
+
+    heroList = new List('QuestionList', options)
+</script>

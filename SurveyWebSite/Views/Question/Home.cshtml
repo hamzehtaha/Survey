@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Question.Qustion>
+
+<div dir="@SurveyWebSite.Resources.Messages.dir">
+    @{
+        ViewBag.Title = SurveyWebSite.Resources.Messages.ListOfQuestion;
+    }
+    <h2>@SurveyWebSite.Resources.Messages.ListOfQuestion</h2>
+    <br />
+    @{
+        //Html.RenderPartial("_List",Model);
+    }
+
+    <div id="ListOfQuestion">
+        @Html.Partial("_List", Model)
+    </div>
+    <p>
+        @Html.ActionLink(SurveyWebSite.Resources.Messages.CreateNewQuestion, "Create")
+    </p>
+    
+</div>
+
+@if (!String.IsNullOrEmpty(ViewBag.JS))
+{
+    <script type="text/javascript">
+        @Html.Raw(ViewBag.JS)</script>
+}
+<script type="text/javascript">
+    var idVar = setInterval(() => {
+        GetData()
+    }, 6000);
+    function GetData() {
+        $.ajax({
+            url: "/Question/GetView/",
+            type: "get",
+            success: function (result) {
+                $('#ListOfQuestion').html(result);
+            }
+        });
+
+    }
+    GetData();
+</script>
