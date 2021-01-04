@@ -124,6 +124,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ChnageChecks.cs" />
     <Compile Include="Models\QustionModelBinder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Messages.ar.Designer.cs">
@@ -175,11 +176,11 @@
     <Content Include="Views\Question\Create.cshtml" />
     <Content Include="Views\Question\Delete.cshtml" />
     <Content Include="Views\Question\Edit.cshtml" />
-    <Content Include="Views\Question\EditSlider.cshtml" />
-    <Content Include="Views\Question\EditSmile.cshtml" />
-    <Content Include="Views\Question\EditStar.cshtml" />
+    <Content Include="Views\Question\_SliderPartail.cshtml" />
+    <Content Include="Views\Question\_SmilePartail.cshtml" />
+    <Content Include="Views\Question\_StarPartail.cshtml" />
     <Content Include="Views\Shared\_LanguagePartial.cshtml" />
-    <Content Include="Views\Question\_List.cshtml" />
+    <Content Include="Views\Question\_ListPartail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

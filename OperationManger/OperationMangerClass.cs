@@ -215,7 +215,10 @@ namespace OperationManger
                     if (IsDifferntList)
                     {
                         ListOfAllQuestion = TempListOfQuestion.ToList();
-                        PutListToShow(); 
+
+                        if (PutListToShow != null) {
+                            PutListToShow(); 
+                        } 
                     }
                     Thread.Sleep(TimeForChangeData);
                     FunctionReload = ""; 

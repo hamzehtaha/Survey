@@ -123,6 +123,9 @@
   <data name="BackToList" xml:space="preserve">
     <value>Back to List</value>
   </data>
+  <data name="CancelButton" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="CreateButton" xml:space="preserve">
     <value>Create</value>
   </data>
@@ -134,6 +137,9 @@
   </data>
   <data name="DeleteQuestion" xml:space="preserve">
     <value>Delete Question</value>
+  </data>
+  <data name="DeleteView" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="dir" xml:space="preserve">
     <value>ltr</value>
@@ -159,17 +165,32 @@
   <data name="EditStar" xml:space="preserve">
     <value>Star Edit</value>
   </data>
+  <data name="EditView" xml:space="preserve">
+    <value>Edit</value>
+  </data>
   <data name="EndCaption" xml:space="preserve">
     <value>EndCaption</value>
   </data>
   <data name="EndValue" xml:space="preserve">
     <value>EndValue</value>
   </data>
+  <data name="ErrorMessageForOrder" xml:space="preserve">
+    <value>Please fill out the order filed !</value>
+  </data>
   <data name="ErrorMessageForText" xml:space="preserve">
-    <value>'Please fill out this filed !'</value>
+    <value>Please fill out the question filed !</value>
+  </data>
+  <data name="ErrorNotFound" xml:space="preserve">
+    <value>Not Found</value>
   </data>
   <data name="GoBack" xml:space="preserve">
     <value>Back</value>
+  </data>
+  <data name="HomeView" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>left</value>
   </data>
   <data name="ListOfQuestion" xml:space="preserve">
     <value>List Of Question</value>
@@ -179,6 +200,21 @@
   </data>
   <data name="NumberOfStars" xml:space="preserve">
     <value>Number of Stars</value>
+  </data>
+  <data name="Operations" xml:space="preserve">
+    <value>Operation</value>
+  </data>
+  <data name="PartailList" xml:space="preserve">
+    <value>_ListPartail</value>
+  </data>
+  <data name="PartailSlider" xml:space="preserve">
+    <value>_SliderPartail</value>
+  </data>
+  <data name="PartailSmile" xml:space="preserve">
+    <value>_SmilePartail</value>
+  </data>
+  <data name="PartailStar" xml:space="preserve">
+    <value>_StarPartail</value>
   </data>
   <data name="QuestionOrder" xml:space="preserve">
     <value>Order</value>

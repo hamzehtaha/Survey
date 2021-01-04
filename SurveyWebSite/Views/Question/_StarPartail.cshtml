@@ -1,0 +1,44 @@
+﻿@model Question.Stars
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h2 style="color:black">@SurveyWebSite.Resources.Messages.EditStar</h2>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionText</label>
+        @Html.EditorFor(model => model.NewText, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NewText, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionOrder</label>
+        @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.NumberOfStars</label>
+        @Html.EditorFor(model => model.NumberOfStars, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NumberOfStars, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value=@SurveyWebSite.Resources.Messages.SaveButton />
+        <input type="button" class="btn btn-danger" onclick="goBack()" value=@SurveyWebSite.Resources.Messages.CancelButton />
+    </div>
+    <div class="form-group">
+        <label class="label-success">@ViewBag.SuccessMessage</label>
+        <label class="label-danger">@ViewBag.FailMessage</label>
+    </div>
+
+</div>
+}
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>

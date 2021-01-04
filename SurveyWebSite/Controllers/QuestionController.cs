@@ -20,29 +20,30 @@ namespace SurveyWebSite.Controllers
         public static FormCollection Form = new FormCollection();
         private static BaseLog.Logger Logger = new BaseLog.Logger();
         // GET: Question
-        [ActionName("Home")]
         public ActionResult Home(string language)
         {
             try
             {
-                var ListOfQuestion = Operation.GetAllQuestion(); 
-                 if (!String.IsNullOrEmpty(language))
-                 {
-                     Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(language);
-                     Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
-                 }
+
+                if (!String.IsNullOrEmpty(language))
+                {
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(language);
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+                }
                 HttpCookie cookie = new HttpCookie("Languages");
                 cookie.Value = language;
                 Response.Cookies.Add(cookie);
+                var ListOfQuestion = Operation.GetAllQuestion();
+                
                 return View(ListOfQuestion);
             }
             catch(Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
         }
-        public void AutoRefresh()
+   /*    public void AutoRefresh()
         {
             try
             {
@@ -61,87 +62,57 @@ namespace SurveyWebSite.Controllers
         {
             try
             {
-                ViewBag.JS = "GetData();";
-                return View("Index"); 
+                return View(SurveyWebSite.Resources.Messages.HomeView); 
             }
             catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
-        }
+        }*/
         public ActionResult GetView()
         {
             try
             {
-                return PartialView("_List", Operation.ListOfAllQuestion);
+                return PartialView(@SurveyWebSite.Resources.Messages.PartailList, Operation.ListOfAllQuestion);
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
-            }
-        }
-        public ActionResult SortByText()
-        {
-            try
-            {
-                Operation.ListOfAllQuestion = Operation.ListOfAllQuestion.OrderBy(r => r.NewText).ToList(); 
-                return PartialView("_List", Operation.ListOfAllQuestion);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.Message);
-                return View("Not Found");
-            }
-        }
-        public ActionResult SortByOrder()
-        {
-            try
-            {
-                Operation.ListOfAllQuestion = Operation.ListOfAllQuestion.OrderBy(r => r.Order).ToList();
-                return PartialView("_List", Operation.ListOfAllQuestion);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.Message);
-                return View("Not Found");
-            }
-        }
-        public ActionResult SortByType()
-        {
-            try
-            {
-                Operation.ListOfAllQuestion = Operation.ListOfAllQuestion.OrderBy(r => r.TypeOfQuestion).ToList();
-                return PartialView("_List", Operation.ListOfAllQuestion);
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
         }
         public ActionResult BackIndex()
         {
             try
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
             }catch(Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
         }
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult Create(int Type)
         {
             try
             {
-                ViewBag.JS = "ReloadPage();";
-                return View();
+                switch (Type) {
+                    case 1:
+                        return View(new Slider());
+                    case 2:
+                        return View(new Smiles());
+                    case 3:
+                        return View(new Stars());
+                    default:
+                        return View();
+                }
+
+                
             }catch(Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
         }
         [HttpPost]
@@ -155,20 +126,19 @@ namespace SurveyWebSite.Controllers
 
                 if (ResultOfCheck == OperationManger.GenralVariables.Succeeded)
                 {
-                        Operation.AddQustion(NewQuestion);
-                        ModelState.Clear();
-                    ViewBag.SuccessMessage = Operation.CheckMessageError(ResultOfCheck); 
-                        return View();
+                    Operation.AddQustion(NewQuestion);
+                     ModelState.Clear();
+                    return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
                 }
                 else
                 {
                     ViewBag.FailMessage = Operation.CheckMessageError(ResultOfCheck);
-                    return View(); 
+                    return View(NewQuestion); 
                 }
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(NewQuestion);
             }
         }
         [HttpGet]
@@ -179,13 +149,13 @@ namespace SurveyWebSite.Controllers
                 var QuestionWillDelete = Operation.SelectById(id);
                 if (QuestionWillDelete == null)
                 {
-                    return View("Not Found");
+                    return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
                 }
                 return View(QuestionWillDelete);
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
         }
         [HttpPost]
@@ -196,11 +166,11 @@ namespace SurveyWebSite.Controllers
             {
                 var QuestionWillDelete = Operation.SelectById(id);
                 Operation.DeleteQustion(QuestionWillDelete);
-                return RedirectToAction("Home");
+                return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
         }
         [HttpGet]
@@ -238,7 +208,7 @@ namespace SurveyWebSite.Controllers
             }catch(Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
                 
         }
@@ -253,18 +223,17 @@ namespace SurveyWebSite.Controllers
                 {
                     Operation.EditQustion(NewQuestion);
                     ModelState.Clear();
-                    ViewBag.SuccessMessage = Operation.CheckMessageError(ResultOfCheck);
-                    return View(NewQuestion);
+                    return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
                 }
                 else
                 {
                     ViewBag.FailMessage = Operation.CheckMessageError(ResultOfCheck);
-                    return View("Not Found");
+                    return View(NewQuestion);
                 }
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View("Not Found");
+                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
             }
         }
     }

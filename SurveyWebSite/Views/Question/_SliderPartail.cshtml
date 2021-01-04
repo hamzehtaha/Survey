@@ -1,0 +1,63 @@
+﻿@model Question.Slider
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal" dir="@SurveyWebSite.Resources.Messages.dir">
+    <h2 style="color:black">@SurveyWebSite.Resources.Messages.EditSlider</h2>
+    <hr />
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionText</label>
+        @Html.EditorFor(model => model.NewText, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.NewText, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionOrder</label>
+        @Html.EditorFor(model => model.Order, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Order, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.StartValue</label>
+        @Html.EditorFor(model => model.StartValue, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.StartValue, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.EndValue</label>
+        @Html.EditorFor(model => model.EndValue, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.EndValue, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.StartCaption</label>
+        @Html.EditorFor(model => model.StartCaption, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.StartCaption, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.EndCaption</label>
+        @Html.EditorFor(model => model.EndCaption, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.EndCaption, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value=@SurveyWebSite.Resources.Messages.SaveButton />
+        <input type="button" class="btn btn-danger" onclick="goBack()" value=@SurveyWebSite.Resources.Messages.CancelButton />
+    </div>
+
+    <div class="form-group">
+        <label class="label-success">@ViewBag.SuccessMessage</label>
+        <label class="label-danger">@ViewBag.FailMessage</label>
+    </div>
+</div>
+}
+
+
+<script>
+    function goBack() {
+        window.history.back();
+    }
+</script>
+
+

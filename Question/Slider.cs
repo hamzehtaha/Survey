@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,12 +51,26 @@ namespace Question
         }
         public Slider()
         {
-
+            try
+            {
+                this.TypeOfQuestion = TypeOfQuestion.Slider;
+            }catch(Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+            }
         }
         public int IdForType { get; set; }
+        [Required(ErrorMessageResourceName = "EmptyStartValue", ErrorMessageResourceType = typeof(Resources.Messages))]
+        [Range(1,100, ErrorMessageResourceName = "StartValueGreaterThanOneHundredMessage", ErrorMessageResourceType = typeof(Resources.Messages))]
         public int StartValue { get; set; }
+        [Required(ErrorMessageResourceName = "EmptyEndValue", ErrorMessageResourceType = typeof(Resources.Messages))]
+        [Range(1, 100, ErrorMessageResourceName = "EndValueGreaterThanOneHundredMessage", ErrorMessageResourceType = typeof(Resources.Messages))]
         public int EndValue { get; set; }
+        [Required(ErrorMessageResourceName = "EmptyStartCaption", ErrorMessageResourceType = typeof(Resources.Messages))]
+        [StringLength(10, MinimumLength = 1, ErrorMessageResourceName = "StartCaptionIsToLong", ErrorMessageResourceType = typeof(Resources.Messages))]
         public string StartCaption { get; set; }
+        [Required(ErrorMessageResourceName = "EmptyEndCaption", ErrorMessageResourceType = typeof(Resources.Messages))]
+        [StringLength(10, MinimumLength = 1, ErrorMessageResourceName = "EndCaptionIsToLong", ErrorMessageResourceType = typeof(Resources.Messages))]
         public string EndCaption { get; set; }
         /// <summary>
         /// Check if tow object type slider is equal 

@@ -79,6 +79,15 @@ namespace SurveyWebSite.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string CancelButton {
+            get {
+                return ResourceManager.GetString("CancelButton", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
         public static string CreateButton {
@@ -111,6 +120,15 @@ namespace SurveyWebSite.Resources {
         public static string DeleteQuestion {
             get {
                 return ResourceManager.GetString("DeleteQuestion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string DeleteView {
+            get {
+                return ResourceManager.GetString("DeleteView", resourceCulture);
             }
         }
         
@@ -187,6 +205,15 @@ namespace SurveyWebSite.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit.
+        /// </summary>
+        public static string EditView {
+            get {
+                return ResourceManager.GetString("EditView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to EndCaption.
         /// </summary>
         public static string EndCaption {
@@ -205,11 +232,29 @@ namespace SurveyWebSite.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &apos;Please fill out this filed !&apos;.
+        ///   Looks up a localized string similar to Please fill out the order filed !.
+        /// </summary>
+        public static string ErrorMessageForOrder {
+            get {
+                return ResourceManager.GetString("ErrorMessageForOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please fill out the question filed !.
         /// </summary>
         public static string ErrorMessageForText {
             get {
                 return ResourceManager.GetString("ErrorMessageForText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Found.
+        /// </summary>
+        public static string ErrorNotFound {
+            get {
+                return ResourceManager.GetString("ErrorNotFound", resourceCulture);
             }
         }
         
@@ -219,6 +264,24 @@ namespace SurveyWebSite.Resources {
         public static string GoBack {
             get {
                 return ResourceManager.GetString("GoBack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string HomeView {
+            get {
+                return ResourceManager.GetString("HomeView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to left.
+        /// </summary>
+        public static string Language {
+            get {
+                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
@@ -246,6 +309,51 @@ namespace SurveyWebSite.Resources {
         public static string NumberOfStars {
             get {
                 return ResourceManager.GetString("NumberOfStars", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Operation.
+        /// </summary>
+        public static string Operations {
+            get {
+                return ResourceManager.GetString("Operations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _ListPartail.
+        /// </summary>
+        public static string PartailList {
+            get {
+                return ResourceManager.GetString("PartailList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _SliderPartail.
+        /// </summary>
+        public static string PartailSlider {
+            get {
+                return ResourceManager.GetString("PartailSlider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _SmilePartail.
+        /// </summary>
+        public static string PartailSmile {
+            get {
+                return ResourceManager.GetString("PartailSmile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _StarPartail.
+        /// </summary>
+        public static string PartailStar {
+            get {
+                return ResourceManager.GetString("PartailStar", resourceCulture);
             }
         }
         

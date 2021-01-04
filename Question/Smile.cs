@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -43,9 +44,20 @@ namespace Question
             }
 
         }
-        public Smiles() { }
+        public Smiles() {
+            try
+            {
+                this.TypeOfQuestion = TypeOfQuestion.Smily;
+            }catch(Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+            }
+        }
+        [Required(ErrorMessageResourceName = "EmptyNumberOfSmile", ErrorMessageResourceType = typeof(Resources.Messages))]
+        [Range(2,5, ErrorMessageResourceName = "NumberOfSmileBetweenFiveAndTow", ErrorMessageResourceType = typeof(Resources.Messages))]
         public int NumberOfSmiles { get; set; }
         public int IdForType { get; set; }
+        
         public override bool Equals(Object NewObject)
         {
             try

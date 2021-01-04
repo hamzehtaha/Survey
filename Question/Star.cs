@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,8 +45,17 @@ namespace Question
         }
         public Stars()
         {
-
+            try
+            {
+                this.TypeOfQuestion = TypeOfQuestion.Stars;
+            }
+            catch (Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+            }
         }
+        [Required(ErrorMessageResourceName = "EmptyNumberOfStar", ErrorMessageResourceType = typeof(Resources.Messages))]
+        [Range(1,10, ErrorMessageResourceName = "NumberOfStrasBetweenTenAndOne", ErrorMessageResourceType = typeof(Resources.Messages))]
         public int NumberOfStars { get; set; }
         public int IdForType { get; set; }
         public override bool Equals(Object NewObject)

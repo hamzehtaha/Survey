@@ -15,41 +15,66 @@ namespace SurveyWebSite.Models
             try {
                 if (bindingContext.ModelType == typeof(Qustion))
                 {
+                    
                     HttpRequestBase request = controllerContext.HttpContext.Request;
                     string text = request.Form.Get("NewText");
-                    int order = Convert.ToInt32(request.Form.Get("Order"));
+                    string order = request.Form.Get("Order"); 
                     if (request.Form.Get("StartValue") != null)
                     {
-                        int StartValue = Convert.ToInt32(request.Form.Get("StartValue"));
-                        int EndValue = Convert.ToInt32(request.Form.Get("EndValue"));
+                        string StartValue = request.Form.Get("StartValue");
+                        string EndValue = request.Form.Get("EndValue");
                         string StarCaption = request.Form.Get("StartCaption");
                         string EndCaption = request.Form.Get("EndCaption");
+
                         Slider NewSlider = new Slider();
                         NewSlider.NewText = text;
-                        NewSlider.Order = order;
+                        if (!String.IsNullOrEmpty(order))
+                        {
+                            NewSlider.Order = Convert.ToInt32(order);
+                        }
                         NewSlider.TypeOfQuestion = TypeOfQuestion.Slider;
-                        NewSlider.StartValue = StartValue;
-                        NewSlider.EndValue = EndValue;
+                        if (!String.IsNullOrEmpty(StartValue))
+                        {
+                            NewSlider.StartValue = Convert.ToInt32(StartValue);
+                        }
+                        if (!String.IsNullOrEmpty(EndValue))
+                        {
+                            NewSlider.EndValue = Convert.ToInt32(EndValue);
+                        }
                         NewSlider.StartCaption = StarCaption;
                         NewSlider.EndCaption = EndCaption;
                         return NewSlider;
                     } else if (request.Form.Get("NumberOfSmiles") != null)
                     {
-                        int NumberOfSmile = Convert.ToInt32(request.Form.Get("NumberOfSmiles"));
+                        
+                        string NumberOfSmile = request.Form.Get("NumberOfSmiles");
                         Smiles NewSmile = new Smiles();
                         NewSmile.NewText = text;
-                        NewSmile.Order = order;
+                        if (!String.IsNullOrEmpty(order))
+                        {
+                            NewSmile.Order = Convert.ToInt32(order);
+                        }
+                        if (!String.IsNullOrEmpty(order))
+                        {
+                            NewSmile.NumberOfSmiles = Convert.ToInt32(NumberOfSmile);
+                        }
                         NewSmile.TypeOfQuestion = TypeOfQuestion.Smily;
-                        NewSmile.NumberOfSmiles = NumberOfSmile;
                         return NewSmile;
                     } else if (request.Form.Get("NumberOfStars") != null)
                     {
-                        int NumberOfStar = Convert.ToInt32(request.Form.Get("NumberOfStars"));
+                        
+                        string NumberOfStar = request.Form.Get("NumberOfStars");
                         Stars NewStar = new Stars();
                         NewStar.NewText = text;
-                        NewStar.Order = order;
+                        if (!String.IsNullOrEmpty(order))
+                        {
+                            NewStar.Order = Convert.ToInt32(order);
+                        }
+                        if (!String.IsNullOrEmpty(order))
+                        {
+                            NewStar.NumberOfStars = Convert.ToInt32(NumberOfStar);
+                        }
                         NewStar.TypeOfQuestion = TypeOfQuestion.Stars;
-                        NewStar.NumberOfStars = NumberOfStar;
                         return NewStar;
                     }else
                     {

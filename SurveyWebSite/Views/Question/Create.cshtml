@@ -1,98 +1,23 @@
-﻿
-
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-<div class="form-horizontal" dir="@SurveyWebSite.Resources.Messages.dir">
+﻿@model Question.Qustion
+<div dir="@SurveyWebSite.Resources.Messages.dir">
     @{
-        ViewBag.Title = SurveyWebSite.Resources.Messages.ListOfQuestion;
-    }
-    <h2>@SurveyWebSite.Resources.Messages.CreateNewQuestion</h2>
-    <div class="form-group">
+        switch (Model.TypeOfQuestion)
+        {
+            case Question.TypeOfQuestion.Slider:
+                Html.RenderPartial(SurveyWebSite.Resources.Messages.PartailSlider);
+                break;
+            case Question.TypeOfQuestion.Smily:
+                Html.RenderPartial(SurveyWebSite.Resources.Messages.PartailSmile);
+                break;
+            case Question.TypeOfQuestion.Stars:
+                Html.RenderPartial(SurveyWebSite.Resources.Messages.PartailStar);
+                break;
 
-        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionText</label>
-        <input type="text" class="form-control" name="NewText" id="Text" required />
-
-    </div>
-    <div class="form-group">
-        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.QuestionOrder</label>
-        <input type="number" class="form-control" name="Order" required="required" min="1" />
-    </div>
-    <div class="form-group">
-        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.Slider :</label>@Html.RadioButton("team", "Slider", new { onclick = "showResult(this)"})
-        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.Smile :</label>@Html.RadioButton("team", "Smile", new { onclick = "showResult(this)" })
-        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.Star :</label>@Html.RadioButton("team", "Star", new { onclick = "showResult(this)" })
-    </div>
-    <div id="partialContainer"></div>
-    <script type="text/javascript">
-        function showResult(radio) {
-            var selected = radio.value;
-            if (selected == "Slider")
-                document.getElementById("partialContainer").innerHTML
-                    = `
-         <div id="SliderDiv">
-
-                    <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.StartValue</label>
-                        <input type="number" class="form-control"  name="StartValue" min="1" max="100" required/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.EndValue</label>
-                        <input type="number" class="form-control"  name="EndValue" min="1" max="100" required/>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.StartCaption</label>
-                        <input type="text" class="form-control" id="StartCaption" name="StartCaption" minlength="1" maxlength="10" required/>
-                    </div>
-                        <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.EndCaption</label>
-                        <input type="text" class="form-control" id="EndCaption" name="EndCaption" minlength="1" maxlength="10" required/>
-                    </div></div>`
-            else if (selected == "Smile")
-                document.getElementById("partialContainer").innerHTML
-                    = `<div id="SmileDiv">
-                    <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.NumberOfSmileFaces</label>
-                        <input type="number" class="form-control" name="NumberOfSmiles" min="2" max="5"  required />
-                    </div>
-
-                </div>`
-            else if (selected == "Star")
-                document.getElementById("partialContainer").innerHTML
-                    = `<div id="StarDiv">
-                    <div class="form-group">
-                        <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.NumberOfStars</label>
-                        <input type="number" class="form-control" name="NumberOfStars" min="1" max="10" required/>
-                    </div>
-                </div>`
         }
-        
-
-    </script>
-    <div class="form-group">
-        <div col-md-10">
-            <input type="submit" id="submit" value="@SurveyWebSite.Resources.Messages.CreateButton" class="btn btn-primary" />
-             <a href="Home">back</a>
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-2">
-            <label class="label-success">@ViewBag.SuccessMessage</label>
-        </div>
-        <div class="col-md-offset-2 col-md-2">
-            <label class="label-danger">@ViewBag.FailMessage</label>
-        </div>
-    </div>
+    }
 </div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
 }
-    @section Scripts {
-        @Scripts.Render("~/bundles/jqueryval")
-    }
-<script type = "text/javascript" >
-    function GoBack() {
-        window.history.back();
-    }
-</script>
-
 
 

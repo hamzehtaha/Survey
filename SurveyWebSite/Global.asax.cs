@@ -27,8 +27,9 @@ namespace SurveyWebSite
                 BundleConfig.RegisterBundles(BundleTable.Bundles);
                 ModelBinders.Binders.Add(typeof(Qustion), new QustionModelBinder());
                 Operation.RefreshData();
-                QuestionController obj = new QuestionController(); 
-                Operation.PutListToShow = obj.AutoRefresh;
+               // QuestionController obj = new QuestionController(); 
+               // Operation.PutListToShow = obj.GetView();
+
             }
             catch (Exception ex)
             {

@@ -1,19 +1,22 @@
 ﻿@model Question.Qustion
-
-@{ 
-    switch (Model.TypeOfQuestion)
-    {
-        case Question.TypeOfQuestion.Slider:
-            Html.RenderPartial("EditSlider");
-            break;
-        case Question.TypeOfQuestion.Smily:
-            Html.RenderPartial("EditSmile");
-            break;
-        case Question.TypeOfQuestion.Stars:
-            Html.RenderPartial("EditStar");
-            break;
-
+<div dir="@SurveyWebSite.Resources.Messages.dir">
+    @{
+        switch (Model.TypeOfQuestion)
+        {
+            case Question.TypeOfQuestion.Slider:
+                Html.RenderPartial(SurveyWebSite.Resources.Messages.PartailSlider);
+                break;
+            case Question.TypeOfQuestion.Smily:
+                Html.RenderPartial(SurveyWebSite.Resources.Messages.PartailSmile);
+                break;
+            case Question.TypeOfQuestion.Stars:
+                Html.RenderPartial(SurveyWebSite.Resources.Messages.PartailStar);
+                break;
+        }
     }
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
 }
 
 
