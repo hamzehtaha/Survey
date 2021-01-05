@@ -27,6 +27,7 @@
         <label class="control-label" col-md-2>@SurveyWebSite.Resources.Messages.EndValue</label>
         @Html.EditorFor(model => model.EndValue, new { htmlAttributes = new { @class = "form-control" } })
         @Html.ValidationMessageFor(model => model.EndValue, "", new { @class = "text-danger" })
+        <label style="color:red">@ViewBag.Message</label>
     </div>
 
     <div class="form-group">
@@ -48,7 +49,7 @@
 
     <div class="form-group">
         <label class="label-success">@ViewBag.SuccessMessage</label>
-        <label class="label-danger">@ViewBag.FailMessage</label>
+        
     </div>
 </div>
 }

@@ -20,7 +20,7 @@ namespace SurveyWebSite.Controllers
         public static FormCollection Form = new FormCollection();
         private static BaseLog.Logger Logger = new BaseLog.Logger();
         public static string  SessionID = "" ;
-        private static List<Qustion> ListOfQuestions = new List<Qustion>(); 
+         
         // GET: Question
         /// <summary>
         /// This Home View get all question from my list in manger to show it
@@ -32,10 +32,8 @@ namespace SurveyWebSite.Controllers
                 string sessionID = HttpContext.Session.SessionID;
                 SessionID = sessionID; 
                 Operation.SessionFlags.Add(sessionID, false); 
-                var ListOfQuestion = Operation.GetAllQuestion();
-                ListOfQuestions = Operation.ListOfAllQuestion; 
-
-                return View(ListOfQuestion);
+                MyListClass.ListOfQuestions = Operation.GetAllQuestion().ToList();
+                return View(MyListClass.ListOfQuestions);
             }
             catch(Exception ex)
             {
@@ -52,10 +50,15 @@ namespace SurveyWebSite.Controllers
         {
             try
             {
+
                 if (Operation.SessionFlags[SessionID])
-                return PartialView(@SurveyWebSite.Resources.Constants.PartailList, Operation.ListOfAllQuestion);
+                {
+                    Operation.SessionFlags[SessionID] = false;
+                    MyListClass.ListOfQuestions = Operation.ListOfAllQuestion;
+                    return PartialView(@SurveyWebSite.Resources.Constants.PartailList, MyListClass.ListOfQuestions);
+                }
                 else
-                    return PartialView(@SurveyWebSite.Resources.Constants.PartailList, ListOfQuestions);
+                    return PartialView(@SurveyWebSite.Resources.Constants.PartailList, MyListClass.ListOfQuestions);
 
             }
             catch (Exception ex)
@@ -122,7 +125,7 @@ namespace SurveyWebSite.Controllers
                 }
                 else
                 {
-                    ViewBag.FailMessage = Operation.CheckMessageError(ResultOfCheck);
+                    ViewBag.Message = Operation.CheckMessageError(ResultOfCheck);
                     return View(NewQuestion); 
                 }
             }catch (Exception ex)
@@ -223,7 +226,6 @@ namespace SurveyWebSite.Controllers
         /// <summary>
         /// Edit post when user press yes will check the validate data then call edit function from manger
         /// </summary>
-        /// <param name="NewQuestion"></param>
         /// <returns></returns>
         [HttpPost]
         public ActionResult Edit([ModelBinder(typeof(QustionModelBinder))] Qustion NewQuestion)

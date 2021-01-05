@@ -26,10 +26,7 @@ namespace SurveyWebSite
                 RouteConfig.RegisterRoutes(RouteTable.Routes);
                 BundleConfig.RegisterBundles(BundleTable.Bundles);
                 ModelBinders.Binders.Add(typeof(Qustion), new QustionModelBinder());
-                Operation.RefreshData();
-               /* QuestionController TempObject = new QuestionController();
-
-                Operation.PutListToShow = TempObject.CallRefresh;  */
+                Operation.RefreshData(); 
             }
             catch (Exception ex)
             {
