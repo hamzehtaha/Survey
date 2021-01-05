@@ -50,7 +50,7 @@
 
     </style>
 </head>
-<div dir="@SurveyWebSite.Resources.Messages.dir">
+<div dir="@SurveyWebSite.Resources.Constants.dir">
     @{
         ViewBag.Title = SurveyWebSite.Resources.Messages.ListOfQuestion;
     }
@@ -60,7 +60,7 @@
     <br />
     <br />
     <div id="ListOfQuestion">
-        @Html.Partial(@SurveyWebSite.Resources.Messages.PartailList, Model)
+        @Html.Partial(@SurveyWebSite.Resources.Constants.PartailList, Model)
     </div>
     <br />
     <div class="dropdown">
@@ -75,10 +75,10 @@
 <script type="text/javascript">
     var idVar = setInterval(() => {
         GetData()
-    },6000);
+    },60000);
     function GetData() {
         $.ajax({
-            url: "/Question/GetView/",
+            url: "/Question/RefreshData/",
             type: "get",
             success: function (result) {
                 $('#ListOfQuestion').html(result);
@@ -86,5 +86,5 @@
         });
 
     }
- 
+
 </script>

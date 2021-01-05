@@ -117,47 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Arabic" xml:space="preserve">
-    <value>العربية</value>
-  </data>
-  <data name="BackToList" xml:space="preserve">
-    <value>Back to List</value>
-  </data>
-  <data name="CancelButton" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="CreateButton" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="CreateNewQuestion" xml:space="preserve">
-    <value>Create New Question</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
+  <data name="DeleteView" xml:space="preserve">
     <value>Delete</value>
   </data>
-  <data name="DeleteQuestion" xml:space="preserve">
-    <value>Delete Question</value>
+  <data name="dir" xml:space="preserve">
+    <value>ltr</value>
   </data>
-  <data name="Edit" xml:space="preserve">
+  <data name="EditView" xml:space="preserve">
     <value>Edit</value>
-  </data>
-  <data name="EditQuestionSlider" xml:space="preserve">
-    <value>Slider question has been Edited successfully</value>
-  </data>
-  <data name="EditQuestionSmile" xml:space="preserve">
-    <value>Smile question has been Edited successfully</value>
-  </data>
-  <data name="EditQuestionStar" xml:space="preserve">
-    <value>Star question has been Edited successfully</value>
-  </data>
-  <data name="EditSlider" xml:space="preserve">
-    <value>Slider Edit</value>
-  </data>
-  <data name="EditSmile" xml:space="preserve">
-    <value>Smile Edit</value>
-  </data>
-  <data name="EditStar" xml:space="preserve">
-    <value>Star Edit</value>
   </data>
   <data name="EndCaption" xml:space="preserve">
     <value>EndCaption</value>
@@ -165,79 +132,58 @@
   <data name="EndValue" xml:space="preserve">
     <value>EndValue</value>
   </data>
-  <data name="English" xml:space="preserve">
-    <value>English</value>
+  <data name="ErrorNotFound" xml:space="preserve">
+    <value>Not Found</value>
   </data>
-  <data name="ErrorChangeLanguage" xml:space="preserve">
-    <value>Something wrong while change language in home controller</value>
+  <data name="ErrorView" xml:space="preserve">
+    <value>ErrorView</value>
   </data>
-  <data name="ErrorCreate" xml:space="preserve">
-    <value>Something wrong while create in controller</value>
+  <data name="HomeView" xml:space="preserve">
+    <value>Home</value>
   </data>
-  <data name="ErrorDelete" xml:space="preserve">
-    <value>Something wrong while delete in controller</value>
+  <data name="ID" xml:space="preserve">
+    <value>Id</value>
   </data>
-  <data name="ErrorEdit" xml:space="preserve">
-    <value>Something wrong while edit in controller</value>
+  <data name="IdForType" xml:space="preserve">
+    <value>IdForType</value>
   </data>
-  <data name="ErrorHome" xml:space="preserve">
-    <value>Something wrong while getting question in home controller</value>
+  <data name="Language" xml:space="preserve">
+    <value>left</value>
   </data>
-  <data name="ErrorMessageForOrder" xml:space="preserve">
-    <value>Please fill out the order filed !</value>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
   </data>
-  <data name="ErrorMessageForText" xml:space="preserve">
-    <value>Please fill out the question filed !</value>
+  <data name="NewText" xml:space="preserve">
+    <value>NewText</value>
   </data>
-  <data name="ErrorRefrsh" xml:space="preserve">
-    <value>Something wrong while refresh question in home controller</value>
+  <data name="NumberOfSmiles" xml:space="preserve">
+    <value>NumberOfSmiles</value>
   </data>
-  <data name="GoBack" xml:space="preserve">
-    <value>Back</value>
-  </data>
-  <data name="ListOfQuestion" xml:space="preserve">
-    <value>List Of Question</value>
-  </data>
-  <data name="NumberOfSmileFaces" xml:space="preserve">
-    <value>Number of Smile Faces</value>
-  </data>
-  <data name="NumberOfStars" xml:space="preserve">
-    <value>Number of Stars</value>
+  <data name="NumberOfStar" xml:space="preserve">
+    <value>NumberOfStars</value>
   </data>
   <data name="Operations" xml:space="preserve">
     <value>Operation</value>
   </data>
-  <data name="QuestionOrder" xml:space="preserve">
+  <data name="Order" xml:space="preserve">
     <value>Order</value>
   </data>
-  <data name="QuestionText" xml:space="preserve">
-    <value>Text</value>
+  <data name="PartailList" xml:space="preserve">
+    <value>_ListPartail</value>
   </data>
-  <data name="QuestionType" xml:space="preserve">
-    <value>Type Of Question</value>
+  <data name="PartailSlider" xml:space="preserve">
+    <value>_SliderPartail</value>
   </data>
-  <data name="SaveButton" xml:space="preserve">
-    <value>Save</value>
+  <data name="PartailSmile" xml:space="preserve">
+    <value>_SmilePartail</value>
   </data>
-  <data name="Slider" xml:space="preserve">
-    <value>Slider</value>
-  </data>
-  <data name="Smile" xml:space="preserve">
-    <value>Smile</value>
-  </data>
-  <data name="SomeThingWrong" xml:space="preserve">
-    <value>Something went wrong !</value>
-  </data>
-  <data name="Star" xml:space="preserve">
-    <value>Star</value>
+  <data name="PartailStar" xml:space="preserve">
+    <value>_StarPartail</value>
   </data>
   <data name="StartCaption" xml:space="preserve">
     <value>StartCaption</value>
   </data>
   <data name="StartValue" xml:space="preserve">
     <value>StartValue</value>
-  </data>
-  <data name="SureForDelete" xml:space="preserve">
-    <value>Are you sure you want to delete this question?</value>
   </data>
 </root>

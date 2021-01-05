@@ -120,6 +120,9 @@
   <data name="AddQuestion" xml:space="preserve">
     <value>!تم أضافة السؤال بنجاح</value>
   </data>
+  <data name="Arabic" xml:space="preserve">
+    <value>العربية</value>
+  </data>
   <data name="BackToList" xml:space="preserve">
     <value>العودة الى القائمة الرئيسية</value>
   </data>
@@ -137,9 +140,6 @@
   </data>
   <data name="DeleteQuestion" xml:space="preserve">
     <value>حذف السؤال</value>
-  </data>
-  <data name="dir" xml:space="preserve">
-    <value>rtl</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل</value>
@@ -168,14 +168,32 @@
   <data name="EndValue" xml:space="preserve">
     <value>رقم النهاية</value>
   </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="ErrorChangeLanguage" xml:space="preserve">
+    <value>حدث خطأ عند تغيير اللغة  في الصفحة الرئيسة في المتحكم</value>
+  </data>
+  <data name="ErrorCreate" xml:space="preserve">
+    <value>حدث خطأ عند انشاء السؤال في المتحكم </value>
+  </data>
+  <data name="ErrorDelete" xml:space="preserve">
+    <value>حدث خطأ عند حذف السؤال في المتحكم</value>
+  </data>
+  <data name="ErrorEdit" xml:space="preserve">
+    <value>حدث خطأ عند تعديل السؤال في المتحكم</value>
+  </data>
+  <data name="ErrorHome" xml:space="preserve">
+    <value>حدث خطأ عند عرض الاسئلة  في الصفحة الرئيسية في المتحكم</value>
+  </data>
   <data name="ErrorMessageForText" xml:space="preserve">
     <value>'يرجى ملء هذا الحقل' </value>
   </data>
+  <data name="ErrorRefrsh" xml:space="preserve">
+    <value>حدث خطأ عند تحديث الاسئلة في الصفحة الرئيسة في المتحكم </value>
+  </data>
   <data name="GoBack" xml:space="preserve">
     <value>العودة</value>
-  </data>
-  <data name="Language" xml:space="preserve">
-    <value>right</value>
   </data>
   <data name="ListOfQuestion" xml:space="preserve">
     <value>قائمة الأسئلة</value>
@@ -206,6 +224,9 @@
   </data>
   <data name="Smile" xml:space="preserve">
     <value>الوجه</value>
+  </data>
+  <data name="SomeThingWrong" xml:space="preserve">
+    <value>حدث خطأ ما !</value>
   </data>
   <data name="Star" xml:space="preserve">
     <value>النجم</value>

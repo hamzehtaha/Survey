@@ -61,11 +61,11 @@ namespace SurveyWebSite.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Question added successfully!.
+        ///   Looks up a localized string similar to العربية.
         /// </summary>
-        public static string AddQuestion {
+        public static string Arabic {
             get {
-                return ResourceManager.GetString("AddQuestion", resourceCulture);
+                return ResourceManager.GetString("Arabic", resourceCulture);
             }
         }
         
@@ -120,24 +120,6 @@ namespace SurveyWebSite.Resources {
         public static string DeleteQuestion {
             get {
                 return ResourceManager.GetString("DeleteQuestion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Delete.
-        /// </summary>
-        public static string DeleteView {
-            get {
-                return ResourceManager.GetString("DeleteView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ltr.
-        /// </summary>
-        public static string dir {
-            get {
-                return ResourceManager.GetString("dir", resourceCulture);
             }
         }
         
@@ -205,15 +187,6 @@ namespace SurveyWebSite.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Edit.
-        /// </summary>
-        public static string EditView {
-            get {
-                return ResourceManager.GetString("EditView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to EndCaption.
         /// </summary>
         public static string EndCaption {
@@ -228,6 +201,60 @@ namespace SurveyWebSite.Resources {
         public static string EndValue {
             get {
                 return ResourceManager.GetString("EndValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English.
+        /// </summary>
+        public static string English {
+            get {
+                return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something wrong while change language in home controller.
+        /// </summary>
+        public static string ErrorChangeLanguage {
+            get {
+                return ResourceManager.GetString("ErrorChangeLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something wrong while create in controller.
+        /// </summary>
+        public static string ErrorCreate {
+            get {
+                return ResourceManager.GetString("ErrorCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something wrong while delete in controller.
+        /// </summary>
+        public static string ErrorDelete {
+            get {
+                return ResourceManager.GetString("ErrorDelete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something wrong while edit in controller.
+        /// </summary>
+        public static string ErrorEdit {
+            get {
+                return ResourceManager.GetString("ErrorEdit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something wrong while getting question in home controller.
+        /// </summary>
+        public static string ErrorHome {
+            get {
+                return ResourceManager.GetString("ErrorHome", resourceCulture);
             }
         }
         
@@ -250,11 +277,11 @@ namespace SurveyWebSite.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Not Found.
+        ///   Looks up a localized string similar to Something wrong while refresh question in home controller.
         /// </summary>
-        public static string ErrorNotFound {
+        public static string ErrorRefrsh {
             get {
-                return ResourceManager.GetString("ErrorNotFound", resourceCulture);
+                return ResourceManager.GetString("ErrorRefrsh", resourceCulture);
             }
         }
         
@@ -264,24 +291,6 @@ namespace SurveyWebSite.Resources {
         public static string GoBack {
             get {
                 return ResourceManager.GetString("GoBack", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Home.
-        /// </summary>
-        public static string HomeView {
-            get {
-                return ResourceManager.GetString("HomeView", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to left.
-        /// </summary>
-        public static string Language {
-            get {
-                return ResourceManager.GetString("Language", resourceCulture);
             }
         }
         
@@ -318,42 +327,6 @@ namespace SurveyWebSite.Resources {
         public static string Operations {
             get {
                 return ResourceManager.GetString("Operations", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _ListPartail.
-        /// </summary>
-        public static string PartailList {
-            get {
-                return ResourceManager.GetString("PartailList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _SliderPartail.
-        /// </summary>
-        public static string PartailSlider {
-            get {
-                return ResourceManager.GetString("PartailSlider", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _SmilePartail.
-        /// </summary>
-        public static string PartailSmile {
-            get {
-                return ResourceManager.GetString("PartailSmile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to _StarPartail.
-        /// </summary>
-        public static string PartailStar {
-            get {
-                return ResourceManager.GetString("PartailStar", resourceCulture);
             }
         }
         
@@ -408,6 +381,15 @@ namespace SurveyWebSite.Resources {
         public static string Smile {
             get {
                 return ResourceManager.GetString("Smile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Something went wrong !.
+        /// </summary>
+        public static string SomeThingWrong {
+            get {
+                return ResourceManager.GetString("SomeThingWrong", resourceCulture);
             }
         }
         

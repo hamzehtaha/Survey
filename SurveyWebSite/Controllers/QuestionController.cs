@@ -19,79 +19,58 @@ namespace SurveyWebSite.Controllers
     {
         public static FormCollection Form = new FormCollection();
         private static BaseLog.Logger Logger = new BaseLog.Logger();
+        public static string  SessionID = "" ;
+        private static List<Qustion> ListOfQuestions = new List<Qustion>(); 
         // GET: Question
-        public ActionResult Home(string language)
+        /// <summary>
+        /// This Home View get all question from my list in manger to show it
+        /// </summary>
+        public ActionResult Home()
         {
             try
             {
-
-                if (!String.IsNullOrEmpty(language))
-                {
-                    Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(language);
-                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
-                }
-                HttpCookie cookie = new HttpCookie("Languages");
-                cookie.Value = language;
-                Response.Cookies.Add(cookie);
+                string sessionID = HttpContext.Session.SessionID;
+                SessionID = sessionID; 
+                Operation.SessionFlags.Add(sessionID, false); 
                 var ListOfQuestion = Operation.GetAllQuestion();
-                
+                ListOfQuestions = Operation.ListOfAllQuestion; 
+
                 return View(ListOfQuestion);
             }
             catch(Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorHome });
             }
         }
-   /*    public void AutoRefresh()
+
+        /// <summary>
+        /// This for refresh my partail view atfer any edit in list 
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult RefreshData()
         {
             try
             {
-                Page page = new Page();
-                ScriptManager.RegisterStartupScript(page, this.GetType(), "Refresh", "GetData()", true);
-                RefreshPartailView(); 
-            }
-            catch(Exception ex)
-            {
-                Logger.Log(ex.Message);
-                
-            }
-            
-        }
-        public ActionResult RefreshPartailView()
-        {
-            try
-            {
-                return View(SurveyWebSite.Resources.Messages.HomeView); 
+                if (Operation.SessionFlags[SessionID])
+                return PartialView(@SurveyWebSite.Resources.Constants.PartailList, Operation.ListOfAllQuestion);
+                else
+                    return PartialView(@SurveyWebSite.Resources.Constants.PartailList, ListOfQuestions);
+
             }
             catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
-            }
-        }*/
-        public ActionResult GetView()
-        {
-            try
-            {
-                return PartialView(@SurveyWebSite.Resources.Messages.PartailList, Operation.ListOfAllQuestion);
-            }catch (Exception ex)
-            {
-                Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorRefrsh });
             }
         }
-        public ActionResult BackIndex()
-        {
-            try
-            {
-                return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
-            }catch(Exception ex)
-            {
-                Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
-            }
-        }
+        /// <summary>
+        /// This create view for get a question to add it 
+        /// 1 mean slider question 
+        /// 2 mean Smile question 
+        /// 3 mean Star question
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Create(int Type)
         {
@@ -105,16 +84,21 @@ namespace SurveyWebSite.Controllers
                     case 3:
                         return View(new Stars());
                     default:
-                        return View();
+                        return View(@SurveyWebSite.Resources.Messages.ErrorCreate);
                 }
 
                 
             }catch(Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorCreate});
             }
         }
+        /// <summary>
+        /// After enter the data and check of validate then call model binder to build the object 
+        /// then add it in database using manger class
+        /// </summary>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([ModelBinder(typeof(QustionModelBinder))]Qustion NewQuestion)
@@ -122,13 +106,19 @@ namespace SurveyWebSite.Controllers
             try
             {
                 int ResultOfCheck = Operation.CheckTheData(NewQuestion);
-
-
                 if (ResultOfCheck == OperationManger.GenralVariables.Succeeded)
                 {
-                    Operation.AddQustion(NewQuestion);
-                     ModelState.Clear();
-                    return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
+                   int ResultOfCreate =  Operation.AddQustion(NewQuestion);
+                    if (ResultOfCreate == OperationManger.GenralVariables.Succeeded)
+                    {
+                        ModelState.Clear();
+                        return RedirectToAction(@SurveyWebSite.Resources.Constants.HomeView);
+                    }
+                    else
+                    {
+                        string Error = Operation.CheckMessageError(ResultOfCreate);
+                        return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage =Error}); 
+                    }
                 }
                 else
                 {
@@ -138,9 +128,13 @@ namespace SurveyWebSite.Controllers
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(NewQuestion);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorCreate });
             }
         }
+        /// <summary>
+        /// This function take ID to show the data will delete it
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult Delete(int id)
         {
@@ -149,15 +143,18 @@ namespace SurveyWebSite.Controllers
                 var QuestionWillDelete = Operation.SelectById(id);
                 if (QuestionWillDelete == null)
                 {
-                    return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                    return View(@SurveyWebSite.Resources.Constants.ErrorNotFound);
                 }
                 return View(QuestionWillDelete);
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorDelete });
             }
         }
+        /// <summary>
+        /// After user press Yes will go to delete post to delete it from database using mnager
+        /// </summary>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id ,FormCollection form)
@@ -165,14 +162,25 @@ namespace SurveyWebSite.Controllers
             try
             {
                 var QuestionWillDelete = Operation.SelectById(id);
-                Operation.DeleteQustion(QuestionWillDelete);
-                return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
+                int ResultOfDelete =  Operation.DeleteQustion(QuestionWillDelete);
+                if (ResultOfDelete == OperationManger.GenralVariables.Succeeded)
+                {
+                    return RedirectToAction(@SurveyWebSite.Resources.Constants.HomeView);
+                }
+                else
+                {
+                    string Error = Operation.CheckMessageError(ResultOfDelete);
+                    return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = Error });
+                }
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorDelete });
             }
         }
+        /// <summary>
+        /// This get method take id the question to show the data  
+        /// </summary>
         [HttpGet]
         public ActionResult Edit (int Id)
         {
@@ -186,44 +194,57 @@ namespace SurveyWebSite.Controllers
                 if (ObjectWillEdit.TypeOfQuestion == TypeOfQuestion.Slider)
                 {
                     var SliderEdit = (Slider)ObjectWillEdit;
-                    Form["Id"] = SliderEdit.Id.ToString();
-                    Form["IdForType"] = SliderEdit.IdForType.ToString();
+                    Form[SurveyWebSite.Resources.Constants.ID] = SliderEdit.Id.ToString();
+                    Form[SurveyWebSite.Resources.Constants.IdForType] = SliderEdit.IdForType.ToString();
                     return View(SliderEdit);
                 }
                 else if (ObjectWillEdit.TypeOfQuestion == TypeOfQuestion.Smily)
                 {
                     var SmileEdit = (Smiles)ObjectWillEdit;
-                    Form["Id"] = SmileEdit.Id.ToString();
-                    Form["IdForType"] = SmileEdit.IdForType.ToString();
+                    Form[SurveyWebSite.Resources.Constants.ID] = SmileEdit.Id.ToString();
+                    Form[SurveyWebSite.Resources.Constants.IdForType] = SmileEdit.IdForType.ToString();
                     return View(SmileEdit);
                 }
                 else if (ObjectWillEdit.TypeOfQuestion == TypeOfQuestion.Stars)
                 {
                     var StarForEdit = (Stars)ObjectWillEdit;
-                    Form["Id"] = StarForEdit.Id.ToString();
-                    Form["IdForType"] = StarForEdit.IdForType.ToString();
+                    Form[SurveyWebSite.Resources.Constants.ID] = StarForEdit.Id.ToString();
+                    Form[SurveyWebSite.Resources.Constants.IdForType] = StarForEdit.IdForType.ToString();
                     return View(StarForEdit);
                 }
                 return View();
             }catch(Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorEdit });
             }
                 
         }
+        /// <summary>
+        /// Edit post when user press yes will check the validate data then call edit function from manger
+        /// </summary>
+        /// <param name="NewQuestion"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Edit([ModelBinder(typeof(QustionModelBinder))] Qustion NewQuestion)
         {
             try
             {
-                NewQuestion.Id = Convert.ToInt32(Form["Id"]);
+                NewQuestion.Id = Convert.ToInt32(Form[SurveyWebSite.Resources.Constants.ID]);
                 int ResultOfCheck = Operation.CheckTheData(NewQuestion);
                 if (ResultOfCheck == OperationManger.GenralVariables.Succeeded)
                 {
-                    Operation.EditQustion(NewQuestion);
-                    ModelState.Clear();
-                    return RedirectToAction(@SurveyWebSite.Resources.Messages.HomeView);
+                    int ResultOfEdit = Operation.EditQustion(NewQuestion);
+                    if (ResultOfEdit == OperationManger.GenralVariables.Succeeded)
+                    {
+                        ModelState.Clear();
+                        return RedirectToAction(@SurveyWebSite.Resources.Constants.HomeView);
+                    }
+                    else
+                    {
+                        string Error = Operation.CheckMessageError(ResultOfEdit);
+                        return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = Error });
+                    }
                 }
                 else
                 {
@@ -233,7 +254,46 @@ namespace SurveyWebSite.Controllers
             }catch (Exception ex)
             {
                 Logger.Log(ex.Message);
-                return View(@SurveyWebSite.Resources.Messages.ErrorNotFound);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorEdit });
+            }
+        }
+        /// <summary>
+        /// To change lanuage and take the language  
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult ChangeLanuage (string Language)
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(Language))
+                {
+                    Thread.CurrentThread.CurrentUICulture = CultureInfo.CreateSpecificCulture(Language);
+                    Thread.CurrentThread.CurrentUICulture = new CultureInfo(Language);
+                }
+                HttpCookie cookie = new HttpCookie(SurveyWebSite.Resources.Constants.Languages);
+                cookie.Value = Language;
+                Response.Cookies.Add(cookie);
+                return RedirectToAction(@SurveyWebSite.Resources.Constants.HomeView);
+            }catch(Exception ex)
+            {
+                Logger.Log(ex.Message);
+                return RedirectToAction(SurveyWebSite.Resources.Constants.ErrorView, new { ErrorMessage = SurveyWebSite.Resources.Messages.ErrorChangeLanguage });
+            }
+        }
+        /// <summary>
+        /// This errro view take the error and show it in error view any error 
+        /// </summary>
+        public ActionResult ErrorView (string ErrorMessage)
+        {
+            try
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View(); 
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(ex.Message);
+                return View(); 
             }
         }
     }

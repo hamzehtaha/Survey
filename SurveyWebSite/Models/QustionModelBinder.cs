@@ -10,6 +10,10 @@ namespace SurveyWebSite.Models
     public class QustionModelBinder : DefaultModelBinder
     {
         private static BaseLog.Logger Logger = new BaseLog.Logger();
+        /// <summary>
+        /// This for bind the object and return to create or edit 
+        /// </summary>
+        /// <returns></returns>
         public override object BindModel(ControllerContext controllerContext, ModelBindingContext bindingContext)
         {
             try {
@@ -17,14 +21,14 @@ namespace SurveyWebSite.Models
                 {
                     
                     HttpRequestBase request = controllerContext.HttpContext.Request;
-                    string text = request.Form.Get("NewText");
-                    string order = request.Form.Get("Order"); 
-                    if (request.Form.Get("StartValue") != null)
+                    string text = request.Form.Get(SurveyWebSite.Resources.Constants.NewText);
+                    string order = request.Form.Get(SurveyWebSite.Resources.Constants.Order); 
+                    if (request.Form.Get(SurveyWebSite.Resources.Constants.StartValue) != null)
                     {
-                        string StartValue = request.Form.Get("StartValue");
-                        string EndValue = request.Form.Get("EndValue");
-                        string StarCaption = request.Form.Get("StartCaption");
-                        string EndCaption = request.Form.Get("EndCaption");
+                        string StartValue = request.Form.Get(SurveyWebSite.Resources.Constants.StartValue);
+                        string EndValue = request.Form.Get(SurveyWebSite.Resources.Constants.EndValue);
+                        string StarCaption = request.Form.Get(SurveyWebSite.Resources.Constants.StartCaption);
+                        string EndCaption = request.Form.Get(SurveyWebSite.Resources.Constants.EndCaption);
 
                         Slider NewSlider = new Slider();
                         NewSlider.NewText = text;
@@ -44,10 +48,10 @@ namespace SurveyWebSite.Models
                         NewSlider.StartCaption = StarCaption;
                         NewSlider.EndCaption = EndCaption;
                         return NewSlider;
-                    } else if (request.Form.Get("NumberOfSmiles") != null)
+                    } else if (request.Form.Get(SurveyWebSite.Resources.Constants.NumberOfSmiles) != null)
                     {
                         
-                        string NumberOfSmile = request.Form.Get("NumberOfSmiles");
+                        string NumberOfSmile = request.Form.Get(SurveyWebSite.Resources.Constants.NumberOfSmiles);
                         Smiles NewSmile = new Smiles();
                         NewSmile.NewText = text;
                         if (!String.IsNullOrEmpty(order))
@@ -60,10 +64,10 @@ namespace SurveyWebSite.Models
                         }
                         NewSmile.TypeOfQuestion = TypeOfQuestion.Smily;
                         return NewSmile;
-                    } else if (request.Form.Get("NumberOfStars") != null)
+                    } else if (request.Form.Get(SurveyWebSite.Resources.Constants.NumberOfStar) != null)
                     {
                         
-                        string NumberOfStar = request.Form.Get("NumberOfStars");
+                        string NumberOfStar = request.Form.Get(SurveyWebSite.Resources.Constants.NumberOfStar);
                         Stars NewStar = new Stars();
                         NewStar.NewText = text;
                         if (!String.IsNullOrEmpty(order))
@@ -76,12 +80,6 @@ namespace SurveyWebSite.Models
                         }
                         NewStar.TypeOfQuestion = TypeOfQuestion.Stars;
                         return NewStar;
-                    }else
-                    {
-                        Slider obj = new Slider();
-                        obj.TypeOfQuestion = TypeOfQuestion.Qustions;
-                        return obj; 
-
                     }
 
                 }

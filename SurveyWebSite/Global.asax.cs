@@ -27,20 +27,23 @@ namespace SurveyWebSite
                 BundleConfig.RegisterBundles(BundleTable.Bundles);
                 ModelBinders.Binders.Add(typeof(Qustion), new QustionModelBinder());
                 Operation.RefreshData();
-               // QuestionController obj = new QuestionController(); 
-               // Operation.PutListToShow = obj.GetView();
+               /* QuestionController TempObject = new QuestionController();
 
+                Operation.PutListToShow = TempObject.CallRefresh;  */
             }
             catch (Exception ex)
             {
                 Logger.Log(ex.Message); 
             }
         }
+        /// <summary>
+        /// override this function for language
+        /// </summary>
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
             try
             {
-                HttpCookie cookie = HttpContext.Current.Request.Cookies["Languages"]; 
+                HttpCookie cookie = HttpContext.Current.Request.Cookies[SurveyWebSite.Resources.Constants.Languages]; 
                 if (cookie != null && cookie.Value != null)
                 {
                     Thread.CurrentThread.CurrentCulture = CultureInfo.CreateSpecificCulture(cookie.Value);

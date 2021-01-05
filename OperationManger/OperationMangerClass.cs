@@ -22,10 +22,9 @@ namespace OperationManger
         public static Thread ThreadForRefresh; 
         public static List<Qustion> ListOfAllQuestion = new List<Qustion>();
         private static int TimeForChangeData = Convert.ToInt32(ConfigurationManager.AppSettings["TimeDataChange"]);
-        public static Boolean EnableAutoRefrsh = true;
         public static bool IsDifferntList = false;
-        public static string FunctionReload = "";
-
+        public static Boolean EnableAutoRefrsh = true;
+        public static Dictionary<string,bool> SessionFlags = new Dictionary<string, bool>();
         private static bool IsNumber(string Number)
         {
             try
@@ -127,37 +126,68 @@ namespace OperationManger
         {
             try
             {
-                if (ResultNumber == GenralVariables.Succeeded)
-                    return OperationManger.Resources.Messages.DataIsEnterd;
-                else if (ResultNumber == GenralVariables.TextIsEmpty)
-                    return OperationManger.Resources.Messages.QuestionIsEmptyMessage;
-                else if (ResultNumber == GenralVariables.TextIsNumber)
-                    return OperationManger.Resources.Messages.QuestionIsJustANumberMessage;
-                else if (ResultNumber == GenralVariables.OrderLessThanZero)
-                    return OperationManger.Resources.Messages.NewOrderLessThanZeroMessage;
-                else if (ResultNumber == GenralVariables.StartValueLessThanZero)
-                    return OperationManger.Resources.Messages.StartValueLessThanZeroMessage;
-                else if (ResultNumber == GenralVariables.StartValueGreaterThanOneHundered)
-                    return OperationManger.Resources.Messages.StartValueGreaterThanOneHundredMessage;
-                else if (ResultNumber == GenralVariables.EndValueGreaterThanOneHundered)
-                    return OperationManger.Resources.Messages.EndValueGreaterThanOneHundredMessage;
-                else if (ResultNumber == GenralVariables.EndValueLessThanZero)
-                    return OperationManger.Resources.Messages.EndValueLessThanZeroMessage;
-                else if (ResultNumber == GenralVariables.StartValueGreaterThanEndValue)
-                    return OperationManger.Resources.Messages.TheEndValueSholudGreaterThanStartValueMessage;
-                else if (ResultNumber == GenralVariables.StartCaptionJustNumbers)
-                    return OperationManger.Resources.Messages.StartCaptionJustNumberMessage;
-                else if (ResultNumber == GenralVariables.EndCaptionJustNumbers)
-                    return OperationManger.Resources.Messages.EndCaptionJustNumberMessage;
-                else if (ResultNumber == GenralVariables.EndCaptionIsEmtpty)
-                    return OperationManger.Resources.Messages.EndCaptionEmptyMessage;
-                else if (ResultNumber == GenralVariables.StartCaptionIsEmtpty)
-                    return OperationManger.Resources.Messages.StartCaptionEmptyMessage;
-                else if (ResultNumber == GenralVariables.NumberOfSmileInvalid)
-                    return OperationManger.Resources.Messages.NumberOfSmileBetweenFiveAndTow;
-                else if (ResultNumber == GenralVariables.NumberOfStarsInvalid)
-                    return OperationManger.Resources.Messages.NumberOfStrasBetweenTenAndOne;
-                return OperationManger.Resources.Messages.ErrorManger;
+                switch (ResultNumber)
+                {
+                    case GenralVariables.Succeeded:
+                        return OperationManger.Resources.Messages.DataIsEnterd;
+                    case GenralVariables.TextIsEmpty:
+                        return OperationManger.Resources.Messages.QuestionIsEmptyMessage;
+                    case GenralVariables.TextIsNumber:
+                        return OperationManger.Resources.Messages.QuestionIsJustANumberMessage;
+                    case GenralVariables.OrderLessThanZero:
+                        return OperationManger.Resources.Messages.NewOrderLessThanZeroMessage;
+                    case GenralVariables.StartValueLessThanZero:
+                        return OperationManger.Resources.Messages.StartValueLessThanZeroMessage;
+                    case GenralVariables.StartValueGreaterThanOneHundered:
+                        return OperationManger.Resources.Messages.StartValueGreaterThanOneHundredMessage;
+                    case GenralVariables.EndValueGreaterThanOneHundered:
+                        return OperationManger.Resources.Messages.EndValueGreaterThanOneHundredMessage;
+                    case GenralVariables.EndValueLessThanZero:
+                        return OperationManger.Resources.Messages.EndValueLessThanZeroMessage;
+                    case GenralVariables.StartValueGreaterThanEndValue:
+                        return OperationManger.Resources.Messages.TheEndValueSholudGreaterThanStartValueMessage;
+                    case GenralVariables.StartCaptionJustNumbers:
+                        return OperationManger.Resources.Messages.StartCaptionJustNumberMessage;
+                    case GenralVariables.EndCaptionJustNumbers:
+                        return OperationManger.Resources.Messages.EndCaptionJustNumberMessage;
+                    case GenralVariables.EndCaptionIsEmtpty:
+                        return OperationManger.Resources.Messages.EndCaptionEmptyMessage;
+                    case GenralVariables.StartCaptionIsEmtpty:
+                        return OperationManger.Resources.Messages.EndCaptionEmptyMessage;
+                    case GenralVariables.NumberOfSmileInvalid:
+                        return OperationManger.Resources.Messages.NumberOfSmileBetweenFiveAndTow;
+                    case GenralVariables.NumberOfStarsInvalid:
+                        return OperationManger.Resources.Messages.NumberOfStrasBetweenTenAndOne;
+                    case GenralVariables.ErrorInManger:
+                        return OperationManger.Resources.Messages.ErrorManger;
+                    case GenralVariables.ErrorInMangerAdd:
+                        return OperationManger.Resources.Messages.ErrorMangerAddQuestion;
+                    case GenralVariables.ErrorInMangerEdit:
+                        return OperationManger.Resources.Messages.ErrorMangerEditQuestion;
+                    case GenralVariables.ErrorInMangerDelete:
+                        return OperationManger.Resources.Messages.ErrorMangerDeleteQuestion;
+                    case GenralVariables.ErrorInMangerGetQuestion:
+                        return OperationManger.Resources.Messages.ErrorMangerGetQuestion;
+                    case DataBaseConnection.GenralVariables.ErrorInDataBase:
+                        return OperationManger.Resources.Messages.ErrorDataBase;
+                    case DataBaseConnection.GenralVariables.ErrorConnectionString:
+                        return OperationManger.Resources.Messages.ErrorDataBaseConnectionString;
+                    case DataBaseConnection.GenralVariables.ErrorInAddQuestion:
+                        return OperationManger.Resources.Messages.ErrorDataBaseAddQuestion;
+                    case DataBaseConnection.GenralVariables.ErrorInSelectionQuestion:
+                        return OperationManger.Resources.Messages.ErrorDataBaseSelectQuestion;
+                    case DataBaseConnection.GenralVariables.ErrorInEditQuestion:
+                        return OperationManger.Resources.Messages.ErrorDataBaseEditQuestion;
+                    case DataBaseConnection.GenralVariables.ErrorInDeleteQuestion:
+                        return OperationManger.Resources.Messages.ErrorDataBaseDeleteQuestion;
+                    case DataBaseConnection.GenralVariables.ErrorInGetQuestion:
+                        return OperationManger.Resources.Messages.ErrorDataBaseGetQuestion;
+                    case DataBaseConnection.GenralVariables.ErrorInOperation:
+                        return OperationManger.Resources.Messages.ErrorInOperation;
+                    default:
+                        return OperationManger.Resources.Messages.ErrorManger;
+
+                }
             }
             catch (Exception ex)
             {
@@ -215,13 +245,16 @@ namespace OperationManger
                     if (IsDifferntList)
                     {
                         ListOfAllQuestion = TempListOfQuestion.ToList();
+                        foreach (var key in SessionFlags.Keys.ToList())
+                        {
+                            SessionFlags[key] = true; 
+                        }
 
                         if (PutListToShow != null) {
                             PutListToShow(); 
                         } 
                     }
-                    Thread.Sleep(TimeForChangeData);
-                    FunctionReload = ""; 
+                    Thread.Sleep(TimeForChangeData); 
 
                 }
             }catch (Exception ex)
@@ -342,19 +375,34 @@ namespace OperationManger
         }
         public static IEnumerable<Qustion> GetAllQuestion()
         {
-            ListOfAllQuestion.Clear(); 
-            GetQustion(ref ListOfAllQuestion);
-            return ListOfAllQuestion; 
+            try
+            {
+                ListOfAllQuestion.Clear();
+                GetQustion(ref ListOfAllQuestion);
+                return ListOfAllQuestion;
+            }catch(Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+                return ListOfAllQuestion;
+            }
         }
 
         public static Qustion SelectById (int Id)
         {
-            foreach (Qustion TempForSelect in ListOfAllQuestion)
+            try
             {
-                if (Id == TempForSelect.Id)
-                    return TempForSelect; 
+                foreach (Qustion TempForSelect in ListOfAllQuestion)
+                {
+                    if (Id == TempForSelect.Id)
+                        return TempForSelect;
+                }
+                return null; 
             }
-            return null; 
+            catch (Exception ex)
+            {
+                GenralVariables.Errors.Log(ex.Message);
+                return null;
+            }
         }
 
     }

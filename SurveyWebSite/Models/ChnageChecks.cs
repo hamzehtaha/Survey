@@ -8,5 +8,6 @@ namespace SurveyWebSite.Models
     public class ChnageChecks
     {
       public static  Dictionary<string, bool> SessionFlags = new Dictionary<string, bool>();
+   
     }
 }

@@ -58,11 +58,14 @@ namespace DataBaseConnection
                         CommandForSelectIdType.Connection.Open();
                         SqlDataReader Reader = CommandForSelectIdType.ExecuteReader();
                         while (Reader.Read())
-                            Id = Convert.ToInt32(Reader[GenralVariables.IdQuestion]);
+                        {
+                               Id = Convert.ToInt32(Reader[GenralVariables.IdQuestion]);
+                            //break; 
+                        }
+                        
                         Reader.Close();
                         if (Id != -1)
                             return GenralVariables.Succeeded;
-
                     }
                     return GenralVariables.ErrorInDataBase;
                 }
@@ -88,6 +91,7 @@ namespace DataBaseConnection
         {
             try
             {
+
                 Id = -1;
                 int ResultOfBulid = BuildConnectionString();
                 if (ResultOfBulid == GenralVariables.Succeeded)
@@ -194,7 +198,7 @@ namespace DataBaseConnection
                             int NumberOfRowsaffected = CommandForInsertSmile.ExecuteNonQuery();
                             if (NumberOfRowsaffected >= 1)
                             {
-                                if (SelectIdType(TypeOfQuestion.Slider, ref Id) == GenralVariables.Succeeded)
+                                if (SelectIdType(TypeOfQuestion.Smily, ref Id) == GenralVariables.Succeeded)
                                 {
                                     SmileQuestion.IdForType = Id;
                                     NewQuestion = SmileQuestion;
@@ -241,7 +245,7 @@ namespace DataBaseConnection
                             int NumberOfRowsaffected = CommandForInsertStar.ExecuteNonQuery();
                             if (NumberOfRowsaffected >= 1)
                             {
-                                if (SelectIdType(TypeOfQuestion.Slider, ref Id) == GenralVariables.Succeeded)
+                                if (SelectIdType(TypeOfQuestion.Stars, ref Id) == GenralVariables.Succeeded)
                                 {
                                     StarQuestion.IdForType = Id;
                                     NewQuestion = StarQuestion;

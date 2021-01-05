@@ -1,4 +1,5 @@
-﻿<ul class="nav navbar-nav">
-    <li>@Html.ActionLink("English", "Home", "Question", new {language= "en"},null)</li>
-    <li>@Html.ActionLink("Arabic", "Home", "Question", new { language = "ar" },null)</li>
-</ul>
+﻿
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink(SurveyWebSite.Resources.Messages.English, "ChangeLanuage", "Question", new { language = "en" }, null)</li>
+        <li>@Html.ActionLink(SurveyWebSite.Resources.Messages.Arabic, "ChangeLanuage", "Question", new { language = "ar" }, null)</li>
+    </ul>
